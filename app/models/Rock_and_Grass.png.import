@@ -1,0 +1,37 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path.s3tc="res://.import/Rock_and_Grass.png-67f0855124c137930306bf5a3c018ada.s3tc.stex"
+path.etc2="res://.import/Rock_and_Grass.png-67f0855124c137930306bf5a3c018ada.etc2.stex"
+path.etc="res://.import/Rock_and_Grass.png-67f0855124c137930306bf5a3c018ada.etc.stex"
+metadata={
+"imported_formats": [ "s3tc", "etc2", "etc" ],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://models/Rock_and_Grass.png"
+dest_files=[ "res://.import/Rock_and_Grass.png-67f0855124c137930306bf5a3c018ada.s3tc.stex", "res://.import/Rock_and_Grass.png-67f0855124c137930306bf5a3c018ada.etc2.stex", "res://.import/Rock_and_Grass.png-67f0855124c137930306bf5a3c018ada.etc.stex" ]
+
+[params]
+
+compress/mode=2
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=true
+flags/filter=true
+flags/mipmaps=true
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0
