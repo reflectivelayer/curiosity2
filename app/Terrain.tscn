@@ -1,10 +1,12 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Terrain.gd" type="Script" id=1]
 [ext_resource path="res://models/Curiosity/chassis.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://models/Curiosity/tex_01.png" type="Texture" id=3]
 [ext_resource path="res://models/Curiosity/tex_02.png" type="Texture" id=4]
 [ext_resource path="res://models/Curiosity/tex_03.png" type="Texture" id=5]
+[ext_resource path="res://models/Curiosity/tex_04.png" type="Texture" id=6]
+[ext_resource path="res://models/Curiosity/tex_05.png" type="Texture" id=7]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 3 )
@@ -17,6 +19,66 @@ albedo_texture = ExtResource( 3 )
 
 [sub_resource type="SpatialMaterial" id=4]
 albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_texture = ExtResource( 6 )
+
+[sub_resource type="SpatialMaterial" id=12]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=13]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=14]
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=15]
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="SpatialMaterial" id=16]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=17]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=18]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=19]
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="SpatialMaterial" id=20]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=21]
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="SpatialMaterial" id=22]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=23]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=24]
+albedo_texture = ExtResource( 4 )
 
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
@@ -33,6 +95,7 @@ light_energy = 0.7
 shadow_enabled = true
 
 [node name="VehicleBody" type="VehicleBody" parent="."]
+mode = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="VehicleBody"]
 mesh = ExtResource( 2 )
@@ -40,33 +103,33 @@ material/0 = SubResource( 1 )
 material/1 = SubResource( 2 )
 material/2 = SubResource( 3 )
 material/3 = SubResource( 4 )
-material/4 = SubResource( 4 )
-material/5 = SubResource( 4 )
-material/6 = null
-material/7 = null
-material/8 = null
-material/9 = null
-material/10 = null
-material/11 = null
-material/12 = null
-material/13 = null
-material/14 = null
-material/15 = null
-material/16 = null
-material/17 = null
-material/18 = null
-material/19 = null
-material/20 = null
-material/21 = null
-material/22 = null
-material/23 = null
-material/24 = null
-material/25 = null
-material/26 = null
-material/27 = null
-material/28 = null
-material/29 = null
-material/30 = null
-material/31 = null
-material/32 = null
+material/4 = SubResource( 5 )
+material/5 = SubResource( 6 )
+material/6 = SubResource( 7 )
+material/7 = SubResource( 8 )
+material/8 = SubResource( 9 )
+material/9 = SubResource( 10 )
+material/10 = SubResource( 11 )
+material/11 = SubResource( 12 )
+material/12 = SubResource( 13 )
+material/13 = SubResource( 14 )
+material/14 = SubResource( 15 )
+material/15 = SubResource( 16 )
+material/16 = SubResource( 17 )
+material/17 = SubResource( 18 )
+material/18 = SubResource( 19 )
+material/19 = SubResource( 20 )
+material/20 = SubResource( 21 )
+material/21 = SubResource( 22 )
+material/22 = SubResource( 23 )
+material/23 = SubResource( 23 )
+material/24 = SubResource( 23 )
+material/25 = SubResource( 21 )
+material/26 = SubResource( 23 )
+material/27 = SubResource( 21 )
+material/28 = SubResource( 23 )
+material/29 = SubResource( 23 )
+material/30 = SubResource( 24 )
+material/31 = SubResource( 23 )
+material/32 = SubResource( 24 )
 
