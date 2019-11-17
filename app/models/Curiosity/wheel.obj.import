@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/wheel.obj-18cbc90519d9d0b3dd57b81a13873dec.mesh"
+
+[deps]
+
+files=[ "res://.import/wheel.obj-18cbc90519d9d0b3dd57b81a13873dec.mesh" ]
+
+source_file="res://models/Curiosity/wheel.obj"
+dest_files=[ "res://.import/wheel.obj-18cbc90519d9d0b3dd57b81a13873dec.mesh", "res://.import/wheel.obj-18cbc90519d9d0b3dd57b81a13873dec.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/suspension.obj-678d2c4232ff188a1c6b7919ddeba0c1.mesh"
+
+[deps]
+
+files=[ "res://.import/suspension.obj-678d2c4232ff188a1c6b7919ddeba0c1.mesh" ]
+
+source_file="res://models/Curiosity/suspension.obj"
+dest_files=[ "res://.import/suspension.obj-678d2c4232ff188a1c6b7919ddeba0c1.mesh", "res://.import/suspension.obj-678d2c4232ff188a1c6b7919ddeba0c1.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true
