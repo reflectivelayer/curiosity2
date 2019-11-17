@@ -32,3 +32,4 @@ enabled=PoolStringArray(  )
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 environment/default_clear_color=Color( 0, 0, 0, 1 )
+environment/default_environment="res://Mars_env.tres"
