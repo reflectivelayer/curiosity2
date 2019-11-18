@@ -7,6 +7,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	$CamCenter.rotate(Vector3(0,1,0),0.01)
 
 

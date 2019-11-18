@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/mastCamHead.obj-336aaf162a1305de4b7db234edd57fee.mesh"
+
+[deps]
+
+files=[ "res://.import/mastCamHead.obj-336aaf162a1305de4b7db234edd57fee.mesh" ]
+
+source_file="res://models/Curiosity/mastCamHead.obj"
+dest_files=[ "res://.import/mastCamHead.obj-336aaf162a1305de4b7db234edd57fee.mesh", "res://.import/mastCamHead.obj-336aaf162a1305de4b7db234edd57fee.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true
