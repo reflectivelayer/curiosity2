@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/armLower.obj-6c9f8d0676f14ffbe0d29497f4198c2a.mesh"
+
+[deps]
+
+files=[ "res://.import/armLower.obj-6c9f8d0676f14ffbe0d29497f4198c2a.mesh" ]
+
+source_file="res://models/Curiosity/armLower.obj"
+dest_files=[ "res://.import/armLower.obj-6c9f8d0676f14ffbe0d29497f4198c2a.mesh", "res://.import/armLower.obj-6c9f8d0676f14ffbe0d29497f4198c2a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

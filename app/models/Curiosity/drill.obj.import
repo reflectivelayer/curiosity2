@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/drill.obj-069dc9826cfefa6b31921b7f6e441419.mesh"
+
+[deps]
+
+files=[ "res://.import/drill.obj-069dc9826cfefa6b31921b7f6e441419.mesh" ]
+
+source_file="res://models/Curiosity/drill.obj"
+dest_files=[ "res://.import/drill.obj-069dc9826cfefa6b31921b7f6e441419.mesh", "res://.import/drill.obj-069dc9826cfefa6b31921b7f6e441419.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/armUpper.obj-eaa60e4c12b1d94d383d0f6986c7ed17.mesh"
+
+[deps]
+
+files=[ "res://.import/armUpper.obj-eaa60e4c12b1d94d383d0f6986c7ed17.mesh" ]
+
+source_file="res://models/Curiosity/armUpper.obj"
+dest_files=[ "res://.import/armUpper.obj-eaa60e4c12b1d94d383d0f6986c7ed17.mesh", "res://.import/armUpper.obj-eaa60e4c12b1d94d383d0f6986c7ed17.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

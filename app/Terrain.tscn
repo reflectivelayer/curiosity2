@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://Terrain.gd" type="Script" id=1]
 [ext_resource path="res://models/Curiosity/chassis.obj" type="ArrayMesh" id=2]
@@ -13,6 +13,12 @@
 [ext_resource path="res://models/Curiosity/mastCamBase.obj" type="ArrayMesh" id=11]
 [ext_resource path="res://models/Curiosity/mastCamPanBase.obj" type="ArrayMesh" id=12]
 [ext_resource path="res://models/Curiosity/mastCamHead.obj" type="ArrayMesh" id=13]
+[ext_resource path="res://models/Curiosity/armBase.obj" type="ArrayMesh" id=14]
+[ext_resource path="res://models/Curiosity/armLower.obj" type="ArrayMesh" id=15]
+[ext_resource path="res://models/Curiosity/armUpper.obj" type="ArrayMesh" id=16]
+[ext_resource path="res://models/Curiosity/armInstrumentBase.obj" type="ArrayMesh" id=17]
+[ext_resource path="res://models/Curiosity/armHead.obj" type="ArrayMesh" id=18]
+[ext_resource path="res://models/Curiosity/drill.obj" type="ArrayMesh" id=19]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 3 )
@@ -101,23 +107,68 @@ normal_texture = ExtResource( 10 )
 [sub_resource type="BoxShape" id=28]
 extents = Vector3( 0.75517, 0.409801, 1.23041 )
 
-[sub_resource type="SpatialMaterial" id=35]
+[sub_resource type="SpatialMaterial" id=29]
 albedo_texture = ExtResource( 6 )
 
-[sub_resource type="SpatialMaterial" id=33]
+[sub_resource type="SpatialMaterial" id=30]
 albedo_texture = ExtResource( 6 )
 
-[sub_resource type="SpatialMaterial" id=34]
+[sub_resource type="SpatialMaterial" id=31]
 albedo_texture = ExtResource( 6 )
-
-[sub_resource type="PhysicsMaterial" id=29]
-
-[sub_resource type="BoxShape" id=30]
-extents = Vector3( 1, 0.0507376, 1 )
-
-[sub_resource type="PlaneMesh" id=31]
 
 [sub_resource type="SpatialMaterial" id=32]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=33]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=34]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=35]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=36]
+albedo_texture = ExtResource( 6 )
+
+[sub_resource type="SpatialMaterial" id=37]
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="SpatialMaterial" id=38]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=39]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=40]
+albedo_texture = ExtResource( 6 )
+
+[sub_resource type="SpatialMaterial" id=41]
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="SpatialMaterial" id=46]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=47]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=51]
+albedo_texture = ExtResource( 6 )
+
+[sub_resource type="SpatialMaterial" id=52]
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="SpatialMaterial" id=50]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="PhysicsMaterial" id=42]
+
+[sub_resource type="BoxShape" id=43]
+extents = Vector3( 1, 0.0507376, 1 )
+
+[sub_resource type="PlaneMesh" id=44]
+
+[sub_resource type="SpatialMaterial" id=45]
 albedo_color = Color( 0.721569, 0.45098, 0.247059, 1 )
 
 [node name="Spatial" type="Spatial"]
@@ -260,34 +311,78 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0335447, 1.01715, -0.228161
 shape = SubResource( 28 )
 
 [node name="MastCam" type="MeshInstance" parent="Rover"]
-editor/display_folded = true
-transform = Transform( 0.590338, 0, -0.807156, 0, 1, 0, 0.807156, 0, 0.590338, -0.568474, 1.22874, 0.698743 )
+transform = Transform( 0.590338, 0.806861, -0.021833, 0, 0.0270493, 0.999634, 0.807156, -0.590122, 0.0159682, -0.568474, 1.22874, 0.698743 )
 mesh = ExtResource( 11 )
-material/0 = SubResource( 35 )
+material/0 = SubResource( 29 )
 
-[node name="MastCamPanBase" type="MeshInstance" parent="Rover/MastCam"]
-transform = Transform( -1, 0, -8.74228e-008, 0, 1, 0, 8.74228e-008, 0, -1, 0, 0.44309, 0 )
+[node name="Base" type="MeshInstance" parent="Rover/MastCam"]
+transform = Transform( -1, 0, -1.50996e-007, 0, 1, 0, 1.50996e-007, 0, -1, 0, 0.44309, 0 )
 mesh = ExtResource( 12 )
-material/0 = SubResource( 33 )
+material/0 = SubResource( 30 )
 
-[node name="MastCamHead" type="MeshInstance" parent="Rover/MastCam/MastCamPanBase"]
-transform = Transform( -0.500706, 0, -0.865617, 0, 1, 0, 0.865617, 0, -0.500706, 0, 0.184603, 0 )
+[node name="CamHead" type="MeshInstance" parent="Rover/MastCam/Base"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.184603, 0 )
 mesh = ExtResource( 13 )
-material/0 = SubResource( 34 )
+material/0 = SubResource( 31 )
 
-[node name="Camera" type="Camera" parent="Rover/MastCam/MastCamPanBase/MastCamHead"]
-transform = Transform( -1, 0, 8.74228e-008, 0, 1, 0, -8.74228e-008, 0, -1, 0.009, 0.058, 0.11 )
+[node name="Camera" type="Camera" parent="Rover/MastCam/Base/CamHead"]
+transform = Transform( -1, 0, 1.50996e-007, 0, 1, 0, -1.50996e-007, 0, -1, 0.009, 0.058, 0.11 )
+current = true
 fov = 39.4
+
+[node name="Arm" type="MeshInstance" parent="Rover"]
+transform = Transform( 0.0108546, 0, -0.999941, 0, 1, 0, 0.999941, 0, 0.0108546, 0.469051, 1.03303, 1.11286 )
+mesh = ExtResource( 14 )
+material/0 = SubResource( 32 )
+material/1 = SubResource( 33 )
+
+[node name="Lower" type="MeshInstance" parent="Rover/Arm"]
+transform = Transform( 1, 0, 0, 0, 0.980924, -0.194392, 0, 0.194392, 0.980924, 0, -0.164132, 0.168373 )
+mesh = ExtResource( 15 )
+material/0 = SubResource( 34 )
+material/1 = SubResource( 35 )
+material/2 = SubResource( 36 )
+material/3 = SubResource( 37 )
+
+[node name="Upper" type="MeshInstance" parent="Rover/Arm/Lower"]
+transform = Transform( 1, 9.31323e-010, -4.65661e-010, 0, 0.339842, 0.940482, 0, -0.940482, 0.339842, 0.0607606, -0.00509202, 0.820138 )
+mesh = ExtResource( 16 )
+material/0 = SubResource( 38 )
+material/1 = SubResource( 39 )
+material/2 = SubResource( 40 )
+material/3 = SubResource( 41 )
+
+[node name="InstrumentBase" type="MeshInstance" parent="Rover/Arm/Lower/Upper"]
+transform = Transform( 1, 0, -9.31323e-010, 0, 0.503519, -0.863984, 0, 0.863984, 0.503519, -0.143094, 0.772061, -0.00588381 )
+mesh = ExtResource( 17 )
+material/0 = SubResource( 46 )
+material/1 = SubResource( 47 )
+
+[node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
+transform = Transform( 0.873092, 0, -0.487555, 0, 1, 0, 0.487555, 0, 0.873092, 0.0828983, 0.131391, -0.103828 )
+mesh = ExtResource( 18 )
+material/0 = SubResource( 51 )
+material/1 = SubResource( 52 )
+material/2 = null
+
+[node name="Drill" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments"]
+transform = Transform( 0.731144, 0.682223, 0, -0.682223, 0.731144, 0, 0, 0, 1, 0.0230753, 0.139189, 0.166712 )
+mesh = ExtResource( 19 )
+material/0 = SubResource( 50 )
+
+[node name="MAHLI" type="Camera" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments"]
+transform = Transform( 0.45341, 0.0853314, 0.887208, -0.382435, 0.917746, 0.107176, -0.805086, -0.387894, 0.448748, -0.202147, 0.142972, -0.130091 )
+fov = 39.2
 
 [node name="Test Ground" type="StaticBody" parent="."]
 transform = Transform( 5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0 )
-physics_material_override = SubResource( 29 )
+physics_material_override = SubResource( 42 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Test Ground"]
-shape = SubResource( 30 )
+shape = SubResource( 43 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Test Ground"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000642276, 0.00184679, -0.000938034 )
-mesh = SubResource( 31 )
-material/0 = SubResource( 32 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000114536, -0.00176072, -0.000304508 )
+mesh = SubResource( 44 )
+material/0 = SubResource( 45 )
 
