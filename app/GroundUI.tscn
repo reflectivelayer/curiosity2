@@ -38,7 +38,7 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="Mast" type="PanelContainer" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 26.0
@@ -53,19 +53,20 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Mast"]
+editor/display_folded = true
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 199.0
 margin_bottom = 216.0
 custom_constants/separation = 5
 
-[node name="Title" type="HSplitContainer" parent="PanelContainer/VBoxContainer"]
+[node name="Title" type="HSplitContainer" parent="Mast/VBoxContainer"]
 margin_right = 195.0
 margin_bottom = 38.0
 dragger_visibility = 1
 
-[node name="BtnPower" type="Button" parent="PanelContainer/VBoxContainer/Title"]
+[node name="BtnPower" type="Button" parent="Mast/VBoxContainer/Title"]
 margin_right = 30.0
 margin_bottom = 38.0
 size_flags_horizontal = 0
@@ -76,7 +77,7 @@ custom_styles/disabled = SubResource( 2 )
 custom_styles/normal = SubResource( 2 )
 icon = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Title"]
+[node name="Label" type="Label" parent="Mast/VBoxContainer/Title"]
 margin_left = 42.0
 margin_top = 3.0
 margin_right = 195.0
@@ -85,7 +86,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "MastCam"
 align = 1
 
-[node name="BtnUp" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="BtnUp" type="Button" parent="Mast/VBoxContainer"]
 margin_left = 81.0
 margin_top = 43.0
 margin_right = 114.0
@@ -98,13 +99,13 @@ custom_styles/disabled = SubResource( 3 )
 custom_styles/normal = SubResource( 3 )
 icon = ExtResource( 4 )
 
-[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="Mast/VBoxContainer"]
 margin_top = 108.0
 margin_right = 195.0
 margin_bottom = 141.0
 dragger_visibility = 1
 
-[node name="BtnLeft" type="Button" parent="PanelContainer/VBoxContainer/HSplitContainer"]
+[node name="BtnLeft" type="Button" parent="Mast/VBoxContainer/HSplitContainer"]
 margin_right = 60.0
 margin_bottom = 33.0
 custom_styles/hover = SubResource( 4 )
@@ -114,7 +115,7 @@ custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 4 )
 icon = ExtResource( 5 )
 
-[node name="BtnRight" type="Button" parent="PanelContainer/VBoxContainer/HSplitContainer"]
+[node name="BtnRight" type="Button" parent="Mast/VBoxContainer/HSplitContainer"]
 margin_left = 135.0
 margin_right = 195.0
 margin_bottom = 33.0
@@ -126,7 +127,7 @@ custom_styles/disabled = SubResource( 5 )
 custom_styles/normal = SubResource( 5 )
 icon = ExtResource( 6 )
 
-[node name="BtnDown" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="BtnDown" type="Button" parent="Mast/VBoxContainer"]
 margin_left = 81.0
 margin_top = 146.0
 margin_right = 114.0
@@ -139,12 +140,265 @@ custom_styles/disabled = SubResource( 3 )
 custom_styles/normal = SubResource( 3 )
 icon = ExtResource( 7 )
 
-[connection signal="pressed" from="PanelContainer/VBoxContainer/Title/BtnPower" to="PanelContainer" method="_on_BtnPower_pressed"]
-[connection signal="button_down" from="PanelContainer/VBoxContainer/BtnUp" to="PanelContainer" method="_on_BtnUp_button_down"]
-[connection signal="button_up" from="PanelContainer/VBoxContainer/BtnUp" to="PanelContainer" method="_on_BtnUp_button_up"]
-[connection signal="button_down" from="PanelContainer/VBoxContainer/HSplitContainer/BtnLeft" to="PanelContainer" method="_on_BtnLeft_button_down"]
-[connection signal="button_up" from="PanelContainer/VBoxContainer/HSplitContainer/BtnLeft" to="PanelContainer" method="_on_BtnLeft_button_up"]
-[connection signal="button_down" from="PanelContainer/VBoxContainer/HSplitContainer/BtnRight" to="PanelContainer" method="_on_BtnRight_button_down"]
-[connection signal="button_up" from="PanelContainer/VBoxContainer/HSplitContainer/BtnRight" to="PanelContainer" method="_on_BtnRight_button_up"]
-[connection signal="button_down" from="PanelContainer/VBoxContainer/BtnDown" to="PanelContainer" method="_on_BtnDown_button_down"]
-[connection signal="button_up" from="PanelContainer/VBoxContainer/BtnDown" to="PanelContainer" method="_on_BtnDown_button_up"]
+[node name="Arm" type="PanelContainer" parent="."]
+editor/display_folded = true
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 26.0
+margin_top = -585.0
+margin_right = 229.0
+margin_bottom = -281.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Arm"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 199.0
+margin_bottom = 300.0
+custom_constants/separation = 17
+
+[node name="Title" type="HSplitContainer" parent="Arm/VBoxContainer"]
+editor/display_folded = true
+margin_right = 195.0
+margin_bottom = 38.0
+dragger_visibility = 1
+
+[node name="BtnPower" type="Button" parent="Arm/VBoxContainer/Title"]
+margin_right = 30.0
+margin_bottom = 38.0
+size_flags_horizontal = 0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/disabled = SubResource( 2 )
+custom_styles/normal = SubResource( 2 )
+icon = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="Arm/VBoxContainer/Title"]
+margin_left = 42.0
+margin_top = 3.0
+margin_right = 195.0
+margin_bottom = 35.0
+custom_fonts/font = ExtResource( 3 )
+text = "Robotic Arm"
+align = 1
+
+[node name="Tools" type="HBoxContainer" parent="Arm/VBoxContainer"]
+editor/display_folded = true
+margin_top = 55.0
+margin_right = 195.0
+margin_bottom = 88.0
+
+[node name="BtnLeft" type="Button" parent="Arm/VBoxContainer/Tools"]
+margin_right = 60.0
+margin_bottom = 33.0
+size_flags_horizontal = 0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 4 )
+icon = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Arm/VBoxContainer/Tools"]
+margin_left = 64.0
+margin_right = 131.0
+margin_bottom = 32.0
+size_flags_horizontal = 7
+custom_fonts/font = ExtResource( 3 )
+text = "Tools"
+align = 1
+
+[node name="BtnRight" type="Button" parent="Arm/VBoxContainer/Tools"]
+margin_left = 135.0
+margin_right = 195.0
+margin_bottom = 33.0
+size_flags_horizontal = 8
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 5 )
+icon = ExtResource( 6 )
+
+[node name="Hinge" type="HBoxContainer" parent="Arm/VBoxContainer"]
+editor/display_folded = true
+margin_top = 105.0
+margin_right = 195.0
+margin_bottom = 138.0
+custom_constants/separation = 0
+
+[node name="BtnLeft" type="Button" parent="Arm/VBoxContainer/Hinge"]
+margin_right = 60.0
+margin_bottom = 33.0
+size_flags_horizontal = 0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 4 )
+icon = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Arm/VBoxContainer/Hinge"]
+margin_left = 60.0
+margin_right = 135.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "Hinge"
+align = 1
+
+[node name="BtnRight" type="Button" parent="Arm/VBoxContainer/Hinge"]
+margin_left = 135.0
+margin_right = 195.0
+margin_bottom = 33.0
+size_flags_horizontal = 8
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 5 )
+icon = ExtResource( 6 )
+
+[node name="Upper" type="HBoxContainer" parent="Arm/VBoxContainer"]
+editor/display_folded = true
+margin_top = 155.0
+margin_right = 195.0
+margin_bottom = 188.0
+custom_constants/separation = 0
+
+[node name="BtnLeft" type="Button" parent="Arm/VBoxContainer/Upper"]
+margin_right = 60.0
+margin_bottom = 33.0
+size_flags_horizontal = 0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 4 )
+icon = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Arm/VBoxContainer/Upper"]
+margin_left = 60.0
+margin_right = 135.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "Upper"
+align = 1
+
+[node name="BtnRight" type="Button" parent="Arm/VBoxContainer/Upper"]
+margin_left = 135.0
+margin_right = 195.0
+margin_bottom = 33.0
+size_flags_horizontal = 8
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 5 )
+icon = ExtResource( 6 )
+
+[node name="Lower" type="HBoxContainer" parent="Arm/VBoxContainer"]
+editor/display_folded = true
+margin_top = 205.0
+margin_right = 195.0
+margin_bottom = 238.0
+custom_constants/separation = 0
+
+[node name="BtnLeft" type="Button" parent="Arm/VBoxContainer/Lower"]
+margin_right = 60.0
+margin_bottom = 33.0
+size_flags_horizontal = 0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 4 )
+icon = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Arm/VBoxContainer/Lower"]
+margin_left = 60.0
+margin_right = 135.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "Lower"
+align = 1
+
+[node name="BtnRight" type="Button" parent="Arm/VBoxContainer/Lower"]
+margin_left = 135.0
+margin_right = 195.0
+margin_bottom = 33.0
+size_flags_horizontal = 8
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 5 )
+icon = ExtResource( 6 )
+
+[node name="Base" type="HBoxContainer" parent="Arm/VBoxContainer"]
+editor/display_folded = true
+margin_top = 255.0
+margin_right = 195.0
+margin_bottom = 288.0
+custom_constants/separation = 0
+
+[node name="BtnLeft" type="Button" parent="Arm/VBoxContainer/Base"]
+margin_right = 60.0
+margin_bottom = 33.0
+size_flags_horizontal = 0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 4 )
+icon = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Arm/VBoxContainer/Base"]
+margin_left = 60.0
+margin_right = 135.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "Base"
+align = 1
+
+[node name="BtnRight" type="Button" parent="Arm/VBoxContainer/Base"]
+margin_left = 135.0
+margin_right = 195.0
+margin_bottom = 33.0
+size_flags_horizontal = 8
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 5 )
+icon = ExtResource( 6 )
+
+[connection signal="pressed" from="Mast/VBoxContainer/Title/BtnPower" to="Mast" method="_on_BtnPower_pressed"]
+[connection signal="button_down" from="Mast/VBoxContainer/BtnUp" to="Mast" method="_on_BtnUp_button_down"]
+[connection signal="button_up" from="Mast/VBoxContainer/BtnUp" to="Mast" method="_on_BtnUp_button_up"]
+[connection signal="button_down" from="Mast/VBoxContainer/HSplitContainer/BtnLeft" to="Mast" method="_on_BtnLeft_button_down"]
+[connection signal="button_up" from="Mast/VBoxContainer/HSplitContainer/BtnLeft" to="Mast" method="_on_BtnLeft_button_up"]
+[connection signal="button_down" from="Mast/VBoxContainer/HSplitContainer/BtnRight" to="Mast" method="_on_BtnRight_button_down"]
+[connection signal="button_up" from="Mast/VBoxContainer/HSplitContainer/BtnRight" to="Mast" method="_on_BtnRight_button_up"]
+[connection signal="button_down" from="Mast/VBoxContainer/BtnDown" to="Mast" method="_on_BtnDown_button_down"]
+[connection signal="button_up" from="Mast/VBoxContainer/BtnDown" to="Mast" method="_on_BtnDown_button_up"]
+[connection signal="pressed" from="Arm/VBoxContainer/Title/BtnPower" to="Arm" method="_on_BtnPower_pressed"]
+[connection signal="button_down" from="Arm/VBoxContainer/Hinge/BtnRight" to="Arm" method="_on_BtnRight_button_down"]
+[connection signal="button_up" from="Arm/VBoxContainer/Hinge/BtnRight" to="Arm" method="_on_BtnRight_button_up"]
+[connection signal="button_down" from="Arm/VBoxContainer/Upper/BtnRight" to="Arm" method="_on_BtnRight_button_down"]
+[connection signal="button_up" from="Arm/VBoxContainer/Upper/BtnRight" to="Arm" method="_on_BtnRight_button_up"]
+[connection signal="button_down" from="Arm/VBoxContainer/Base/BtnRight" to="Arm" method="_on_BtnRight_button_down"]
+[connection signal="button_up" from="Arm/VBoxContainer/Base/BtnRight" to="Arm" method="_on_BtnRight_button_up"]

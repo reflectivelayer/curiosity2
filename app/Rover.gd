@@ -14,7 +14,7 @@ var _mastCamBase:MeshInstance
 func _ready():
 	_mastCam = $MastCam/Base/CamHead
 	_mastCamBase = $MastCam/Base
-	UI = get_parent().get_node("Control/PanelContainer")
+	UI = get_parent().get_node("Control/Mast")
 	UI.connect("powerToggle",self,"onPowerToggle")
 	UI.connect("mastMovment",self,"onMovement")
 
