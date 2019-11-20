@@ -1,34 +1,78 @@
 extends VehicleBody
 
 var MASTCAM_HEAD_SPEED = 0.003
-var UI
+var ARM_SPEED = 0.005
+var MastUI
+var ArmUI
 var power = false
 var _moveMastCamUp = false
 var _moveMastCamDown = false
 var _moveMastCamLeft = false
 var _moveMastCamRight = false
+var _moveArmBaseLeft = false
+var _moveArmBaseRight = false
+var _moveArmLowerUp = false
+var _moveArmLowerDown = false
+var _moveArmUpperUp = false
+var _moveArmUpperDown = false
+var _moveArmInstrumentBaseUp = false
+var _moveArmInstrumentBaseDown = false
+var _moveArmInstrumentLeft = false
+var _moveArmInstrumentRight = false
 var _mastCam:MeshInstance
 var _mastCamBase:MeshInstance
-
+var _armBase:MeshInstance
+var _armLower:MeshInstance
+var _armUpper:MeshInstance
+var _armInstrumentBase:MeshInstance
+var _armInstrument:MeshInstance
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_mastCam = $MastCam/Base/CamHead
 	_mastCamBase = $MastCam/Base
-	UI = get_parent().get_node("Control/Mast")
-	UI.connect("powerToggle",self,"onPowerToggle")
-	UI.connect("mastMovment",self,"onMovement")
-
+	_armBase = $Arm
+	_armLower = $Arm/Lower
+	_armUpper = $Arm/Lower/Upper
+	_armInstrumentBase = $Arm/Lower/Upper/InstrumentBase
+	_armInstrument = $Arm/Lower/Upper/InstrumentBase/Instruments
+	
+	MastUI = get_parent().get_node("Control/Mast")
+	MastUI.connect("powerToggle",self,"onPowerToggle")
+	MastUI.connect("mastMovment",self,"onMastMovement")
+	
+	ArmUI = get_parent().get_node("Control/Arm")
+	ArmUI.connect("armMovment",self,"onArmMovement")	
+	
 func _process(delta):
 	if _moveMastCamUp:
 		_mastCam.rotate_x(-MASTCAM_HEAD_SPEED)
-	if _moveMastCamDown:
+	elif _moveMastCamDown:
 		_mastCam.rotate_x(MASTCAM_HEAD_SPEED)
-	if _moveMastCamLeft:
+	elif _moveMastCamLeft:
 		_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED)
-	if _moveMastCamRight:
+	elif _moveMastCamRight:
 		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED)
-		
-		
+	elif _moveArmBaseLeft:
+		_armBase.rotate_y(ARM_SPEED)
+	elif _moveArmBaseRight:
+		_armBase.rotate_y(-ARM_SPEED)
+	elif _moveArmLowerUp:
+		_armLower.rotate_x(ARM_SPEED)
+	elif _moveArmLowerDown:
+		_armLower.rotate_x(-ARM_SPEED)
+	elif _moveArmUpperUp:
+		_armUpper.rotate_x(ARM_SPEED)
+	elif _moveArmUpperDown:
+		_armUpper.rotate_x(-ARM_SPEED)
+	elif _moveArmInstrumentBaseUp:
+		_armInstrumentBase.rotate_x(ARM_SPEED)
+	elif _moveArmInstrumentBaseDown:
+		_armInstrumentBase.rotate_x(-ARM_SPEED)
+	elif _moveArmInstrumentLeft:
+		_armInstrument.rotate_y(ARM_SPEED)
+	elif _moveArmInstrumentRight:
+		_armInstrument.rotate_y(-ARM_SPEED)		
+
 func onPowerToggle():
 	if power:
 		$MastCam/MastStartUp.play_backwards("MastStartUp")
@@ -36,7 +80,7 @@ func onPowerToggle():
 		$MastCam/MastStartUp.play("MastStartUp")
 	power = !power
 	
-func onMovement(direction,isOn):
+func onMastMovement(direction,isOn):
 	match direction:
 		"up":
 			_moveMastCamUp = isOn
@@ -47,6 +91,35 @@ func onMovement(direction,isOn):
 		"right":
 			_moveMastCamRight = isOn
 
-
-func onMovementDown(isOn):
-	_moveMastCamDown = isOn
+func onArmMovement(section, direction,isOn):
+	match section:
+		"base":
+			match direction:
+				"left":
+					_moveArmBaseLeft = isOn
+				"right":
+					_moveArmBaseRight = isOn
+		"lower":
+			match direction:
+				"left":
+					_moveArmLowerUp = isOn
+				"right":
+					_moveArmLowerDown = isOn
+		"upper":
+			match direction:
+				"left":
+					_moveArmUpperUp = isOn
+				"right":
+					_moveArmUpperDown = isOn
+		"hinge":
+			match direction:
+				"left":
+					_moveArmInstrumentBaseUp = isOn
+				"right":
+					_moveArmInstrumentBaseDown = isOn
+		"tools":
+			match direction:
+				"left":
+					_moveArmInstrumentLeft = isOn
+				"right":
+					_moveArmInstrumentRight = isOn

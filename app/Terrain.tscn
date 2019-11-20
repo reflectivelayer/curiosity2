@@ -213,7 +213,8 @@ shadow_enabled = true
 transform = Transform( 1, 0, 0, 0, 0.746986, 0.664839, 0, -0.664839, 0.746986, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="CamCenter"]
-transform = Transform( 1, 0, 0, 0, 1, 2.98023e-008, 0, -2.98023e-008, 1, 0.358456, -4.76837e-007, 1.61088 )
+transform = Transform( 0.74825, 0.345213, -0.566524, -0.418925, 0.908021, 2.98023e-008, 0.514416, 0.237331, 0.824046, -1.2078, 0.464176, 2.8931 )
+current = true
 
 [node name="Rover" type="VehicleBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215407, 0 )
@@ -346,7 +347,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0335447, 1.01715, -0.228161
 shape = SubResource( 29 )
 
 [node name="MastCam" type="MeshInstance" parent="Rover"]
-transform = Transform( 0.590338, 0.807156, 3.52819e-008, 0, -4.37114e-008, 1, 0.807156, -0.590338, -2.58045e-008, -0.568474, 1.22874, 0.698743 )
+transform = Transform( 0.586796, 0.809734, 3.53946e-008, 0, -4.37114e-008, 1, 0.809734, -0.586796, -2.56497e-008, -0.568474, 1.22874, 0.698743 )
 mesh = ExtResource( 13 )
 material/0 = SubResource( 30 )
 
@@ -410,7 +411,6 @@ material/0 = SubResource( 48 )
 
 [node name="MAHLI" type="Camera" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments"]
 transform = Transform( 0.45341, 0.0853314, 0.887208, -0.382435, 0.917746, 0.107176, -0.805086, -0.387894, 0.448748, -0.202147, 0.142972, -0.130091 )
-current = true
 fov = 39.2
 
 [node name="HazCam" type="Camera" parent="Rover"]

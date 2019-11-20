@@ -12,5 +12,17 @@ func _ready():
 #	pass
 
 
-func _on_BtnPower_pressed():
-	emit_signal("powerToggle")
+
+func _on_BtnLeft_button_down(section):
+		emit_signal("armMovment",section,"left",true)
+
+func _on_BtnLeft_button_up(section):
+		emit_signal("armMovment",section,"left",false)
+
+
+func _on_BtnRight_button_down(section):
+		emit_signal("armMovment",section,"right",true)
+
+
+func _on_BtnRight_button_up(section):
+		emit_signal("armMovment",section,"right",false)
