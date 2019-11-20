@@ -1,6 +1,6 @@
 extends PanelContainer
 
-signal powerToggle
+signal cameraToggle
 signal armMovment(section,direction,isOn)
 
 # Called when the node enters the scene tree for the first time.
@@ -12,7 +12,9 @@ func _ready():
 #	pass
 
 
-
+func _on_BtnCamera_pressed():
+	emit_signal("cameraToggle")
+	
 func _on_BtnLeft_button_down(section):
 		emit_signal("armMovment",section,"left",true)
 
@@ -26,3 +28,5 @@ func _on_BtnRight_button_down(section):
 
 func _on_BtnRight_button_up(section):
 		emit_signal("armMovment",section,"right",false)
+
+

@@ -26,7 +26,8 @@ var _armLower:MeshInstance
 var _armUpper:MeshInstance
 var _armInstrumentBase:MeshInstance
 var _armInstrument:MeshInstance
-# Called when the node enters the scene tree for the first time.
+var _useMAHLI = false
+
 func _ready():
 	_mastCam = $MastCam/Base/CamHead
 	_mastCamBase = $MastCam/Base
@@ -36,11 +37,14 @@ func _ready():
 	_armInstrumentBase = $Arm/Lower/Upper/InstrumentBase
 	_armInstrument = $Arm/Lower/Upper/InstrumentBase/Instruments
 	
+	brake = 0.1
+	
 	MastUI = get_parent().get_node("Control/Mast")
 	MastUI.connect("powerToggle",self,"onPowerToggle")
 	MastUI.connect("mastMovment",self,"onMastMovement")
 	
 	ArmUI = get_parent().get_node("Control/Arm")
+	ArmUI.connect("cameraToggle",self,"onCameraToggle")
 	ArmUI.connect("armMovment",self,"onArmMovement")	
 	
 func _process(delta):
@@ -80,6 +84,16 @@ func onPowerToggle():
 		$MastCam/MastStartUp.play("MastStartUp")
 	power = !power
 	
+func onCameraToggle():
+	_useMAHLI = !_useMAHLI
+	if _useMAHLI:
+		$MastCam/Base/CamHead/Camera.current = false
+		$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = true
+	else:
+		$MastCam/Base/CamHead/Camera.current = true
+		$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
+
+
 func onMastMovement(direction,isOn):
 	match direction:
 		"up":

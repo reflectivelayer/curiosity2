@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/site_1.obj-b05c80544b9b7214b065591697ea9f43.mesh"
+
+[deps]
+
+files=[ "res://.import/site_1.obj-b05c80544b9b7214b065591697ea9f43.mesh" ]
+
+source_file="res://models/landscape/site_1.obj"
+dest_files=[ "res://.import/site_1.obj-b05c80544b9b7214b065591697ea9f43.mesh", "res://.import/site_1.obj-b05c80544b9b7214b065591697ea9f43.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true
