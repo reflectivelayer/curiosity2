@@ -17,6 +17,8 @@ _global_script_class_icons={
 
 config/name="Curiosity 2"
 run/main_scene="res://Terrain.tscn"
+run/disable_stdout=true
+run/disable_stderr=true
 config/icon="res://icon.png"
 
 [display]
@@ -36,5 +38,6 @@ enabled=PoolStringArray(  )
 
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
+quality/shadows/filter_mode.mobile=1
 environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://Mars_env.tres"

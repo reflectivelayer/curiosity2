@@ -1,7 +1,7 @@
 extends VehicleBody
 
-var MASTCAM_HEAD_SPEED = 0.003
-var ARM_SPEED = 0.005
+var MASTCAM_HEAD_SPEED = 0.3
+var ARM_SPEED = 0.3
 var MastUI
 var ArmUI
 var power = false
@@ -49,33 +49,33 @@ func _ready():
 	
 func _process(delta):
 	if _moveMastCamUp:
-		_mastCam.rotate_x(-MASTCAM_HEAD_SPEED)
+		_mastCam.rotate_x(-MASTCAM_HEAD_SPEED*delta)
 	elif _moveMastCamDown:
-		_mastCam.rotate_x(MASTCAM_HEAD_SPEED)
+		_mastCam.rotate_x(MASTCAM_HEAD_SPEED*delta)
 	elif _moveMastCamLeft:
-		_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED)
+		_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED*delta)
 	elif _moveMastCamRight:
-		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED)
+		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED*delta)
 	elif _moveArmBaseLeft:
-		_armBase.rotate_y(ARM_SPEED)
+		_armBase.rotate_y(ARM_SPEED*delta)
 	elif _moveArmBaseRight:
-		_armBase.rotate_y(-ARM_SPEED)
+		_armBase.rotate_y(-ARM_SPEED*delta)
 	elif _moveArmLowerUp:
-		_armLower.rotate_x(ARM_SPEED)
+		_armLower.rotate_x(ARM_SPEED*delta)
 	elif _moveArmLowerDown:
-		_armLower.rotate_x(-ARM_SPEED)
+		_armLower.rotate_x(-ARM_SPEED*delta)
 	elif _moveArmUpperUp:
-		_armUpper.rotate_x(ARM_SPEED)
+		_armUpper.rotate_x(ARM_SPEED*delta)
 	elif _moveArmUpperDown:
-		_armUpper.rotate_x(-ARM_SPEED)
+		_armUpper.rotate_x(-ARM_SPEED*delta)
 	elif _moveArmInstrumentBaseUp:
-		_armInstrumentBase.rotate_x(ARM_SPEED)
+		_armInstrumentBase.rotate_x(ARM_SPEED*delta)
 	elif _moveArmInstrumentBaseDown:
-		_armInstrumentBase.rotate_x(-ARM_SPEED)
+		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
 	elif _moveArmInstrumentLeft:
-		_armInstrument.rotate_y(ARM_SPEED)
+		_armInstrument.rotate_y(ARM_SPEED*delta)
 	elif _moveArmInstrumentRight:
-		_armInstrument.rotate_y(-ARM_SPEED)		
+		_armInstrument.rotate_y(-ARM_SPEED*delta)		
 
 func onPowerToggle():
 	if power:
