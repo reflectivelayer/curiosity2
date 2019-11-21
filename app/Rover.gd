@@ -62,12 +62,16 @@ func _process(delta):
 		_armBase.rotate_y(-ARM_SPEED*delta)
 	elif _moveArmLowerUp:
 		_armLower.rotate_x(ARM_SPEED*delta)
+		_armUpper.rotate_x(-ARM_SPEED*delta)
 	elif _moveArmLowerDown:
 		_armLower.rotate_x(-ARM_SPEED*delta)
+		_armUpper.rotate_x(ARM_SPEED*delta)	
 	elif _moveArmUpperUp:
 		_armUpper.rotate_x(ARM_SPEED*delta)
+		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)		
 	elif _moveArmUpperDown:
 		_armUpper.rotate_x(-ARM_SPEED*delta)
+		_armInstrumentBase.rotate_x(ARM_SPEED*delta)		
 	elif _moveArmInstrumentBaseUp:
 		_armInstrumentBase.rotate_x(ARM_SPEED*delta)
 	elif _moveArmInstrumentBaseDown:
