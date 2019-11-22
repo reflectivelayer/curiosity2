@@ -17,8 +17,6 @@ _global_script_class_icons={
 
 config/name="Curiosity 2"
 run/main_scene="res://Terrain.tscn"
-run/disable_stdout=true
-run/disable_stderr=true
 config/icon="res://icon.png"
 
 [display]
@@ -32,7 +30,9 @@ enabled=PoolStringArray(  )
 
 [physics]
 
+3d/physics_engine="GodotPhysics"
 3d/default_gravity=3.711
+3d/smooth_trimesh_collision=true
 
 [rendering]
 
