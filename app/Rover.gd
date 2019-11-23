@@ -32,6 +32,14 @@ var _armUpper:MeshInstance
 var _armInstrumentBase:MeshInstance
 var _armInstrument:MeshInstance
 var _useMAHLI = false
+var _leftFrontWheel
+var _rightFrontWheel
+var _leftRearWheel
+var _rightRearWheel
+var _leftFrontSuspension
+var _rightFrontSuspension
+var _leftRearSuspension
+var _rightRearSuspension
 
 func _ready():
 	_mastCam = $MastCam/Base/CamHead
@@ -41,7 +49,15 @@ func _ready():
 	_armUpper = $Arm/Lower/Upper
 	_armInstrumentBase = $Arm/Lower/Upper/InstrumentBase
 	_armInstrument = $Arm/Lower/Upper/InstrumentBase/Instruments
-
+	_leftFrontWheel = $LeftFront
+	_rightFrontWheel = $RightFront
+	_leftRearWheel = $LeftRear
+	_rightRearWheel = $RightRear
+	_leftFrontSuspension = $LeftFrontSuspension
+	_rightFrontSuspension = $RightFrontSuspension
+	_leftRearSuspension = $LeftRearSuspension
+	_rightRearSuspension = $RightRearSuspension
+	
 	MastUI = get_parent().get_node("Control/MastRect/Mast")
 	MastUI.connect("powerToggle",self,"onPowerToggle")
 	MastUI.connect("mastMovment",self,"onMastMovement")
@@ -65,15 +81,15 @@ func _process(delta):
 	elif _moveMastCamRight:
 		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED*delta)
 	elif _moveArmBaseLeft:
-		_armBase.rotate_y(ARM_SPEED*delta)
-	elif _moveArmBaseRight:
 		_armBase.rotate_y(-ARM_SPEED*delta)
+	elif _moveArmBaseRight:
+		_armBase.rotate_y(ARM_SPEED*delta)
 	elif _moveArmLowerUp:
-		_armLower.rotate_x(ARM_SPEED*delta)
-		_armUpper.rotate_x(-ARM_SPEED*delta)
-	elif _moveArmLowerDown:
 		_armLower.rotate_x(-ARM_SPEED*delta)
-		_armUpper.rotate_x(ARM_SPEED*delta)	
+		_armUpper.rotate_x(ARM_SPEED*delta)
+	elif _moveArmLowerDown:
+		_armLower.rotate_x(ARM_SPEED*delta)
+		_armUpper.rotate_x(-ARM_SPEED*delta)	
 	elif _moveArmUpperUp:
 		_armUpper.rotate_x(ARM_SPEED*delta)
 		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)		
@@ -81,18 +97,20 @@ func _process(delta):
 		_armUpper.rotate_x(-ARM_SPEED*delta)
 		_armInstrumentBase.rotate_x(ARM_SPEED*delta)		
 	elif _moveArmInstrumentBaseUp:
-		_armInstrumentBase.rotate_x(ARM_SPEED*delta)
-	elif _moveArmInstrumentBaseDown:
 		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
+	elif _moveArmInstrumentBaseDown:
+		_armInstrumentBase.rotate_x(ARM_SPEED*delta)
 	elif _moveArmInstrumentLeft:
-		_armInstrument.rotate_y(ARM_SPEED*delta)
-	elif _moveArmInstrumentRight:
 		_armInstrument.rotate_y(-ARM_SPEED*delta)
+	elif _moveArmInstrumentRight:
+		_armInstrument.rotate_y(ARM_SPEED*delta)
 	elif _turnLeft:
 		add_torque (Vector3(0,2000,0))
+		_turnPosition()
 		pass
 	elif _turnRight:
 		add_torque (Vector3(0,-2000,0))
+		_turnPosition()		
 		pass
 		
 func onPowerToggle():
@@ -142,13 +160,16 @@ func onDriveMovement(direction,isOn):
 			if isOn:
 				brake = 0
 			else:
-				brake = 10			
+				brake = 10
+				_setSuspensionStraight()
 		"right":
 			_turnRight = isOn
 			if isOn:
 				brake = 0
 			else:
-				brake = 10			
+				brake = 10
+				_setSuspensionStraight()
+				
 
 func onArmMovement(section, direction,isOn):
 	match section:
@@ -192,32 +213,30 @@ func _driveBackward():
 	_setWheelsforStraight()
 	brake =0.0	
 	engine_force = -500
-	
-func _turnLeft():
-	_setWheelsforTurn()
-	
-func _turnRight():
-	_setWheelsforTurn()
-	
+
 func _driveStop():
 	engine_force=0
 	brake = 10
 
-func _setWheelsforTurn():
-	$RightFront.rotate_y(35)
-	$LeftFront.rotation_degrees.y = -35
-	$RightRear.rotation_degrees.y = -35
-	$LeftRear.rotation_degrees.y = 35
-	print("HGF")
 	
 func _setWheelsforStraight():
 	$RightFront.rotation_degrees.y = 0
 	$RightRear.rotation_degrees.y = 0
 	$LeftFront.rotation_degrees.y = 0
 	$LeftRear.rotation_degrees.y = 0
+
+func _setSuspensionStraight():
+	_rightFrontSuspension.rotation_degrees.y = 0
+	_leftFrontSuspension.rotation_degrees.y = 0
+	_rightRearSuspension.rotation_degrees.y = 0
+	_leftRearSuspension.rotation_degrees.y = 0
 	
 func _turnPosition():
-	$RightFront.rotation_degrees.y = 35
-	$LeftFront.rotation_degrees.y = -35
-	$RightRear.rotation_degrees.y = -35
-	$LeftRear.rotation_degrees.y = 35	
+	_rightFrontWheel.rotation_degrees.y = 45
+	_leftFrontWheel.rotation_degrees.y = -45
+	_rightRearWheel.rotation_degrees.y = -45
+	_leftRearWheel.rotation_degrees.y = 45
+	_rightFrontSuspension.rotation_degrees.y = 45
+	_leftFrontSuspension.rotation_degrees.y = -45
+	_rightRearSuspension.rotation_degrees.y = -45
+	_leftRearSuspension.rotation_degrees.y = 45		
