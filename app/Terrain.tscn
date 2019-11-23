@@ -185,6 +185,7 @@ albedo_texture = ExtResource( 6 )
 shader = ExtResource( 20 )
 
 [sub_resource type="PhysicsMaterial" id=49]
+friction = 49.87
 
 [sub_resource type="ShaderMaterial" id=50]
 shader = ExtResource( 22 )
@@ -206,11 +207,11 @@ directional_shadow_max_distance = 100.0
 transform = Transform( 1, 0, 0, 0, 0.746986, 0.664839, 0, -0.664839, 0.746986, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="CamCenter"]
-transform = Transform( 0.74825, 0.345213, -0.566524, -0.418925, 0.908021, 1.78814e-007, 0.514416, 0.237331, 0.824046, 1.24494, 6.91566, 4.57934 )
+transform = Transform( 0.0985804, 0.287183, -0.95279, -0.616429, 0.769261, 0.168086, 0.781216, 0.570757, 0.252862, 4.37329, 7.50955, 3.48879 )
 
 [node name="Rover" type="VehicleBody" parent="."]
-transform = Transform( -0.740996, 0, -0.67151, 0, 1, 0, 0.67151, 0, -0.740996, 6.15932, 6.70987, -5.95285 )
-mass = 500.0
+transform = Transform( -0.740996, 0, -0.67151, 0, 1, 0, 0.67151, 0, -0.740996, 8.71722, 6.51486, -3.61076 )
+mass = 5000.0
 script = ExtResource( 2 )
 
 [node name="Chassis" type="MeshInstance" parent="Rover"]
@@ -276,6 +277,7 @@ material/1 = SubResource( 26 )
 
 [node name="LeftFront" type="VehicleWheel" parent="Rover"]
 transform = Transform( 1, 0, 1.49012e-008, 0, 1, 0, -1.49012e-008, 0, 1, 1.07448, 0.269852, 1.08701 )
+wheel_roll_influence = 1.0
 wheel_radius = 0.24
 wheel_friction_slip = 1.0
 suspension_stiffness = 50.0
@@ -289,6 +291,7 @@ material/0 = SubResource( 27 )
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06145, 0.269852, 1.08701 )
 use_as_traction = true
+wheel_roll_influence = 1.0
 wheel_radius = 0.24
 wheel_friction_slip = 1.0
 suspension_stiffness = 50.0
@@ -302,6 +305,7 @@ material/0 = SubResource( 27 )
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06145, 0.269852, -1.17326 )
 use_as_traction = true
+wheel_roll_influence = 1.0
 wheel_radius = 0.24
 wheel_friction_slip = 1.0
 suspension_stiffness = 50.0
@@ -339,6 +343,7 @@ material/0 = SubResource( 27 )
 editor/display_folded = true
 transform = Transform( 1, 0, 2.98023e-008, 0, 1, 0, -2.98023e-008, 0, 1, 1.07448, 0.260694, -1.16808 )
 use_as_traction = true
+wheel_roll_influence = 1.0
 wheel_radius = 0.24
 wheel_friction_slip = 1.0
 suspension_stiffness = 50.0
@@ -403,7 +408,7 @@ material/0 = SubResource( 43 )
 material/1 = SubResource( 44 )
 
 [node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
-transform = Transform( -0.975543, -1.30094e-007, 0.219811, -2.09846e-007, 0.999999, -3.14743e-007, -0.219812, -3.43294e-007, -0.975542, 0.0597508, 0.133471, 0.141341 )
+transform = Transform( -0.975543, -1.3411e-007, 0.219811, -2.08616e-007, 0.999999, -3.12924e-007, -0.219812, -3.39001e-007, -0.975542, 0.059751, 0.133471, 0.141341 )
 mesh = ExtResource( 18 )
 material/0 = SubResource( 45 )
 material/1 = SubResource( 46 )
@@ -418,6 +423,10 @@ material/0 = SubResource( 47 )
 [node name="MAHLI" type="Camera" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments"]
 transform = Transform( -0.3837, -0.376436, 0.843248, 0.580503, -0.808487, -0.0967744, 0.718185, 0.452375, 0.528739, -0.202153, 0.142974, -0.130092 )
 fov = 39.2
+
+[node name="SpotLight" type="SpotLight" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI"]
+transform = Transform( 1, 3.72529e-008, -2.98023e-007, 7.45058e-009, 1, 0, 3.27826e-007, 0, 1, 0.00324726, 0.0766838, 0.0226936 )
+spot_angle = 26.0
 
 [node name="Desaturator" type="TextureRect" parent="Rover"]
 visible = false

@@ -52,8 +52,10 @@ func _ready():
 	
 	DriveUI = get_parent().get_node("Control/DriveRect/Drive")
 	DriveUI.connect("driveMovment",self,"onDriveMovement")
-		
+
+				
 func _process(delta):
+	
 	if _moveMastCamUp:
 		_mastCam.rotate_x(-MASTCAM_HEAD_SPEED*delta)
 	elif _moveMastCamDown:
@@ -87,20 +89,18 @@ func _process(delta):
 	elif _moveArmInstrumentRight:
 		_armInstrument.rotate_y(-ARM_SPEED*delta)
 	elif _turnLeft:
-		rotate_y(0.005)
+		add_torque (Vector3(0,2000,0))
+		pass
 	elif _turnRight:
-		rotate_y(-0.005)
+		add_torque (Vector3(0,-2000,0))
+		pass
 		
 func onPowerToggle():
 	power = !power
 	if power:
-		engine_force = 30
-		brake = 0		
-		#$MastCam/MastStartUp.play_backwards("MastStartUp")
+		$MastCam/MastStartUp.play_backwards("MastStartUp")
 	else:
-		engine_force = 0
-		brake = 0.8	
-		#$MastCam/MastStartUp.play("MastStartUp")
+		$MastCam/MastStartUp.play("MastStartUp")
 
 	
 func onCameraToggle():
@@ -139,8 +139,16 @@ func onDriveMovement(direction,isOn):
 				_driveStop()
 		"left":
 			_turnLeft = isOn
+			if isOn:
+				brake = 0
+			else:
+				brake = 10			
 		"right":
 			_turnRight = isOn
+			if isOn:
+				brake = 0
+			else:
+				brake = 10			
 
 func onArmMovement(section, direction,isOn):
 	match section:
@@ -178,12 +186,12 @@ func onArmMovement(section, direction,isOn):
 func _driveForward():
 	_setWheelsforStraight()
 	brake =0.0
-	engine_force = 20
+	engine_force = 500
 	
 func _driveBackward():
 	_setWheelsforStraight()
 	brake =0.0	
-	engine_force = -20
+	engine_force = -500
 	
 func _turnLeft():
 	_setWheelsforTurn()
@@ -193,7 +201,7 @@ func _turnRight():
 	
 func _driveStop():
 	engine_force=0
-	brake = 1
+	brake = 10
 
 func _setWheelsforTurn():
 	$RightFront.rotate_y(35)
@@ -208,3 +216,8 @@ func _setWheelsforStraight():
 	$LeftFront.rotation_degrees.y = 0
 	$LeftRear.rotation_degrees.y = 0
 	
+func _turnPosition():
+	$RightFront.rotation_degrees.y = 35
+	$LeftFront.rotation_degrees.y = -35
+	$RightRear.rotation_degrees.y = -35
+	$LeftRear.rotation_degrees.y = 35	
