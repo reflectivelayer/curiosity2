@@ -30,7 +30,6 @@ enabled=PoolStringArray(  )
 
 [physics]
 
-3d/physics_engine="GodotPhysics"
 3d/default_gravity=3.711
 3d/smooth_trimesh_collision=true
 
@@ -39,5 +38,7 @@ enabled=PoolStringArray(  )
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 quality/shadows/filter_mode.mobile=1
+quality/filters/use_nearest_mipmap_filter=true
 environment/default_clear_color=Color( 0, 0, 0, 1 )
+quality/filters/msaa=1
 environment/default_environment="res://Mars_env.tres"

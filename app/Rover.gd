@@ -71,7 +71,6 @@ func _ready():
 
 				
 func _process(delta):
-	
 	if _moveMastCamUp:
 		_mastCam.rotate_x(-MASTCAM_HEAD_SPEED*delta)
 	elif _moveMastCamDown:
@@ -105,11 +104,11 @@ func _process(delta):
 	elif _moveArmInstrumentRight:
 		_armInstrument.rotate_y(ARM_SPEED*delta)
 	elif _turnLeft:
-		add_torque (Vector3(0,2000,0))
+		applyTurnForce(1)
 		_turnPosition()
 		pass
 	elif _turnRight:
-		add_torque (Vector3(0,-2000,0))
+		applyTurnForce(-1)
 		_turnPosition()		
 		pass
 		
@@ -158,14 +157,14 @@ func onDriveMovement(direction,isOn):
 		"left":
 			_turnLeft = isOn
 			if isOn:
-				brake = 0
+				brake = 0						
 			else:
 				brake = 10
 				_setSuspensionStraight()
 		"right":
 			_turnRight = isOn
 			if isOn:
-				brake = 0
+				brake = 0	
 			else:
 				brake = 10
 				_setSuspensionStraight()
@@ -207,16 +206,18 @@ func onArmMovement(section, direction,isOn):
 func _driveForward():
 	_setWheelsforStraight()
 	brake =0.0
-	engine_force = 500
+	engine_force = 1000
 	
 func _driveBackward():
 	_setWheelsforStraight()
 	brake =0.0	
-	engine_force = -500
+	engine_force = -1000
+	print("true")	
 
 func _driveStop():
 	engine_force=0
 	brake = 10
+	print("false")
 
 	
 func _setWheelsforStraight():
@@ -239,4 +240,14 @@ func _turnPosition():
 	_rightFrontSuspension.rotation_degrees.y = 45
 	_leftFrontSuspension.rotation_degrees.y = -45
 	_rightRearSuspension.rotation_degrees.y = -45
-	_leftRearSuspension.rotation_degrees.y = 45		
+	_leftRearSuspension.rotation_degrees.y = 45
+		
+func applyTurnForce(direction):
+	var turnForce = 20
+	var torqueVector = Vector3(0,0,100)
+	if direction>0:
+		add_force( Vector3(turnForce,0,0),torqueVector)
+		add_force( Vector3(-turnForce,0,0),-torqueVector)
+	else:
+		add_force( Vector3(-turnForce,0,0),torqueVector)
+		add_force( Vector3(turnForce,0,0),-torqueVector)		
