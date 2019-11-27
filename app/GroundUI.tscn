@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://GroundUI.gd" type="Script" id=1]
 [ext_resource path="res://ArmControl.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://ui/arrow_down.png" type="Texture" id=10]
 [ext_resource path="res://ui/icn_mast.png" type="Texture" id=11]
 [ext_resource path="res://DriveControl.gd" type="Script" id=12]
+[ext_resource path="res://CamSelector.gd" type="Script" id=13]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -378,6 +379,7 @@ custom_styles/normal = SubResource( 9 )
 icon = ExtResource( 7 )
 
 [node name="MastRect" type="HBoxContainer" parent="."]
+editor/display_folded = true
 margin_left = -156.291
 margin_top = 360.0
 margin_right = 65.709
@@ -626,6 +628,34 @@ anims/DrivePanel = SubResource( 16 )
 anims/MastCamPanel = SubResource( 17 )
 anims/RoboticArmPanel = SubResource( 18 )
 
+[node name="CamSelector" type="VBoxContainer" parent="."]
+anchor_left = 0.01
+anchor_right = 1.0
+margin_left = 904.76
+margin_top = 12.0
+margin_right = -7.0
+margin_bottom = 158.0
+script = ExtResource( 13 )
+
+[node name="MastCam" type="Button" parent="CamSelector"]
+margin_right = 102.0
+margin_bottom = 20.0
+
+[node name="MAHLI" type="Button" parent="CamSelector"]
+margin_top = 24.0
+margin_right = 102.0
+margin_bottom = 44.0
+
+[node name="HazCamFront" type="Button" parent="CamSelector"]
+margin_top = 48.0
+margin_right = 102.0
+margin_bottom = 68.0
+
+[node name="HazCamRear" type="Button" parent="CamSelector"]
+margin_top = 72.0
+margin_right = 102.0
+margin_bottom = 92.0
+
 [connection signal="pressed" from="ArmRect/Arm/VBoxContainer/Title/BtnPower" to="ArmRect/Arm" method="_on_BtnCamera_pressed"]
 [connection signal="button_down" from="ArmRect/Arm/VBoxContainer/Tools/BtnLeft" to="ArmRect/Arm" method="_on_BtnLeft_button_down" binds= [ "tools" ]]
 [connection signal="button_up" from="ArmRect/Arm/VBoxContainer/Tools/BtnLeft" to="ArmRect/Arm" method="_on_BtnLeft_button_up" binds= [ "tools" ]]
@@ -667,3 +697,7 @@ anims/RoboticArmPanel = SubResource( 18 )
 [connection signal="button_down" from="DriveRect/Drive/VBoxContainer/BtnDown" to="DriveRect/Drive" method="_on_BtnDown_button_down"]
 [connection signal="button_up" from="DriveRect/Drive/VBoxContainer/BtnDown" to="DriveRect/Drive" method="_on_BtnDown_button_up"]
 [connection signal="pressed" from="DriveRect/Button" to="." method="_on_drive_panel_pressed"]
+[connection signal="button_up" from="CamSelector/MastCam" to="CamSelector" method="_on_MastCam_button_up"]
+[connection signal="button_up" from="CamSelector/MAHLI" to="CamSelector" method="_on_MAHLI_button_up"]
+[connection signal="button_up" from="CamSelector/HazCamFront" to="CamSelector" method="_on_HazCamFront_button_up"]
+[connection signal="button_up" from="CamSelector/HazCamRear" to="CamSelector" method="_on_HazCamRear_button_up"]

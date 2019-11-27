@@ -5,6 +5,7 @@ var ARM_SPEED = 0.3
 var MastUI
 var ArmUI
 var DriveUI
+var CamUI
 var power = false
 var _moveMastCamUp = false
 var _moveMastCamDown = false
@@ -40,6 +41,8 @@ var _leftFrontSuspension
 var _rightFrontSuspension
 var _leftRearSuspension
 var _rightRearSuspension
+var _previousPosition:Vector3
+var _stopped:bool = false
 
 func _ready():
 	_mastCam = $MastCam/Base/CamHead
@@ -69,6 +72,9 @@ func _ready():
 	DriveUI = get_parent().get_node("Control/DriveRect/Drive")
 	DriveUI.connect("driveMovment",self,"onDriveMovement")
 
+	CamUI = get_parent().get_node("Control/CamSelector")
+	CamUI.connect("cameraSelected",self,"onCameraSelected")
+	_driveStop()
 				
 func _process(delta):
 	if _moveMastCamUp:
@@ -111,7 +117,11 @@ func _process(delta):
 		applyTurnForce(-1)
 		_turnPosition()		
 		pass
-		
+	if !_turnLeft && !_turnRight && engine_force==0 && !_stopped && _previousPosition.distance_squared_to(translation)<0.000001:
+		_stopped = true
+		mode = RigidBody.MODE_STATIC
+	_previousPosition = translation*1
+			
 func onPowerToggle():
 	power = !power
 	if power:
@@ -130,6 +140,33 @@ func onCameraToggle():
 		$MastCam/Base/CamHead/Camera.current = true
 		$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 
+func onCameraSelected(camera):
+	match camera:
+		"mastCam":
+			$Desaturator.visible = false			
+			$MastCam/Base/CamHead/Camera.current = true
+			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
+			$HazCamFront.current = false
+			$HazCamRear.current = false			
+		"MAHLI":
+			$Desaturator.visible = false
+			$MastCam/Base/CamHead/Camera.current = false
+			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = true
+			$HazCamFront.current = false
+			$HazCamRear.current = false				
+		"hazCamFront":
+			$Desaturator.visible = true			
+			$HazCamFront.current = true
+			$MastCam/Base/CamHead/Camera.current = false
+			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
+			$HazCamRear.current = false				
+		"hazCamRear":
+			$Desaturator.visible = true			
+			$HazCamFront.current = false
+			$MastCam/Base/CamHead/Camera.current = false
+			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
+			$HazCamRear.current = true		
+			
 
 func onMastMovement(direction,isOn):
 	match direction:
@@ -146,27 +183,39 @@ func onDriveMovement(direction,isOn):
 	match direction:
 		"up":
 			if isOn:
-				_driveForward()
+				if _stopped:
+					_stopped = false				
+					mode = RigidBody.MODE_RIGID					
+					_driveForward()
 			else:
 				_driveStop()
 		"down":
 			if isOn:
-				_driveBackward()
+				if _stopped:				
+					_stopped = false
+					mode = RigidBody.MODE_RIGID					
+					_driveBackward()
 			else:
 				_driveStop()
 		"left":
 			_turnLeft = isOn
 			if isOn:
-				brake = 0						
+				if _stopped:
+					brake = 0
+					_stopped = false				
+					mode = RigidBody.MODE_RIGID						
 			else:
-				brake = 10
-				_setSuspensionStraight()
+				brake = 100
+				_setSuspensionStraight()			
 		"right":
 			_turnRight = isOn
 			if isOn:
-				brake = 0	
+				if _stopped:				
+					brake = 0	
+					_stopped = false			
+					mode = RigidBody.MODE_RIGID				
 			else:
-				brake = 10
+				brake = 100
 				_setSuspensionStraight()
 				
 
@@ -212,12 +261,10 @@ func _driveBackward():
 	_setWheelsforStraight()
 	brake =0.0	
 	engine_force = -1000
-	print("true")	
 
 func _driveStop():
 	engine_force=0
-	brake = 10
-	print("false")
+	brake = 100
 
 	
 func _setWheelsforStraight():
@@ -231,6 +278,8 @@ func _setSuspensionStraight():
 	_leftFrontSuspension.rotation_degrees.y = 0
 	_rightRearSuspension.rotation_degrees.y = 0
 	_leftRearSuspension.rotation_degrees.y = 0
+	axis_lock_linear_x = false
+	axis_lock_linear_z = false	
 	
 func _turnPosition():
 	_rightFrontWheel.rotation_degrees.y = 45
@@ -241,13 +290,15 @@ func _turnPosition():
 	_leftFrontSuspension.rotation_degrees.y = -45
 	_rightRearSuspension.rotation_degrees.y = -45
 	_leftRearSuspension.rotation_degrees.y = 45
-		
+	axis_lock_linear_x = true
+	axis_lock_linear_z = true
+	
 func applyTurnForce(direction):
-	var turnForce = 20
+	var turnForce = 200
 	var torqueVector = Vector3(0,0,100)
 	if direction>0:
 		add_force( Vector3(turnForce,0,0),torqueVector)
 		add_force( Vector3(-turnForce,0,0),-torqueVector)
 	else:
 		add_force( Vector3(-turnForce,0,0),torqueVector)
-		add_force( Vector3(turnForce,0,0),-torqueVector)		
+		add_force( Vector3(turnForce,0,0),-torqueVector)
