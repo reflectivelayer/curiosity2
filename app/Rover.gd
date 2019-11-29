@@ -2,6 +2,8 @@ extends VehicleBody
 
 var MASTCAM_HEAD_SPEED = 0.3
 var ARM_SPEED = 0.3
+var SPEED_LIMIT = 0.001
+var DRIVE_FORCE = 1500
 var MastUI
 var ArmUI
 var DriveUI
@@ -43,6 +45,14 @@ var _leftRearSuspension
 var _rightRearSuspension
 var _previousPosition:Vector3
 var _stopped:bool = false
+var _armDeploying = false
+var _armRetracting = false
+var _armDeployed = false
+var _speed
+var _driveDirection = 1 #positive is foward negative is backward
+var _instrumentCollider
+var _camLable
+var _drill:MeshInstance
 
 func _ready():
 	_mastCam = $MastCam/Base/CamHead
@@ -60,13 +70,15 @@ func _ready():
 	_rightFrontSuspension = $RightFrontSuspension
 	_leftRearSuspension = $LeftRearSuspension
 	_rightRearSuspension = $RightRearSuspension
+	_instrumentCollider = $Arm/Lower/Upper/InstrumentBase/Instruments/RayCast/Ray
+	_drill = $Arm/Lower/Upper/InstrumentBase/Instruments/Drill
 	
 	MastUI = get_parent().get_node("Control/MastRect/Mast")
 	MastUI.connect("powerToggle",self,"onPowerToggle")
 	MastUI.connect("mastMovment",self,"onMastMovement")
 	
 	ArmUI = get_parent().get_node("Control/ArmRect/Arm")
-	ArmUI.connect("cameraToggle",self,"onCameraToggle")
+	ArmUI.connect("cameraDeploy",self,"onCmeraDeploy")
 	ArmUI.connect("armMovment",self,"onArmMovement")	
 	
 	DriveUI = get_parent().get_node("Control/DriveRect/Drive")
@@ -74,9 +86,56 @@ func _ready():
 
 	CamUI = get_parent().get_node("Control/CamSelector")
 	CamUI.connect("cameraSelected",self,"onCameraSelected")
+	_camLable = get_parent().get_node("Control/SelectedCam")
 	_driveStop()
 				
+func _deployArm(delta):
+	var done = 0
+	if _armBase.rotation_degrees.y<0:
+		_armBase.rotate_y(ARM_SPEED*delta)
+	else: done+=1
+
+	if _armLower.rotation_degrees.x>-88:
+		_armLower.rotate_x(-ARM_SPEED*delta)
+		_armUpper.rotate_x(ARM_SPEED*delta)
+	else: done+=1
+			
+	if _armUpper.rotation_degrees.x>0:
+		_armUpper.rotate_x(ARM_SPEED*delta)
+		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
+	else: done+=1
+	
+	if done== 3: 
+		_armDeploying = false
+		_armDeployed = true
+
+func _retractArm(delta):
+	var done = 0
+	if _armBase.rotation_degrees.y>-88:	
+		_armBase.rotate_y(-ARM_SPEED*delta)
+	else: done+=1
+
+	if _armLower.rotation_degrees.x<0:
+		_armLower.rotate_x(ARM_SPEED*delta)
+		_armUpper.rotate_x(-ARM_SPEED*delta)
+	else: done+=1
+			
+	if _armUpper.rotation_degrees.x>-80:
+		_armUpper.rotate_x(-ARM_SPEED*delta)
+		_armInstrumentBase.rotate_x(+ARM_SPEED*delta)
+	else: done+=1
+	
+	if done== 3: 
+		_armRetracting = false
+		_armDeployed = false
+
 func _process(delta):
+	_drill.rotate_z(1)
+	_speed = _previousPosition.distance_squared_to(translation)
+	if _armDeploying:
+		_deployArm(delta)
+	if _armRetracting:
+		_retractArm(delta)
 	if _moveMastCamUp:
 		_mastCam.rotate_x(-MASTCAM_HEAD_SPEED*delta)
 	elif _moveMastCamDown:
@@ -97,10 +156,10 @@ func _process(delta):
 		_armUpper.rotate_x(-ARM_SPEED*delta)	
 	elif _moveArmUpperUp:
 		_armUpper.rotate_x(ARM_SPEED*delta)
-		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)		
+		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
 	elif _moveArmUpperDown:
 		_armUpper.rotate_x(-ARM_SPEED*delta)
-		_armInstrumentBase.rotate_x(ARM_SPEED*delta)		
+		_armInstrumentBase.rotate_x(ARM_SPEED*delta)
 	elif _moveArmInstrumentBaseUp:
 		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
 	elif _moveArmInstrumentBaseDown:
@@ -115,12 +174,14 @@ func _process(delta):
 		pass
 	elif _turnRight:
 		applyTurnForce(-1)
-		_turnPosition()		
+		_turnPosition()	
 		pass
-	if !_turnLeft && !_turnRight && engine_force==0 && !_stopped && _previousPosition.distance_squared_to(translation)<0.000001:
+	if !_turnLeft && !_turnRight && engine_force==0 && !_stopped && _speed<0.000001:
 		_stopped = true
-		mode = RigidBody.MODE_STATIC
+		_lockAxis()
 	_previousPosition = translation*1
+	_updateSpeedControl()
+	if checkInstumentCollision(): _stopArm()
 			
 func onPowerToggle():
 	power = !power
@@ -130,42 +191,43 @@ func onPowerToggle():
 		$MastCam/MastStartUp.play("MastStartUp")
 
 	
-func onCameraToggle():
-	_useMAHLI = !_useMAHLI
-	if _useMAHLI:
-		$MastCam/Base/CamHead/Camera.current = false
-		$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = true
-		
+func onCmeraDeploy():
+	if _armDeploying || _armDeployed:
+		_armRetracting = true
+		_armDeploying = false	
 	else:
-		$MastCam/Base/CamHead/Camera.current = true
-		$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
-
+		_armDeploying = true
+	
 func onCameraSelected(camera):
 	match camera:
 		"mastCam":
-			$Desaturator.visible = false			
+			_camLable.text = "Mastcam"
+			$Desaturator.visible = false
 			$MastCam/Base/CamHead/Camera.current = true
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamFront.current = false
-			$HazCamRear.current = false			
+			$HazCamRear.current = false	
 		"MAHLI":
+			_camLable.text = "MAHLI"			
 			$Desaturator.visible = false
 			$MastCam/Base/CamHead/Camera.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = true
 			$HazCamFront.current = false
-			$HazCamRear.current = false				
+			$HazCamRear.current = false
 		"hazCamFront":
-			$Desaturator.visible = true			
+			_camLable.text = "Hazcam(front)"			
+			$Desaturator.visible = true
 			$HazCamFront.current = true
 			$MastCam/Base/CamHead/Camera.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
-			$HazCamRear.current = false				
+			$HazCamRear.current = false
 		"hazCamRear":
-			$Desaturator.visible = true			
+			_camLable.text = "Hazcam(rear)"
+			$Desaturator.visible = true
 			$HazCamFront.current = false
 			$MastCam/Base/CamHead/Camera.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
-			$HazCamRear.current = true		
+			$HazCamRear.current = true
 			
 
 func onMastMovement(direction,isOn):
@@ -184,16 +246,16 @@ func onDriveMovement(direction,isOn):
 		"up":
 			if isOn:
 				if _stopped:
-					_stopped = false				
-					mode = RigidBody.MODE_RIGID					
+					_stopped = false
+					_unlockAxis()
 					_driveForward()
 			else:
 				_driveStop()
 		"down":
 			if isOn:
-				if _stopped:				
+				if _stopped:
 					_stopped = false
-					mode = RigidBody.MODE_RIGID					
+					_unlockAxis()
 					_driveBackward()
 			else:
 				_driveStop()
@@ -202,18 +264,18 @@ func onDriveMovement(direction,isOn):
 			if isOn:
 				if _stopped:
 					brake = 0
-					_stopped = false				
-					mode = RigidBody.MODE_RIGID						
+					_stopped = false
+					_unlockAxis()
 			else:
 				brake = 100
-				_setSuspensionStraight()			
+				_setSuspensionStraight()
 		"right":
 			_turnRight = isOn
 			if isOn:
-				if _stopped:				
+				if _stopped:
 					brake = 0	
-					_stopped = false			
-					mode = RigidBody.MODE_RIGID				
+					_stopped = false
+					_unlockAxis()
 			else:
 				brake = 100
 				_setSuspensionStraight()
@@ -255,16 +317,19 @@ func onArmMovement(section, direction,isOn):
 func _driveForward():
 	_setWheelsforStraight()
 	brake =0.0
-	engine_force = 1000
+	engine_force = DRIVE_FORCE
+	_driveDirection = 1
 	
 func _driveBackward():
 	_setWheelsforStraight()
 	brake =0.0	
-	engine_force = -1000
+	engine_force = -DRIVE_FORCE
+	_driveDirection = -1	
 
 func _driveStop():
 	engine_force=0
 	brake = 100
+	_driveDirection = 0
 
 	
 func _setWheelsforStraight():
@@ -302,3 +367,49 @@ func applyTurnForce(direction):
 	else:
 		add_force( Vector3(-turnForce,0,0),torqueVector)
 		add_force( Vector3(turnForce,0,0),-torqueVector)
+
+func _lockAxis():
+	axis_lock_linear_x = true
+	axis_lock_linear_z = true
+	axis_lock_angular_y = true	
+	
+func _unlockAxis():
+	axis_lock_linear_x = false
+	axis_lock_linear_z = false
+	axis_lock_angular_y = false
+	
+func _updateSpeedControl():
+	if _speed>SPEED_LIMIT:
+		engine_force = 0
+		if brake == 0: brake = 10
+	elif _driveDirection!=0 && _speed<SPEED_LIMIT:
+		if _driveDirection>=1:
+			_driveForward()
+		else:
+			_driveBackward()
+	
+
+func _on_Collision_area_entered(area,section):
+	_stopArm()
+
+func _on_Collision_body_entered(body,section):
+	_stopArm()
+
+func checkInstumentCollision():
+	var origin = _instrumentCollider.get_parent()
+	origin.rotate_y(PI/4)
+	if _instrumentCollider.is_colliding(): return true
+	return false
+	
+func _stopArm():
+	_moveArmBaseLeft = false
+	_moveArmBaseRight = false
+	_moveArmLowerUp = false
+	_moveArmLowerDown = false
+	_moveArmUpperUp = false
+	_moveArmUpperDown = false
+	_moveArmInstrumentBaseUp = false
+	_moveArmInstrumentBaseDown = false
+	_moveArmInstrumentLeft = false
+	_moveArmInstrumentRight = false
+	

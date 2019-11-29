@@ -6,7 +6,7 @@ sky_horizon_color = Color( 0.592157, 0.537255, 0.352941, 1 )
 ground_bottom_color = Color( 0.721569, 0.45098, 0.247059, 1 )
 ground_horizon_color = Color( 0.592157, 0.537255, 0.352941, 1 )
 sun_color = Color( 0.705882, 0.682353, 0.584314, 1 )
-sun_latitude = 18.06
+sun_latitude = 40.0
 sun_angle_min = 0.4
 sun_angle_max = 10.0
 
