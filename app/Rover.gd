@@ -203,14 +203,24 @@ func onCameraSelected(camera):
 		"mastCam":
 			_camLable.text = "Mastcam"
 			$Desaturator.visible = false
-			$MastCam/Base/CamHead/Camera.current = true
+			$MastCam/Base/CamHead/Mastcam.current = true
+			$MastCam/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamFront.current = false
 			$HazCamRear.current = false	
+		"navCam":
+			_camLable.text = "Navcam"
+			$Desaturator.visible = true
+			$MastCam/Base/CamHead/Mastcam.current = false
+			$MastCam/Base/CamHead/Navcam.current = true
+			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
+			$HazCamFront.current = false
+			$HazCamRear.current = false				
 		"MAHLI":
 			_camLable.text = "MAHLI"			
 			$Desaturator.visible = false
-			$MastCam/Base/CamHead/Camera.current = false
+			$MastCam/Base/CamHead/Mastcam.current = false
+			$MastCam/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = true
 			$HazCamFront.current = false
 			$HazCamRear.current = false
@@ -218,14 +228,16 @@ func onCameraSelected(camera):
 			_camLable.text = "Hazcam(front)"			
 			$Desaturator.visible = true
 			$HazCamFront.current = true
-			$MastCam/Base/CamHead/Camera.current = false
+			$MastCam/Base/CamHead/Mastcam.current = false
+			$MastCam/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamRear.current = false
 		"hazCamRear":
 			_camLable.text = "Hazcam(rear)"
 			$Desaturator.visible = true
 			$HazCamFront.current = false
-			$MastCam/Base/CamHead/Camera.current = false
+			$MastCam/Base/CamHead/Mastcam.current = false
+			$MastCam/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamRear.current = true
 			

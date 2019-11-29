@@ -110,11 +110,9 @@ tracks/0/keys = {
 "values": [ Vector2( -205, 10 ), Vector2( 0, 10 ) ]
 }
 
-[sub_resource type="DynamicFont" id=39]
+[sub_resource type="DynamicFont" id=19]
 size = 20
 font_data = ExtResource( 13 )
-
-[sub_resource type="StyleBoxEmpty" id=19]
 
 [sub_resource type="StyleBoxEmpty" id=20]
 
@@ -153,6 +151,8 @@ font_data = ExtResource( 13 )
 [sub_resource type="StyleBoxEmpty" id=37]
 
 [sub_resource type="StyleBoxEmpty" id=38]
+
+[sub_resource type="StyleBoxEmpty" id=39]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -684,7 +684,7 @@ margin_top = 11.7279
 margin_right = 570.167
 margin_bottom = 43.7279
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 39 )
+custom_fonts/font = SubResource( 19 )
 text = "Cams"
 align = 1
 
@@ -708,59 +708,74 @@ text = "Cams"
 align = 1
 
 [node name="MastCam" type="Button" parent="CamSelector"]
-margin_left = 14.0
+margin_left = 13.0
 margin_top = 36.0
-margin_right = 78.0
+margin_right = 77.0
 margin_bottom = 100.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 19 )
-custom_styles/pressed = SubResource( 20 )
-custom_styles/focus = SubResource( 21 )
-custom_styles/disabled = SubResource( 22 )
-custom_styles/normal = SubResource( 23 )
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 21 )
+custom_styles/focus = SubResource( 22 )
+custom_styles/disabled = SubResource( 23 )
+custom_styles/normal = SubResource( 24 )
+custom_constants/hseparation = 0
+icon = ExtResource( 15 )
+
+[node name="NavCam" type="Button" parent="CamSelector"]
+margin_left = 13.0
+margin_top = 104.0
+margin_right = 77.0
+margin_bottom = 168.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 21 )
+custom_styles/focus = SubResource( 22 )
+custom_styles/disabled = SubResource( 23 )
+custom_styles/normal = SubResource( 24 )
 custom_constants/hseparation = 0
 icon = ExtResource( 15 )
 
 [node name="MAHLI" type="Button" parent="CamSelector"]
-margin_left = 14.0
-margin_top = 104.0
-margin_right = 78.0
-margin_bottom = 168.0
+margin_left = 13.0
+margin_top = 172.0
+margin_right = 77.0
+margin_bottom = 236.0
 size_flags_horizontal = 4
-custom_styles/hover = SubResource( 24 )
-custom_styles/pressed = SubResource( 25 )
-custom_styles/focus = SubResource( 26 )
-custom_styles/disabled = SubResource( 27 )
-custom_styles/normal = SubResource( 28 )
+custom_styles/hover = SubResource( 25 )
+custom_styles/pressed = SubResource( 26 )
+custom_styles/focus = SubResource( 27 )
+custom_styles/disabled = SubResource( 28 )
+custom_styles/normal = SubResource( 29 )
 icon = ExtResource( 16 )
 
 [node name="HazCamFront" type="Button" parent="CamSelector"]
-margin_left = 14.0
-margin_top = 172.0
-margin_right = 78.0
-margin_bottom = 236.0
-size_flags_horizontal = 4
-size_flags_vertical = 0
-custom_styles/hover = SubResource( 29 )
-custom_styles/pressed = SubResource( 30 )
-custom_styles/focus = SubResource( 31 )
-custom_styles/disabled = SubResource( 32 )
-custom_styles/normal = SubResource( 33 )
-icon = ExtResource( 17 )
-
-[node name="HazCamRear" type="Button" parent="CamSelector"]
-margin_left = 14.0
+margin_left = 13.0
 margin_top = 240.0
-margin_right = 78.0
+margin_right = 77.0
 margin_bottom = 304.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 34 )
-custom_styles/pressed = SubResource( 35 )
-custom_styles/focus = SubResource( 36 )
-custom_styles/disabled = SubResource( 37 )
-custom_styles/normal = SubResource( 38 )
+custom_styles/hover = SubResource( 30 )
+custom_styles/pressed = SubResource( 31 )
+custom_styles/focus = SubResource( 32 )
+custom_styles/disabled = SubResource( 33 )
+custom_styles/normal = SubResource( 34 )
+icon = ExtResource( 17 )
+
+[node name="HazCamRear" type="Button" parent="CamSelector"]
+margin_left = 13.0
+margin_top = 308.0
+margin_right = 77.0
+margin_bottom = 372.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 35 )
+custom_styles/pressed = SubResource( 36 )
+custom_styles/focus = SubResource( 37 )
+custom_styles/disabled = SubResource( 38 )
+custom_styles/normal = SubResource( 39 )
 icon = ExtResource( 18 )
 
 [connection signal="pressed" from="ArmRect/Arm/VBoxContainer/Title/BtnPower" to="ArmRect/Arm" method="_on_BtnCamera_pressed"]
@@ -804,7 +819,8 @@ icon = ExtResource( 18 )
 [connection signal="button_down" from="DriveRect/Drive/VBoxContainer/BtnDown" to="DriveRect/Drive" method="_on_BtnDown_button_down"]
 [connection signal="button_up" from="DriveRect/Drive/VBoxContainer/BtnDown" to="DriveRect/Drive" method="_on_BtnDown_button_up"]
 [connection signal="pressed" from="DriveRect/Button" to="." method="_on_drive_panel_pressed"]
-[connection signal="button_up" from="CamSelector/MastCam" to="CamSelector" method="_on_MastCam_button_up"]
-[connection signal="button_up" from="CamSelector/MAHLI" to="CamSelector" method="_on_MAHLI_button_up"]
-[connection signal="button_up" from="CamSelector/HazCamFront" to="CamSelector" method="_on_HazCamFront_button_up"]
-[connection signal="button_up" from="CamSelector/HazCamRear" to="CamSelector" method="_on_HazCamRear_button_up"]
+[connection signal="button_up" from="CamSelector/MastCam" to="CamSelector" method="_on_Cam_button_up" binds= [ "mastCam" ]]
+[connection signal="button_up" from="CamSelector/NavCam" to="CamSelector" method="_on_Cam_button_up" binds= [ "navCam" ]]
+[connection signal="button_up" from="CamSelector/MAHLI" to="CamSelector" method="_on_Cam_button_up" binds= [ "MAHLI" ]]
+[connection signal="button_up" from="CamSelector/HazCamFront" to="CamSelector" method="_on_Cam_button_up" binds= [ "hazCamFront" ]]
+[connection signal="button_up" from="CamSelector/HazCamRear" to="CamSelector" method="_on_Cam_button_up" binds= [ "hazCamRear" ]]

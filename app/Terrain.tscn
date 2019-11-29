@@ -21,10 +21,10 @@
 [ext_resource path="res://models/Curiosity/drill.obj" type="ArrayMesh" id=19]
 [ext_resource path="res://grayscale.shader" type="Shader" id=20]
 [ext_resource path="res://White single Pixel.png" type="Texture" id=21]
-[ext_resource path="res://GroundUI.tscn" type="PackedScene" id=22]
-[ext_resource path="res://models/landscape/LR Rock .obj" type="ArrayMesh" id=23]
-[ext_resource path="res://models/landscape/Terrain.tres" type="Material" id=24]
-[ext_resource path="res://models/landscape/Material_002.material" type="Material" id=25]
+[ext_resource path="res://models/landscape/LR Rock .obj" type="ArrayMesh" id=22]
+[ext_resource path="res://models/landscape/Terrain.tres" type="Material" id=23]
+[ext_resource path="res://models/landscape/Material_002.material" type="Material" id=24]
+[ext_resource path="res://GroundUI.tscn" type="PackedScene" id=25]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 100.0
@@ -205,7 +205,7 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 97591,
 "index_count": 12678,
-"material": ExtResource( 25 ),
+"material": ExtResource( 24 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 2115
@@ -299,12 +299,12 @@ material/0 = SubResource( 26 )
 material/1 = SubResource( 27 )
 
 [node name="LeftFront" type="VehicleWheel" parent="Rover"]
-editor/display_folded = true
-transform = Transform( 1, 0, 1.49012e-008, 0, 1, 0, -1.49012e-008, 0, 1, 1.07448, 0.269852, 1.08701 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.074, 0.254, 1.087 )
 use_as_traction = true
+use_as_steering = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
-wheel_friction_slip = 10000.0
+wheel_friction_slip = 100.0
 suspension_travel = 0.5
 suspension_stiffness = 50.0
 
@@ -313,24 +313,25 @@ mesh = ExtResource( 10 )
 material/0 = SubResource( 28 )
 
 [node name="RightFront" type="VehicleWheel" parent="Rover"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06145, 0.269852, 1.08701 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.061, 0.254, 1.087 )
 use_as_traction = true
+use_as_steering = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
-wheel_rest_length = 0.0
-wheel_friction_slip = 10000.0
+wheel_friction_slip = 100.0
 suspension_travel = 0.5
 suspension_stiffness = 50.0
 
 [node name="wheel" type="MeshInstance" parent="Rover/RightFront"]
-transform = Transform( -1, 0, -8.75443e-008, 0, 1, 0, 8.75443e-008, 0, -1, -5.91278e-005, 0, 0.0116768 )
+transform = Transform( -1, 0, -8.75443e-008, 0, 1, 0, 8.75443e-008, 0, -1, 0, 0, 0 )
 mesh = ExtResource( 10 )
 material/0 = SubResource( 28 )
 
 [node name="RightRear" type="VehicleWheel" parent="Rover"]
 editor/display_folded = true
-transform = Transform( 1, 0, -7.45058e-009, 0, 1, 0, 7.45058e-009, 0, 1, -1.06145, 0.269852, -1.17326 )
+transform = Transform( 1, 0, -7.45058e-009, 0, 1, 0, 7.45058e-009, 0, 1, -1.061, 0.254, -1.173 )
 use_as_traction = true
+use_as_steering = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
 wheel_friction_slip = 100.0
@@ -344,8 +345,7 @@ material/0 = SubResource( 28 )
 
 [node name="RightCenter" type="VehicleWheel" parent="Rover"]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.20982, 0.262786, -0.105875 )
-use_as_traction = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.21, 0.254, -0.106 )
 wheel_radius = 0.24
 wheel_friction_slip = 100.0
 suspension_travel = 0.5
@@ -357,9 +357,7 @@ mesh = ExtResource( 10 )
 material/0 = SubResource( 28 )
 
 [node name="LeftCenter" type="VehicleWheel" parent="Rover"]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20825, 0.253945, -0.090072 )
-use_as_traction = true
 wheel_radius = 0.24
 wheel_friction_slip = 100.0
 suspension_travel = 0.5
@@ -371,8 +369,9 @@ material/0 = SubResource( 28 )
 
 [node name="LeftRear" type="VehicleWheel" parent="Rover"]
 editor/display_folded = true
-transform = Transform( 1, 0, 2.98023e-008, 0, 1, 0, -2.98023e-008, 0, 1, 1.07448, 0.260694, -1.16808 )
+transform = Transform( 1, 0, 2.98023e-008, 0, 1, 0, -2.98023e-008, 0, 1, 1.074, 0.254, -1.168 )
 use_as_traction = true
+use_as_steering = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
 wheel_friction_slip = 100.0
@@ -402,9 +401,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.184603, 0 )
 mesh = ExtResource( 13 )
 material/0 = SubResource( 32 )
 
-[node name="Camera" type="Camera" parent="Rover/MastCam/Base/CamHead"]
+[node name="Mastcam" type="Camera" parent="Rover/MastCam/Base/CamHead"]
 transform = Transform( -1, 0, 1.50996e-007, 0, 1, 0, -1.50996e-007, 0, -1, 0.009, 0.058, 0.11 )
 fov = 39.4
+far = 250.0
+
+[node name="Navcam" type="Camera" parent="Rover/MastCam/Base/CamHead"]
+transform = Transform( -1, 0, 1.50996e-007, 0, 1, 0, -1.50996e-007, 0, -1, 0.009, 0.058, 0.11 )
+fov = 60.7
 far = 250.0
 
 [node name="MastStartUp" type="AnimationPlayer" parent="Rover/MastCam"]
@@ -501,7 +505,7 @@ stretch_mode = 1
 
 [node name="HazCamFront" type="Camera" parent="Rover"]
 transform = Transform( -1, 4.26887e-008, -7.62917e-008, 0, 0.872675, 0.488302, 8.74228e-008, 0.488301, -0.872675, 0.113, 0.745, 1.006 )
-fov = 100.0
+fov = 110.0
 far = 200.0
 
 [node name="HazCamRear" type="Camera" parent="Rover"]
@@ -513,16 +517,15 @@ far = 200.0
 transform = Transform( 0.317426, 0.944686, -0.082518, -0.327279, 0.190809, 0.925462, 0.890016, -0.266759, 0.369744, -0.0475616, 11.9682, 4.16004 )
 far = 200.0
 
-[node name="Control" parent="." instance=ExtResource( 22 )]
-
 [node name="Rock" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5717, 1.90868, 24.1523 )
-mesh = ExtResource( 23 )
+mesh = ExtResource( 22 )
 material/0 = null
 
 [node name="Gale Crater" type="MeshInstance" parent="."]
+editor/display_folded = true
 transform = Transform( 0.989787, 0, 0, 0, 1.29498, 0, 0, 0, 0.989787, 0, 0, 0 )
-material_override = ExtResource( 24 )
+material_override = ExtResource( 23 )
 mesh = SubResource( 52 )
 material/0 = null
 
@@ -533,6 +536,8 @@ shape = SubResource( 53 )
 
 [node name="Spatial" type="Spatial" parent="Gale Crater"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 58.8559, -8.66809, 69.6405 )
+
+[node name="Control" parent="." instance=ExtResource( 25 )]
 
 [connection signal="area_entered" from="Rover/Arm/Lower/Collision" to="Rover" method="_on_Collision_area_entered" binds= [ "Lower" ]]
 [connection signal="body_entered" from="Rover/Arm/Lower/Collision" to="Rover" method="_on_Collision_body_entered" binds= [ "Lower" ]]
