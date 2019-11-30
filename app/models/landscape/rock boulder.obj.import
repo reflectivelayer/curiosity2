@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/rock boulder.obj-3092b264c92714876d92c783020b57a2.mesh"
+
+[deps]
+
+files=[ "res://.import/rock boulder.obj-3092b264c92714876d92c783020b57a2.mesh" ]
+
+source_file="res://models/landscape/rock boulder.obj"
+dest_files=[ "res://.import/rock boulder.obj-3092b264c92714876d92c783020b57a2.mesh", "res://.import/rock boulder.obj-3092b264c92714876d92c783020b57a2.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

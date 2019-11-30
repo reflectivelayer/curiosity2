@@ -2,6 +2,12 @@ extends Spatial
 
 var rover:VehicleBody
 var sampler:RayCast
+var _orgRock1 = preload("res://models/landscape/rock1.tscn")
+var _orgRock2 = preload("res://models/landscape/rock2.tscn")
+var _orgRock3 = preload("res://models/landscape/rock3.tscn")
+var _orgRock4 = preload("res://models/landscape/rock4.tscn")
+var _rockCount = 4
+
 func _ready():
 	sampler = RayCast.new()
 	add_child(sampler)
@@ -24,29 +30,28 @@ func _placeRocks():
 	var safe = 2000
 	var safeCount = 0 
 	var radius = 130
-	var maxRock = 250
+	var maxRock = 50
 	var count = 0
-	var orgMesh:Mesh = $Rock.mesh
-	var meshInst:MeshInstance
+	var orgRocks = [_orgRock1,_orgRock2,_orgRock3,_orgRock4]
+	var rock:MeshInstance
 	var rng = RandomNumberGenerator.new()
-
 	
+	rng.randomize()
 	while count < maxRock && safeCount<safe:
 		sampler.force_raycast_update()
 		sampler.translation = Vector3(rng.randf_range(-radius,radius),-1,rng.randf_range(-radius,radius))
 		var target = sampler.get_collision_point()
 		var normal = sampler.get_collision_normal()
-		if normal.x>0 && normal.x<0.2:
-			meshInst = MeshInstance.new()
-			meshInst.mesh = orgMesh
-			meshInst.translation = target
-			meshInst.rotation = Vector3(rng.randf_range(0,PI*2),rng.randf_range(0,PI*2),rng.randf_range(0,PI*2))
-			var scalJitter = rng.randf_range(0,0.1)
-			meshInst.scale = Vector3(0.2+scalJitter,0.2+scalJitter,0.2+scalJitter)
-			add_child(meshInst)
+		if abs(normal.x)<0.2 && abs(normal.z)<0.2:
+			rock = orgRocks[rng.randi_range(0,_rockCount-1)].instance()
+			rock.translation = target
+			rock.rotation = Vector3(rng.randf_range(0,PI*2),rng.randf_range(0,PI*2),rng.randf_range(0,PI*2))
+			var scalJitterX = rng.randf_range(0,0.4)
+			var scalJitterY = rng.randf_range(0,0.1)
+			var scalJitterZ = rng.randf_range(0,0.4)
+			rock.scale = Vector3(0.2+scalJitterX,0.5+scalJitterY,0.5+scalJitterZ)
+			add_child(rock)
 			count+=1
 		safeCount+=1
 	sampler.enabled = false
 	print(count)
-
-	

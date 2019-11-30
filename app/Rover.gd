@@ -90,47 +90,48 @@ func _ready():
 	_driveStop()
 				
 func _deployArm(delta):
-	var done = 0
-	if _armBase.rotation_degrees.y<0:
-		_armBase.rotate_y(ARM_SPEED*delta)
-	else: done+=1
+	#var done = 0
+	#if _armBase.rotation_degrees.y<0:
+	#	_armBase.rotate_y(ARM_SPEED*delta)
+	#else: done+=1
 
-	if _armLower.rotation_degrees.x>-88:
-		_armLower.rotate_x(-ARM_SPEED*delta)
-		_armUpper.rotate_x(ARM_SPEED*delta)
-	else: done+=1
+	#if _armLower.rotation_degrees.x>-88:
+	#	_armLower.rotate_x(-ARM_SPEED*delta)
+	#	_armUpper.rotate_x(ARM_SPEED*delta)
+	#else: done+=1
 			
-	if _armUpper.rotation_degrees.x>0:
-		_armUpper.rotate_x(ARM_SPEED*delta)
-		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
-	else: done+=1
-	
-	if done== 3: 
-		_armDeploying = false
-		_armDeployed = true
+	#if _armUpper.rotation_degrees.x>0:
+	#	_armUpper.rotate_x(ARM_SPEED*delta)
+	#	_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
+	#else: done+=1
+
+	#if done== 3: 
+	_armDeploying = false
+	_armDeployed = true
+	_drill.engage()
 
 func _retractArm(delta):
-	var done = 0
-	if _armBase.rotation_degrees.y>-88:	
-		_armBase.rotate_y(-ARM_SPEED*delta)
-	else: done+=1
+	#var done = 0
+	#if _armBase.rotation_degrees.y>-88:	
+	#	_armBase.rotate_y(-ARM_SPEED*delta)
+	#else: done+=1
 
-	if _armLower.rotation_degrees.x<0:
-		_armLower.rotate_x(ARM_SPEED*delta)
-		_armUpper.rotate_x(-ARM_SPEED*delta)
-	else: done+=1
+	#if _armLower.rotation_degrees.x<0:
+	#	_armLower.rotate_x(ARM_SPEED*delta)
+	#	_armUpper.rotate_x(-ARM_SPEED*delta)
+	#else: done+=1
 			
-	if _armUpper.rotation_degrees.x>-80:
-		_armUpper.rotate_x(-ARM_SPEED*delta)
-		_armInstrumentBase.rotate_x(+ARM_SPEED*delta)
-	else: done+=1
+	#if _armUpper.rotation_degrees.x>-80:
+	#	_armUpper.rotate_x(-ARM_SPEED*delta)
+	#	_armInstrumentBase.rotate_x(+ARM_SPEED*delta)
+	#else: done+=1
 	
-	if done== 3: 
-		_armRetracting = false
-		_armDeployed = false
-
+	#if done== 3: 
+	_armRetracting = false
+	_armDeployed = false
+	_drill.disengage()
+	
 func _process(delta):
-	_drill.rotate_z(1)
 	_speed = _previousPosition.distance_squared_to(translation)
 	if _armDeploying:
 		_deployArm(delta)

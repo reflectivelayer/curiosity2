@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/LR Rock .obj-6ffc6a7e78b4fc9175d4dac9a758f9d4.mesh"
+
+[deps]
+
+files=[ "res://.import/LR Rock .obj-6ffc6a7e78b4fc9175d4dac9a758f9d4.mesh" ]
+
+source_file="res://models/landscape/LR Rock .obj"
+dest_files=[ "res://.import/LR Rock .obj-6ffc6a7e78b4fc9175d4dac9a758f9d4.mesh", "res://.import/LR Rock .obj-6ffc6a7e78b4fc9175d4dac9a758f9d4.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

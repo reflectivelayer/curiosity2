@@ -19,12 +19,13 @@
 [ext_resource path="res://models/Curiosity/armInstrumentBase.obj" type="ArrayMesh" id=17]
 [ext_resource path="res://models/Curiosity/armHead.obj" type="ArrayMesh" id=18]
 [ext_resource path="res://models/Curiosity/drill.obj" type="ArrayMesh" id=19]
-[ext_resource path="res://grayscale.shader" type="Shader" id=20]
-[ext_resource path="res://White single Pixel.png" type="Texture" id=21]
-[ext_resource path="res://models/landscape/LR Rock .obj" type="ArrayMesh" id=22]
+[ext_resource path="res://Drill.gd" type="Script" id=20]
+[ext_resource path="res://grayscale.shader" type="Shader" id=21]
+[ext_resource path="res://White single Pixel.png" type="Texture" id=22]
 [ext_resource path="res://models/landscape/Terrain.tres" type="Material" id=23]
 [ext_resource path="res://models/landscape/Material_002.material" type="Material" id=24]
 [ext_resource path="res://GroundUI.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Mars_env.tres" type="Environment" id=26]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 100.0
@@ -190,11 +191,8 @@ albedo_texture = ExtResource( 8 )
 radius = 0.276469
 height = 0.18733
 
-[sub_resource type="SpatialMaterial" id=50]
-albedo_texture = ExtResource( 6 )
-
 [sub_resource type="ShaderMaterial" id=51]
-shader = ExtResource( 20 )
+shader = ExtResource( 21 )
 
 [sub_resource type="ArrayMesh" id=52]
 resource_name = "Gale Crater"
@@ -457,7 +455,7 @@ material/0 = SubResource( 45 )
 material/1 = SubResource( 46 )
 
 [node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
-transform = Transform( -0.975543, -1.3411e-007, 0.219811, -2.08616e-007, 0.999999, -3.12924e-007, -0.219812, -3.39001e-007, -0.975542, 0.059751, 0.133471, 0.141341 )
+transform = Transform( -0.847234, 0, 0.531221, 0, 0.999999, 0, -0.531221, 0, -0.847233, 0.059751, 0.133471, 0.141341 )
 mesh = ExtResource( 18 )
 material/0 = SubResource( 47 )
 material/1 = SubResource( 48 )
@@ -471,10 +469,11 @@ transform = Transform( 1, 2.83122e-007, 0, -4.26326e-013, -4.37113e-008, -1, -2.
 shape = SubResource( 49 )
 
 [node name="Drill" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments"]
-transform = Transform( 0.699314, 0.714815, 0, -0.708167, 0.692811, -0.136061, -0.0972587, 0.0951497, 0.9907, -0.00235653, 0.0841236, 0.19817 )
+transform = Transform( -0.661773, 0.749705, 2.98023e-007, -0.749704, -0.661774, -1.15251e-008, 1.04308e-007, 4.47035e-008, 1, -0.00236893, 0.0841203, 0.193901 )
 cast_shadow = 0
 mesh = ExtResource( 19 )
-material/0 = SubResource( 50 )
+material/0 = null
+script = ExtResource( 20 )
 
 [node name="MAHLI" type="Camera" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments"]
 transform = Transform( -0.40145, -0.357452, 0.843247, 0.540757, -0.835597, -0.0967664, 0.739204, 0.417146, 0.528742, -0.233437, 0.0910869, -0.0897446 )
@@ -499,7 +498,7 @@ visible = false
 material = SubResource( 51 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 21 )
+texture = ExtResource( 22 )
 expand = true
 stretch_mode = 1
 
@@ -517,14 +516,9 @@ far = 200.0
 transform = Transform( 0.317426, 0.944686, -0.082518, -0.327279, 0.190809, 0.925462, 0.890016, -0.266759, 0.369744, -0.0475616, 11.9682, 4.16004 )
 far = 200.0
 
-[node name="Rock" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5717, 1.90868, 24.1523 )
-mesh = ExtResource( 22 )
-material/0 = null
-
 [node name="Gale Crater" type="MeshInstance" parent="."]
 editor/display_folded = true
-transform = Transform( 0.989787, 0, 0, 0, 1.29498, 0, 0, 0, 0.989787, 0, 0, 0 )
+transform = Transform( 0.989787, 0, 0, 0, 1.29498, 0, 0, 0, 0.989787, 0.899773, 0, -2.23363 )
 material_override = ExtResource( 23 )
 mesh = SubResource( 52 )
 material/0 = null
@@ -538,6 +532,9 @@ shape = SubResource( 53 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 58.8559, -8.66809, 69.6405 )
 
 [node name="Control" parent="." instance=ExtResource( 25 )]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 26 )
 
 [connection signal="area_entered" from="Rover/Arm/Lower/Collision" to="Rover" method="_on_Collision_area_entered" binds= [ "Lower" ]]
 [connection signal="body_entered" from="Rover/Arm/Lower/Collision" to="Rover" method="_on_Collision_body_entered" binds= [ "Lower" ]]
