@@ -8,6 +8,8 @@ var MastUI
 var ArmUI
 var DriveUI
 var CamUI
+var ZoomControl
+
 var power = false
 var _moveMastCamUp = false
 var _moveMastCamDown = false
@@ -53,6 +55,7 @@ var _driveDirection = 1 #positive is foward negative is backward
 var _instrumentCollider
 var _camLable
 var _drill:MeshInstance
+var _selectedCam
 
 func _ready():
 	_mastCam = $MastCam/Base/CamHead
@@ -86,9 +89,12 @@ func _ready():
 
 	CamUI = get_parent().get_node("Control/CamSelector")
 	CamUI.connect("cameraSelected",self,"onCameraSelected")
+	CamUI.connect("cameraZoomChanged",self,"onZoomChanged")
 	_camLable = get_parent().get_node("Control/SelectedCam")
+	
+	_drill.connect("onDrillContact",self,"onDrillContact")
 	_driveStop()
-				
+	onCameraSelected("navCam")
 func _deployArm(delta):
 	#var done = 0
 	#if _armBase.rotation_degrees.y<0:
@@ -182,7 +188,7 @@ func _process(delta):
 		_lockAxis()
 	_previousPosition = translation*1
 	_updateSpeedControl()
-	if checkInstumentCollision(): _stopArm()
+	#if checkInstumentCollision(): _stopArm()
 			
 func onPowerToggle():
 	power = !power
@@ -204,7 +210,15 @@ func onCameraSelected(camera):
 		"mastCam":
 			_camLable.text = "Mastcam"
 			$Desaturator.visible = false
-			$MastCam/Base/CamHead/Mastcam.current = true
+			var cam = $MastCam/Base/CamHead/Mastcam
+			if cam == _selectedCam:
+				if _selectedCam.fov == 21:
+					_selectedCam.fov = 7
+				else:
+					cam.fov = 21
+			else:
+				_selectedCam = cam
+			_selectedCam.current = true
 			$MastCam/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamFront.current = false
@@ -213,7 +227,8 @@ func onCameraSelected(camera):
 			_camLable.text = "Navcam"
 			$Desaturator.visible = true
 			$MastCam/Base/CamHead/Mastcam.current = false
-			$MastCam/Base/CamHead/Navcam.current = true
+			_selectedCam = $MastCam/Base/CamHead/Navcam
+			_selectedCam.current = true
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamFront.current = false
 			$HazCamRear.current = false				
@@ -222,13 +237,15 @@ func onCameraSelected(camera):
 			$Desaturator.visible = false
 			$MastCam/Base/CamHead/Mastcam.current = false
 			$MastCam/Base/CamHead/Navcam.current = false
-			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = true
+			_selectedCam = $Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI
+			_selectedCam.current = true
 			$HazCamFront.current = false
 			$HazCamRear.current = false
 		"hazCamFront":
 			_camLable.text = "Hazcam(front)"			
 			$Desaturator.visible = true
-			$HazCamFront.current = true
+			_selectedCam = $HazCamFront
+			_selectedCam.current = true
 			$MastCam/Base/CamHead/Mastcam.current = false
 			$MastCam/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
@@ -240,7 +257,8 @@ func onCameraSelected(camera):
 			$MastCam/Base/CamHead/Mastcam.current = false
 			$MastCam/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
-			$HazCamRear.current = true
+			_selectedCam = $HazCamRear
+			_selectedCam.current = true
 			
 
 func onMastMovement(direction,isOn):
@@ -400,9 +418,21 @@ func _updateSpeedControl():
 			_driveForward()
 		else:
 			_driveBackward()
-	
+
+func _stopArm():
+	_moveArmBaseLeft = false
+	_moveArmBaseRight = false
+	_moveArmLowerUp = false
+	_moveArmLowerDown = false
+	_moveArmUpperUp = false
+	_moveArmUpperDown = false
+	_moveArmInstrumentBaseUp = false
+	_moveArmInstrumentBaseDown = false
+	_moveArmInstrumentLeft = false
+	_moveArmInstrumentRight = false	
 
 func _on_Collision_area_entered(area,section):
+	print("xxxx")
 	_stopArm()
 
 func _on_Collision_body_entered(body,section):
@@ -414,15 +444,12 @@ func checkInstumentCollision():
 	if _instrumentCollider.is_colliding(): return true
 	return false
 	
-func _stopArm():
-	_moveArmBaseLeft = false
-	_moveArmBaseRight = false
-	_moveArmLowerUp = false
-	_moveArmLowerDown = false
-	_moveArmUpperUp = false
-	_moveArmUpperDown = false
-	_moveArmInstrumentBaseUp = false
-	_moveArmInstrumentBaseDown = false
-	_moveArmInstrumentLeft = false
-	_moveArmInstrumentRight = false
+func onZoomChanged(value):
+	print(value)
+	
+func onDrillContact(contactA,contactB):
+	if contactA>=0.04 || contactB>=0.04:
+		_stopArm()
+	elif  contactA>=0 && contactB>=0:
+		print("STABLE")
 	
