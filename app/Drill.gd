@@ -43,6 +43,3 @@ func engage():
 func disengage():
 	_direction=-1
 	pass
-
-func _on_Drill_Contact(body, contactID):
-	print("DDDD")

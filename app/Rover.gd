@@ -1,7 +1,6 @@
 extends VehicleBody
 
 var MASTCAM_HEAD_SPEED = 0.3
-var ARM_SPEED = 0.3
 var SPEED_LIMIT = 0.001
 var DRIVE_FORCE = 1500
 var MastUI
@@ -19,23 +18,10 @@ var _driveForward = false
 var _driveBackward = false
 var _turnLeft = false
 var _turnRight = false
-var _moveArmBaseLeft = false
-var _moveArmBaseRight = false
-var _moveArmLowerUp = false
-var _moveArmLowerDown = false
-var _moveArmUpperUp = false
-var _moveArmUpperDown = false
-var _moveArmInstrumentBaseUp = false
-var _moveArmInstrumentBaseDown = false
-var _moveArmInstrumentLeft = false
-var _moveArmInstrumentRight = false
+
 var _mastCam:MeshInstance
 var _mastCamBase:MeshInstance
-var _armBase:MeshInstance
-var _armLower:MeshInstance
-var _armUpper:MeshInstance
-var _armInstrumentBase:MeshInstance
-var _armInstrument:MeshInstance
+
 var _useMAHLI = false
 var _leftFrontWheel
 var _rightFrontWheel
@@ -52,19 +38,13 @@ var _armRetracting = false
 var _armDeployed = false
 var _speed
 var _driveDirection = 1 #positive is foward negative is backward
-var _instrumentCollider
 var _camLable
-var _drill:MeshInstance
 var _selectedCam
 
 func _ready():
 	_mastCam = $MastCam/Base/CamHead
 	_mastCamBase = $MastCam/Base
-	_armBase = $Arm
-	_armLower = $Arm/Lower
-	_armUpper = $Arm/Lower/Upper
-	_armInstrumentBase = $Arm/Lower/Upper/InstrumentBase
-	_armInstrument = $Arm/Lower/Upper/InstrumentBase/Instruments
+
 	_leftFrontWheel = $LeftFront
 	_rightFrontWheel = $RightFront
 	_leftRearWheel = $LeftRear
@@ -73,8 +53,6 @@ func _ready():
 	_rightFrontSuspension = $RightFrontSuspension
 	_leftRearSuspension = $LeftRearSuspension
 	_rightRearSuspension = $RightRearSuspension
-	_instrumentCollider = $Arm/Lower/Upper/InstrumentBase/Instruments/RayCast/Ray
-	_drill = $Arm/Lower/Upper/InstrumentBase/Instruments/Drill
 	
 	MastUI = get_parent().get_node("Control/MastRect/Mast")
 	MastUI.connect("powerToggle",self,"onPowerToggle")
@@ -82,7 +60,6 @@ func _ready():
 	
 	ArmUI = get_parent().get_node("Control/ArmRect/Arm")
 	ArmUI.connect("cameraDeploy",self,"onCmeraDeploy")
-	ArmUI.connect("armMovment",self,"onArmMovement")	
 	
 	DriveUI = get_parent().get_node("Control/DriveRect/Drive")
 	DriveUI.connect("driveMovment",self,"onDriveMovement")
@@ -92,50 +69,15 @@ func _ready():
 	CamUI.connect("cameraZoomChanged",self,"onZoomChanged")
 	_camLable = get_parent().get_node("Control/SelectedCam")
 	
-	_drill.connect("onDrillContact",self,"onDrillContact")
 	_driveStop()
 	onCameraSelected("navCam")
 func _deployArm(delta):
-	#var done = 0
-	#if _armBase.rotation_degrees.y<0:
-	#	_armBase.rotate_y(ARM_SPEED*delta)
-	#else: done+=1
-
-	#if _armLower.rotation_degrees.x>-88:
-	#	_armLower.rotate_x(-ARM_SPEED*delta)
-	#	_armUpper.rotate_x(ARM_SPEED*delta)
-	#else: done+=1
-			
-	#if _armUpper.rotation_degrees.x>0:
-	#	_armUpper.rotate_x(ARM_SPEED*delta)
-	#	_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
-	#else: done+=1
-
-	#if done== 3: 
 	_armDeploying = false
 	_armDeployed = true
-	_drill.engage()
 
 func _retractArm(delta):
-	#var done = 0
-	#if _armBase.rotation_degrees.y>-88:	
-	#	_armBase.rotate_y(-ARM_SPEED*delta)
-	#else: done+=1
-
-	#if _armLower.rotation_degrees.x<0:
-	#	_armLower.rotate_x(ARM_SPEED*delta)
-	#	_armUpper.rotate_x(-ARM_SPEED*delta)
-	#else: done+=1
-			
-	#if _armUpper.rotation_degrees.x>-80:
-	#	_armUpper.rotate_x(-ARM_SPEED*delta)
-	#	_armInstrumentBase.rotate_x(+ARM_SPEED*delta)
-	#else: done+=1
-	
-	#if done== 3: 
 	_armRetracting = false
 	_armDeployed = false
-	_drill.disengage()
 	
 func _process(delta):
 	_speed = _previousPosition.distance_squared_to(translation)
@@ -151,30 +93,6 @@ func _process(delta):
 		_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED*delta)
 	elif _moveMastCamRight:
 		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED*delta)
-	elif _moveArmBaseLeft:
-		_armBase.rotate_y(-ARM_SPEED*delta)
-	elif _moveArmBaseRight:
-		_armBase.rotate_y(ARM_SPEED*delta)
-	elif _moveArmLowerUp:
-		_armLower.rotate_x(-ARM_SPEED*delta)
-		_armUpper.rotate_x(ARM_SPEED*delta)
-	elif _moveArmLowerDown:
-		_armLower.rotate_x(ARM_SPEED*delta)
-		_armUpper.rotate_x(-ARM_SPEED*delta)	
-	elif _moveArmUpperUp:
-		_armUpper.rotate_x(ARM_SPEED*delta)
-		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
-	elif _moveArmUpperDown:
-		_armUpper.rotate_x(-ARM_SPEED*delta)
-		_armInstrumentBase.rotate_x(ARM_SPEED*delta)
-	elif _moveArmInstrumentBaseUp:
-		_armInstrumentBase.rotate_x(-ARM_SPEED*delta)
-	elif _moveArmInstrumentBaseDown:
-		_armInstrumentBase.rotate_x(ARM_SPEED*delta)
-	elif _moveArmInstrumentLeft:
-		_armInstrument.rotate_y(-ARM_SPEED*delta)
-	elif _moveArmInstrumentRight:
-		_armInstrument.rotate_y(ARM_SPEED*delta)
 	elif _turnLeft:
 		applyTurnForce(1)
 		_turnPosition()
@@ -312,39 +230,6 @@ func onDriveMovement(direction,isOn):
 				_setSuspensionStraight()
 				
 
-func onArmMovement(section, direction,isOn):
-	match section:
-		"base":
-			match direction:
-				"left":
-					_moveArmBaseLeft = isOn
-				"right":
-					_moveArmBaseRight = isOn
-		"lower":
-			match direction:
-				"left":
-					_moveArmLowerUp = isOn
-				"right":
-					_moveArmLowerDown = isOn
-		"upper":
-			match direction:
-				"left":
-					_moveArmUpperUp = isOn
-				"right":
-					_moveArmUpperDown = isOn
-		"hinge":
-			match direction:
-				"left":
-					_moveArmInstrumentBaseUp = isOn
-				"right":
-					_moveArmInstrumentBaseDown = isOn
-		"tools":
-			match direction:
-				"left":
-					_moveArmInstrumentLeft = isOn
-				"right":
-					_moveArmInstrumentRight = isOn
-					
 func _driveForward():
 	_setWheelsforStraight()
 	brake =0.0
@@ -419,37 +304,7 @@ func _updateSpeedControl():
 		else:
 			_driveBackward()
 
-func _stopArm():
-	_moveArmBaseLeft = false
-	_moveArmBaseRight = false
-	_moveArmLowerUp = false
-	_moveArmLowerDown = false
-	_moveArmUpperUp = false
-	_moveArmUpperDown = false
-	_moveArmInstrumentBaseUp = false
-	_moveArmInstrumentBaseDown = false
-	_moveArmInstrumentLeft = false
-	_moveArmInstrumentRight = false	
 
-func _on_Collision_area_entered(area,section):
-	print("xxxx")
-	_stopArm()
-
-func _on_Collision_body_entered(body,section):
-	_stopArm()
-
-func checkInstumentCollision():
-	var origin = _instrumentCollider.get_parent()
-	origin.rotate_y(PI/4)
-	if _instrumentCollider.is_colliding(): return true
-	return false
-	
 func onZoomChanged(value):
 	print(value)
-	
-func onDrillContact(contactA,contactB):
-	if contactA>=0.04 || contactB>=0.04:
-		_stopArm()
-	elif  contactA>=0 && contactB>=0:
-		print("STABLE")
 	
