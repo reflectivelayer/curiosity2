@@ -235,7 +235,6 @@ transform = Transform( 1, 0, 0, 0, 0.746986, 0.664839, 0, -0.664839, 0.746986, 0
 
 [node name="Rover" type="VehicleBody" parent="."]
 transform = Transform( -0.954831, 0, -0.29715, 0, 1, 0, 0.29715, 0, -0.954831, 83.5854, 0.141165, 67.4812 )
-collision_layer = 2
 mass = 4000.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 1.3
@@ -303,6 +302,7 @@ material/0 = SubResource( 26 )
 material/1 = SubResource( 27 )
 
 [node name="LeftFront" type="VehicleWheel" parent="Rover"]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.074, 0.254, 1.087 )
 use_as_traction = true
 use_as_steering = true
@@ -317,6 +317,7 @@ mesh = ExtResource( 10 )
 material/0 = SubResource( 28 )
 
 [node name="RightFront" type="VehicleWheel" parent="Rover"]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.061, 0.254, 1.087 )
 use_as_traction = true
 use_as_steering = true
@@ -361,6 +362,7 @@ mesh = ExtResource( 10 )
 material/0 = SubResource( 28 )
 
 [node name="LeftCenter" type="VehicleWheel" parent="Rover"]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20825, 0.253945, -0.090072 )
 wheel_radius = 0.24
 wheel_friction_slip = 100.0
@@ -391,6 +393,7 @@ transform = Transform( 0.999999, 0, -6.70552e-008, 0, 1, 0, 6.70552e-008, 0, 0.9
 shape = SubResource( 29 )
 
 [node name="MastCam" type="MeshInstance" parent="Rover"]
+editor/display_folded = true
 transform = Transform( 0.590338, 0, -0.807156, 0, 1, 0, 0.807156, 0, 0.590338, -0.568474, 1.22874, 0.698743 )
 mesh = ExtResource( 11 )
 material/0 = SubResource( 30 )
@@ -448,21 +451,15 @@ material/1 = SubResource( 42 )
 material/2 = SubResource( 43 )
 material/3 = SubResource( 44 )
 
-[node name="Collision" type="Area" parent="Rover/Arm/Lower/Upper"]
-transform = Transform( 0.999572, -6.75356e-009, 0.0292649, -0.029265, -4.31865e-008, 0.999572, -5.48682e-009, -1, -4.33658e-008, 0.115467, -0.00338173, 0 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Rover/Arm/Lower/Upper/Collision"]
-transform = Transform( 1, 0, 6.66134e-016, 0, -4.37114e-008, -1, 2.98023e-008, 1, -4.37114e-008, -0.192299, 0.00912571, 0.401134 )
-shape = SubResource( 40 )
-
 [node name="InstrumentBase" type="MeshInstance" parent="Rover/Arm/Lower/Upper"]
-transform = Transform( -1, 1.49012e-008, 1.52737e-007, 2.98023e-008, 0.999106, 0.0422436, -1.52737e-007, 0.0422435, -0.999108, -0.188538, 0.792168, -0.000365257 )
+transform = Transform( -1, 2.55182e-007, 1.49012e-008, 1.49012e-008, 0.180738, -0.983532, -2.57045e-007, -0.98353, -0.180739, -0.188538, 0.792168, -0.000364304 )
+visible = false
 mesh = ExtResource( 18 )
 material/0 = SubResource( 45 )
 material/1 = SubResource( 46 )
 
 [node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
-transform = Transform( -0.997587, -1.49012e-008, -0.0694361, -1.49012e-008, 0.999999, 1.49012e-008, 0.0694361, -1.49012e-008, -0.997586, 0.0601349, 0.133438, 0.142117 )
+transform = Transform( -0.997586, 0, -0.069443, 0, 0.999999, 0, 0.069443, 0, -0.997585, 0.0601349, 0.133438, 0.14212 )
 mesh = ExtResource( 19 )
 material/0 = SubResource( 47 )
 material/1 = SubResource( 48 )
@@ -498,6 +495,15 @@ far = 250.0
 transform = Transform( 1, 3.72529e-008, -2.98023e-007, 7.45058e-009, 1, 0, 3.27826e-007, 0, 1, 0.00324726, 0.0766838, 0.0226936 )
 visible = false
 spot_angle = 26.0
+
+[node name="Collision" type="Spatial" parent="Rover/Arm/Lower/Upper"]
+transform = Transform( -1, 2.62911e-007, -7.75361e-008, 7.43326e-008, -0.0121628, -0.999927, -2.63835e-007, -0.999925, 0.0121628, -0.0681229, 0.0640945, 0.0115252 )
+
+[node name="RayCast" type="RayCast" parent="Rover/Arm/Lower/Upper/Collision"]
+transform = Transform( 1, 3.72529e-009, 0, 0, 1, -2.98023e-008, 0, -2.98023e-008, 1, -0.0427017, 2.86102e-006, 3.8147e-006 )
+enabled = true
+exclude_parent = false
+cast_to = Vector3( 0, 0, -0.8 )
 
 [node name="Desaturator" type="TextureRect" parent="Rover"]
 material = SubResource( 50 )
@@ -551,3 +557,4 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="rock1/StaticBody"]
 shape = SubResource( 53 )
 
+[connection signal="body_entered" from="Rover/Arm/Lower/Collision" to="Rover/Arm" method="_on_Collision_body_entered"]
