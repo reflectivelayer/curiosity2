@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=82 format=2]
 
 [ext_resource path="res://Terrain.gd" type="Script" id=1]
 [ext_resource path="res://Rover.gd" type="Script" id=2]
@@ -161,10 +161,6 @@ albedo_texture = ExtResource( 7 )
 
 [sub_resource type="SpatialMaterial" id=39]
 albedo_texture = ExtResource( 8 )
-
-[sub_resource type="CylinderShape" id=40]
-radius = 0.052904
-height = 0.829466
 
 [sub_resource type="SpatialMaterial" id=41]
 albedo_texture = ExtResource( 6 )
@@ -389,7 +385,7 @@ mesh = ExtResource( 10 )
 material/0 = SubResource( 28 )
 
 [node name="ColChassis" type="CollisionShape" parent="Rover"]
-transform = Transform( 0.999999, 0, -6.70552e-008, 0, 1, 0, 6.70552e-008, 0, 0.999999, -0.0436821, 0.89942, -0.239131 )
+transform = Transform( 0.999999, 0, -2.98023e-008, 0, 1, 0, 2.98023e-008, 0, 0.999999, 0.0577507, 0.89942, -0.237511 )
 shape = SubResource( 29 )
 
 [node name="MastCam" type="MeshInstance" parent="Rover"]
@@ -430,21 +426,15 @@ material/1 = SubResource( 35 )
 script = ExtResource( 15 )
 
 [node name="Lower" type="MeshInstance" parent="Rover/Arm"]
-transform = Transform( 0.986133, -0.165512, 0.0121607, 0, 0.0732758, 0.997312, -0.165958, -0.983482, 0.0722597, 0, -0.164131, 0.168373 )
+transform = Transform( 0.986133, -0.165512, 0.0121606, 0, 0.0732751, 0.997312, -0.165958, -0.983482, 0.072259, 0, -0.164131, 0.168373 )
 mesh = ExtResource( 16 )
 material/0 = SubResource( 36 )
 material/1 = SubResource( 37 )
 material/2 = SubResource( 38 )
 material/3 = SubResource( 39 )
 
-[node name="Collision" type="Area" parent="Rover/Arm/Lower"]
-
-[node name="CollisionShape" type="CollisionShape" parent="Rover/Arm/Lower/Collision"]
-transform = Transform( 1, 2.98023e-008, -3.55271e-015, 0, -4.37114e-008, -1, -2.98023e-008, 1, -4.37114e-008, -0.192299, 0.00912571, 0.452738 )
-shape = SubResource( 40 )
-
 [node name="Upper" type="MeshInstance" parent="Rover/Arm/Lower"]
-transform = Transform( 0.999572, -0.00833073, 0.0280542, -1.49012e-007, -0.958628, -0.284662, 0.029265, 0.284541, -0.958216, 0.0607605, -0.00509262, 0.820138 )
+transform = Transform( 0.999572, -0.00833073, 0.0280539, -1.44749e-007, -0.958628, -0.284662, 0.0292648, 0.284541, -0.958216, 0.0607605, -0.00509262, 0.820138 )
 mesh = ExtResource( 17 )
 material/0 = SubResource( 41 )
 material/1 = SubResource( 42 )
@@ -459,6 +449,7 @@ material/0 = SubResource( 45 )
 material/1 = SubResource( 46 )
 
 [node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
+editor/display_folded = true
 transform = Transform( -0.997586, 0, -0.069443, 0, 0.999999, 0, 0.069443, 0, -0.997585, 0.0601349, 0.133438, 0.14212 )
 mesh = ExtResource( 19 )
 material/0 = SubResource( 47 )
@@ -497,6 +488,7 @@ visible = false
 spot_angle = 26.0
 
 [node name="Collision" type="Spatial" parent="Rover/Arm/Lower/Upper"]
+editor/display_folded = true
 transform = Transform( -1, 2.62911e-007, -7.75361e-008, 7.43326e-008, -0.0121628, -0.999927, -2.63835e-007, -0.999925, 0.0121628, -0.0681229, 0.0640945, 0.0115252 )
 
 [node name="RayCast" type="RayCast" parent="Rover/Arm/Lower/Upper/Collision"]
@@ -504,6 +496,16 @@ transform = Transform( 1, 3.72529e-009, 0, 0, 1, -2.98023e-008, 0, -2.98023e-008
 enabled = true
 exclude_parent = false
 cast_to = Vector3( 0, 0, -0.8 )
+
+[node name="Collision" type="Spatial" parent="Rover/Arm/Lower"]
+transform = Transform( -1, 0, -8.3819e-008, -5.96046e-008, 0.999998, -2.98023e-008, 8.00937e-008, -7.45058e-009, -1, -0.20533, -0.00165176, -0.220872 )
+
+[node name="RayCast" type="RayCast" parent="Rover/Arm/Lower/Collision"]
+transform = Transform( 1, 7.45058e-009, 1.49012e-008, 0, 1, -4.47035e-008, 0, -2.98023e-008, 1, 0.07, 0, 0 )
+enabled = true
+exclude_parent = false
+cast_to = Vector3( 0, 0, -1.1 )
+collide_with_areas = true
 
 [node name="Desaturator" type="TextureRect" parent="Rover"]
 material = SubResource( 50 )
@@ -524,7 +526,8 @@ fov = 100.0
 far = 200.0
 
 [node name="Camera" type="Camera" parent="Rover"]
-transform = Transform( 0.317426, 0.944686, -0.082518, -0.327279, 0.190809, 0.925462, 0.890016, -0.266759, 0.369744, -0.0475616, 11.9682, 4.16004 )
+transform = Transform( -0.0242563, 0.99081, 0.13307, 0.256331, -0.122495, 0.958796, 0.966285, 0.0573667, -0.251004, 0.456287, 1.91894, 0.137703 )
+current = true
 far = 200.0
 
 [node name="Gale Crater" type="MeshInstance" parent="."]
@@ -557,4 +560,3 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="rock1/StaticBody"]
 shape = SubResource( 53 )
 
-[connection signal="body_entered" from="Rover/Arm/Lower/Collision" to="Rover/Arm" method="_on_Collision_body_entered"]

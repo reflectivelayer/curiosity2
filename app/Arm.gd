@@ -26,6 +26,8 @@ var _isOn
 var _delta
 var _collisionUpper
 var _raycastUpper:RayCast
+var _collisionLower
+var _raycastLower:RayCast
 var _collisionIncrement = PI/4
 
 
@@ -38,7 +40,8 @@ func _ready():
 	_Drill = $Lower/Upper/InstrumentBase/Instruments/Drill
 	_collisionUpper = $Lower/Upper/Collision
 	_raycastUpper = $Lower/Upper/Collision/RayCast
-	
+	_collisionLower = $Lower/Collision
+	_raycastLower = $Lower/Collision/RayCast	
 	
 	_ArmUI = $"../../Control/ArmRect/Arm"
 	_ArmUI.connect("armMovement",self,"onArmMovement")
@@ -133,27 +136,17 @@ func onDrillContact(contactA,contactB):
 		_speedMultiplier = 0.1
 	elif contactA<0.01|| contactB<0.01:
 		_speedMultiplier = 1
-		
-
-
-func checkInstumentCollision():
-	var origin = _instrumentCollider.get_parent()
-	origin.rotate_y(PI/4)
-	if _instrumentCollider.is_colliding(): return true
-	return false
-
-func _on_Collision_body_entered(body):
-	_stopArm()
 	
 func bounceBack():
 	if _isOn:
+		print("bounce")
 		match _section:
 			"base":
 				match _direction:
 					"left":
-						_moveArmBaseLeft = _isOn
+						rotate_y(ARM_SPEED*_delta*_speedMultiplier*2)
 					"right":
-						_moveArmBaseRight = _isOn
+						rotate_y(-ARM_SPEED*_delta*_speedMultiplier*2)
 			"lower":
 				match _direction:
 					"left":
@@ -185,6 +178,7 @@ func bounceBack():
 						
 
 func _checkCollision()->bool:
-	_collisionUpper.rotate_y(_collisionIncrement)
-	return _raycastUpper.is_colliding()
+	#_collisionUpper.rotate_y(_collisionIncrement)
+	#_collisionLower.rotate_z(_collisionIncrement/10)
+	return _raycastUpper.is_colliding() || _raycastLower.is_colliding()
 		
