@@ -7,14 +7,17 @@ var _orgRock2 = preload("res://models/landscape/rock2.tscn")
 var _orgRock3 = preload("res://models/landscape/rock3.tscn")
 var _orgRock4 = preload("res://models/landscape/rock4.tscn")
 var _rockCount = 4
+var _Drill:Spatial
 
 func _ready():
+	_Drill = $Rover/Arm/Lower/Upper/InstrumentBase/Instruments/Drill
 	sampler = RayCast.new()
 	add_child(sampler)
 	sampler.enabled = true	
 	sampler.cast_to = Vector3(0,100,0)	
 	_place3dFeatures()
-	print($rock1.mesh.surface_get_arrays(0)[0].size())
+	_Drill.connect("onDrillTipContact",self,"onDrillTipContact")
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -56,3 +59,11 @@ func _placeRocks():
 		safeCount+=1
 	sampler.enabled = false
 	print("Rocks placed: "+String(count))
+
+func onDrillTipContact(contact,normal,distance):
+	if $DrillHoles/Hole.translation == Vector3():
+		$DrillHoles/Hole.translation = contact
+		$DrillHoles/Hole.rotation = normal
+		print("Contact")
+
+

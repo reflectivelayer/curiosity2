@@ -61,7 +61,7 @@ func _ready():
 	_DrillUI = $"../../Control/DrillRect/Drill"
 	_DrillUI.connect("drillAction",self,"_onDrillAction")	
 	_Drill.connect("onDrillContact",self,"onDrillContact")
-	_setDefaultPosition()
+	#_setDefaultPosition()
 	
 
 func printArmDefaultPosition():
@@ -171,7 +171,7 @@ func onDrillContact(contactA,contactB):
 	if contactA>=0.04 || contactB>=0.04:
 		_stopArm()
 	elif  contactA>=0 && contactB>=0:
-		print("STABLE")	
+		pass
 	_DrillUI.setContactLeft(contactA>=0.01) 
 	_DrillUI.setContactRight(contactB>=0.01)
 	

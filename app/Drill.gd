@@ -1,5 +1,6 @@
 extends Spatial
 signal onDrillContact(contactA,contactB)
+signal onDrillTipContact(contact, normal, distance)
 
 var MAX_DEPTH
 var _depth = 0
@@ -44,7 +45,8 @@ func _process(delta):
 	if dstA>=0 || dstB >=0:
 		emit_signal("onDrillContact",dstA,dstB)
 	if _drillTip.is_colliding():
-		print("hit")
+		emit_signal("onDrillTipContact",_drillTip.get_collision_point(),_drillTip.get_collision_normal(),-6)
+		
 		
 func lowerDrill(isOn):
 	if isOn:
