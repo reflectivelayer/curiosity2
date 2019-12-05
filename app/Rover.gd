@@ -124,6 +124,7 @@ func onCmeraDeploy():
 		_armDeploying = true
 	
 func onCameraSelected(camera):
+	$Arm.speedMultiplier = 1
 	match camera:
 		"mastCam":
 			_camLable.text = "Mastcam"
@@ -132,10 +133,13 @@ func onCameraSelected(camera):
 			if cam == _selectedCam:
 				if _selectedCam.fov == 21:
 					_selectedCam.fov = 7
+					$Arm.speedMultiplier = 0.1
 				else:
 					cam.fov = 21
+					$Arm.speedMultiplier = 0.2
 			else:
 				_selectedCam = cam
+				$Arm.speedMultiplier = 0.2
 			_selectedCam.current = true
 			$MastCam/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false

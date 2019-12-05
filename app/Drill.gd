@@ -13,6 +13,7 @@ var _contactDepthB
 var dstA
 var dstB
 
+
 func _ready():
 	_contactA = $Contact_A
 	_contactB = $Contact_B
@@ -32,14 +33,17 @@ func _process(delta):
 	collider = _contactB.get_collider()
 	if collider!=null:
 		dstB = _contactB.get_collision_point().distance_to(_contactB.to_global(_contactA.cast_to))
-		
+
 	if dstA>=0 || dstB >=0:
 		emit_signal("onDrillContact",dstA,dstB)
 
 func engage():
 	_direction=1
 	pass
-	
+
 func disengage():
 	_direction=-1
 	pass
+
+func _on_Drill_Contact(body, contactID):
+	print("DDDD")

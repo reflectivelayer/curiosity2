@@ -443,13 +443,11 @@ material/3 = SubResource( 44 )
 
 [node name="InstrumentBase" type="MeshInstance" parent="Rover/Arm/Lower/Upper"]
 transform = Transform( -1, 2.55182e-007, 1.49012e-008, 1.49012e-008, 0.180738, -0.983532, -2.57045e-007, -0.98353, -0.180739, -0.188538, 0.792168, -0.000364304 )
-visible = false
 mesh = ExtResource( 18 )
 material/0 = SubResource( 45 )
 material/1 = SubResource( 46 )
 
 [node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
-editor/display_folded = true
 transform = Transform( -0.997586, 0, -0.069443, 0, 0.999999, 0, 0.069443, 0, -0.997585, 0.0601349, 0.133438, 0.14212 )
 mesh = ExtResource( 19 )
 material/0 = SubResource( 47 )
@@ -457,6 +455,7 @@ material/1 = SubResource( 48 )
 material/2 = null
 
 [node name="Drill" type="Spatial" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments"]
+editor/display_folded = true
 transform = Transform( 1, 1.5134e-009, -1.49012e-008, -3.37604e-009, 1, -4.65661e-010, 0, 4.65661e-010, 1, 0, 0, 0 )
 script = ExtResource( 20 )
 
@@ -486,6 +485,11 @@ far = 250.0
 transform = Transform( 1, 3.72529e-008, -2.98023e-007, 7.45058e-009, 1, 0, 3.27826e-007, 0, 1, 0.00324726, 0.0766838, 0.0226936 )
 visible = false
 spot_angle = 26.0
+
+[node name="RayCast" type="RayCast" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments"]
+transform = Transform( 1, 9.31323e-010, 0, -3.25963e-009, 1, -7.45058e-009, -2.98023e-008, -3.72529e-009, 1, -1.52588e-005, 0.0899792, -1.14441e-005 )
+enabled = true
+cast_to = Vector3( 0, 0, 0.18 )
 
 [node name="Collision" type="Spatial" parent="Rover/Arm/Lower/Upper"]
 editor/display_folded = true
