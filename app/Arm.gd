@@ -44,8 +44,9 @@ func _ready():
 	_raycastLower = $Lower/Collision/RayCast
 	
 	_ArmUI = $"../../Control/ArmRect/Arm"
-	_DrillUI = $"../../Control/DrillRect/Drill"
 	_ArmUI.connect("armMovement",self,"onArmMovement")
+	_DrillUI = $"../../Control/DrillRect/Drill"
+	_DrillUI.connect("drillAction",self,"_onDrillAction")	
 	_Drill.connect("onDrillContact",self,"onDrillContact")
 
 func _process(delta):
@@ -181,3 +182,10 @@ func _checkCollision()->bool:
 	_instrumentsCollider.rotate_y(_collisionIncrement)
 	return _raycastUpper.is_colliding() || _raycastLower.is_colliding() || _instrumentsCollider.is_colliding()
 		
+func _onDrillAction(direction,isOn):
+	if direction == "down":
+		_Drill.lowerDrill(isOn)
+	elif direction == "up":
+		_Drill.raiseDrill(isOn)	
+	elif direction == "activate":
+		_Drill.activate(isOn)		

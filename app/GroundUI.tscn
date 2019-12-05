@@ -674,7 +674,6 @@ text = "Drill"
 align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DrillRect/Drill/VBoxContainer"]
-editor/display_folded = true
 margin_top = 37.0
 margin_right = 156.0
 margin_bottom = 161.0
@@ -686,7 +685,6 @@ margin_bottom = 124.0
 rect_min_size = Vector2( 55.83, 0 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
-editor/display_folded = true
 margin_left = 59.0
 margin_right = 92.0
 margin_bottom = 124.0
@@ -734,6 +732,7 @@ icon = ExtResource( 3 )
 align = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="DrillRect/Drill/VBoxContainer"]
+editor/display_folded = true
 margin_top = 166.0
 margin_right = 156.0
 margin_bottom = 199.0
@@ -1065,10 +1064,12 @@ text = "Hazcam R"
 [connection signal="button_down" from="MastRect/Mast/VBoxContainer/BtnDown" to="MastRect/Mast" method="_on_BtnDown_button_down"]
 [connection signal="button_up" from="MastRect/Mast/VBoxContainer/BtnDown" to="MastRect/Mast" method="_on_BtnDown_button_up"]
 [connection signal="pressed" from="MastRect/Button" to="." method="_on_Mast_Paneel_pressed"]
-[connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnUp" to="DrillRect/Drill" method="_on_BtnUp_button_down"]
-[connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnUp" to="DrillRect/Drill" method="_on_BtnUp_button_up"]
-[connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnDown" to="DrillRect/Drill" method="_on_BtnDown_button_down"]
-[connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnDown" to="DrillRect/Drill" method="_on_BtnDown_button_up"]
+[connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnUp" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "up" ]]
+[connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnUp" to="DrillRect/Drill" method="_on_BtnMoveDrill_up" binds= [ "up" ]]
+[connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnDown" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "down" ]]
+[connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnDown" to="DrillRect/Drill" method="_on_BtnMoveDrill_up" binds= [ "down" ]]
+[connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/BtnPower" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "activate" ]]
+[connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer/BtnPower" to="DrillRect/Drill" method="_on_BtnMoveDrill_up" binds= [ "activate" ]]
 [connection signal="button_down" from="DriveRect/Drive/VBoxContainer/BtnUp" to="DriveRect/Drive" method="_on_BtnUp_button_down"]
 [connection signal="button_up" from="DriveRect/Drive/VBoxContainer/BtnUp" to="DriveRect/Drive" method="_on_BtnUp_button_up"]
 [connection signal="button_down" from="DriveRect/Drive/VBoxContainer/HSplitContainer/BtnLeft" to="DriveRect/Drive" method="_on_BtnLeft_button_down"]

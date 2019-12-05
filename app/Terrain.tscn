@@ -455,12 +455,11 @@ material/1 = SubResource( 48 )
 material/2 = null
 
 [node name="Drill" type="Spatial" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments"]
-editor/display_folded = true
-transform = Transform( 1, 1.5134e-009, -1.49012e-008, -3.37604e-009, 1, -4.65661e-010, 0, 4.65661e-010, 1, 0, 0, 0 )
+transform = Transform( 1, 2.79397e-009, -1.49012e-008, -6.0536e-009, 1, -3.72529e-009, -1.49012e-008, -3.72529e-009, 1, 0, 0, 0 )
 script = ExtResource( 20 )
 
 [node name="DrillBit" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments/Drill"]
-transform = Transform( -0.661773, 0.749705, 3.27826e-007, -0.749704, -0.661774, -1.25729e-008, 1.11759e-007, 1.49012e-008, 1, -0.00235748, 0.0841198, 0.193909 )
+transform = Transform( -0.661773, 0.749705, 3.27826e-007, -0.749704, -0.661774, -1.86265e-008, 1.2666e-007, 1.49012e-008, 1, -0.00234985, 0.0841203, 0.193901 )
 cast_shadow = 0
 mesh = ExtResource( 21 )
 material/0 = SubResource( 49 )

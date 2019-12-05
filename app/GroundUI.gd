@@ -35,4 +35,3 @@ func _on_drive_panel_pressed():
 	else:
 		$PanelSlider.play("DrivePanel")	
 	_drivePanelOpen = !_drivePanelOpen		
-
