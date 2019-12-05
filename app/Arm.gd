@@ -1,3 +1,16 @@
+#Default Arm position
+#Arm (0.469009, 1.03303, 1.11285)
+#Arm (-0, -1.686564, 0)
+#Lower (0.000008, -0.164129, 0.168373)
+#Lower (-0.261799, 0.166732, 0)
+#Upper (0.060753, -0.005095, 0.820141)
+#Upper (-1.27409, -0.029269, 0)
+#InstrumentBase (-0.188538, 0.792168, -0.000365)
+#InstrumentBase (-1.535892, 3.141593, 0)
+#Instrument (0.060135, 0.133438, 0.14212)
+#Instrument (-0, 2.426008, 0)
+
+
 extends MeshInstance
 
 var ARM_SPEED = 0.3
@@ -48,7 +61,33 @@ func _ready():
 	_DrillUI = $"../../Control/DrillRect/Drill"
 	_DrillUI.connect("drillAction",self,"_onDrillAction")	
 	_Drill.connect("onDrillContact",self,"onDrillContact")
+	_setDefaultPosition()
+	
 
+func printArmDefaultPosition():
+	print(translation)
+	print(rotation)
+	print($Lower.translation)
+	print($Lower.rotation)
+	print($Lower/Upper.translation)
+	print($Lower/Upper.rotation)
+	print($Lower/Upper/InstrumentBase.translation)
+	print($Lower/Upper/InstrumentBase.rotation)
+	print($Lower/Upper/InstrumentBase/Instruments.translation)
+	print($Lower/Upper/InstrumentBase/Instruments.rotation)		
+
+func _setDefaultPosition():
+	translation = Vector3(0.469009, 1.03303, 1.11285)
+	rotation = Vector3(-0, -1.686564, 0)
+	$Lower.translation = Vector3(0.000008, -0.164129, 0.168373)
+	$Lower.rotation = Vector3(-0.261799, 0.166732, 0)
+	$Lower/Upper.translation = Vector3(0.060753, -0.005095, 0.820141)
+	$Lower/Upper.rotation = Vector3(-1.27409, -0.029269, 0)
+	$Lower/Upper/InstrumentBase.translation = Vector3(-0.188538, 0.792168, -0.000365)
+	$Lower/Upper/InstrumentBase.rotation = Vector3(-1.535892, 3.141593, 0)
+	$Lower/Upper/InstrumentBase/Instruments.translation = Vector3(0.060135, 0.133438, 0.14212)
+	$Lower/Upper/InstrumentBase/Instruments.rotation = Vector3(-0, 2.426008, 0)
+	
 func _process(delta):
 	_delta = delta
 	if _moveArmBaseLeft:

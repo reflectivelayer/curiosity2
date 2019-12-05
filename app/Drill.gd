@@ -14,12 +14,14 @@ var dstA
 var dstB
 var _isRotating = false
 var _drillBit
+var _drillTip:RayCast
 
 
 func _ready():
 	_contactA = $Contact_A
 	_contactB = $Contact_B
 	_drillBit = $DrillBit
+	_drillTip = $DrillBit/Tip
 	_orgZ = translation.z
 	
 
@@ -41,7 +43,9 @@ func _process(delta):
 
 	if dstA>=0 || dstB >=0:
 		emit_signal("onDrillContact",dstA,dstB)
-
+	if _drillTip.is_colliding():
+		print("hit")
+		
 func lowerDrill(isOn):
 	if isOn:
 		_direction=1
@@ -59,4 +63,4 @@ func activate(isOn):
 		_isRotating = !_isRotating
 
 func _on_Drill_Contact(body, contactID):
-	print("DDDD")
+	pass

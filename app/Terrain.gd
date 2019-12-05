@@ -14,6 +14,7 @@ func _ready():
 	sampler.enabled = true	
 	sampler.cast_to = Vector3(0,100,0)	
 	_place3dFeatures()
+	print($rock1.mesh.surface_get_arrays(0)[0].size())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -54,4 +55,4 @@ func _placeRocks():
 			count+=1
 		safeCount+=1
 	sampler.enabled = false
-	print(count)
+	print("Rocks placed: "+String(count))
