@@ -64,6 +64,5 @@ func onDrillTipContact(contact,normal,distance):
 	if $DrillHoles/Hole.translation == Vector3():
 		$DrillHoles/Hole.translation = contact
 		$DrillHoles/Hole.rotation = normal
-		print("Contact")
 
 

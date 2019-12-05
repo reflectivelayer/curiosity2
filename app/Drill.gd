@@ -4,7 +4,7 @@ signal onDrillTipContact(contact, normal, distance)
 
 var MAX_DEPTH
 var _depth = 0
-var _drillRate = 0.0001
+var _drillRate = 0.01
 var _orgZ
 var _direction = 0
 var _contactA:RayCast
@@ -31,7 +31,7 @@ func _process(delta):
 	dstA = -1
 	dstB = -1
 	if _direction!=0:
-		_depth+=_drillRate*_direction
+		_depth+=_drillRate*_direction*delta
 		translation.z = _orgZ+_depth
 	if _isRotating:
 		_drillBit.rotate_z(0.2)
