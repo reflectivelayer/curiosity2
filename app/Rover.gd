@@ -75,6 +75,8 @@ func _ready():
 	_camLable = get_parent().get_node("Control/SelectedCam")
 	_driveStop()
 	onCameraSelected("navCam")
+	_updateMastAngle()
+	_updateRoverAngle()
 
 	
 func _deployArm(delta):
@@ -97,31 +99,25 @@ func _process(delta):
 		_mastCam.rotate_x(MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
 	elif _moveMastCamLeft:
 		_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
-		_mastAngle = _mastCamBase.rotation_degrees.y
-		if _mastAngle<0:_mastAngle =360+_mastAngle
+		_updateMastAngle()
 		emit_signal("onMastRotated",_mastAngle+_roverAngle)	
 	elif _moveMastCamRight:
 		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
-		_mastAngle = _mastCamBase.rotation_degrees.y
-		if _mastAngle<0:_mastAngle =360+_mastAngle
+		_updateMastAngle()
 		emit_signal("onMastRotated",_mastAngle+_roverAngle)		
 	elif _turnLeft:
 		applyTurnForce(1)
 		_turnPosition()
-		_roverAngle = rotation_degrees.y	
-		if _roverAngle<0:_roverAngle =360+_roverAngle			
+		_updateRoverAngle()
 		emit_signal("onRoverRotated",_roverAngle)
-		var mastAngle = _mastCamBase.rotation_degrees.y
-		if mastAngle<0:mastAngle =360+mastAngle
-		emit_signal("onMastRotated",_roverAngle+mastAngle)		
+		_updateMastAngle()
+		emit_signal("onMastRotated",_roverAngle+_mastAngle)		
 	elif _turnRight:
 		applyTurnForce(-1)
 		_turnPosition()	
-		_roverAngle = rotation_degrees.y
-		if _roverAngle<0:_roverAngle =360+_roverAngle	
+		_updateRoverAngle()
 		emit_signal("onRoverRotated",_roverAngle)
-		_mastAngle = _mastCamBase.rotation_degrees.y
-		if _mastAngle<0:_mastAngle =360+_mastAngle
+		_updateMastAngle()
 		emit_signal("onMastRotated",_roverAngle+_mastAngle)	
 	if !_turnLeft && !_turnRight && engine_force==0 && !_stopped && _speed<0.000001:
 		_stopped = true
@@ -129,7 +125,15 @@ func _process(delta):
 	_previousPosition = translation*1
 	_updateSpeedControl()
 	#if checkInstumentCollision(): _stopArm()
-			
+
+func _updateMastAngle():
+	_mastAngle = _mastCamBase.rotation_degrees.y
+	if _mastAngle<0:_mastAngle =360+_mastAngle	
+
+func _updateRoverAngle():
+	_roverAngle = rotation_degrees.y
+	if _roverAngle<0:_roverAngle =360+_roverAngle	
+		
 func onPowerToggle():
 	power = !power
 	if power:
@@ -152,7 +156,7 @@ func onCameraSelected(camera):
 		"mastCam":
 			_camLable.text = "Mastcam"
 			$Desaturator.visible = false
-			var cam = $MastCam/Base/CamHead/Mastcam
+			var cam = $MastCam/BaseAxis/Base/CamHead/Mastcam
 			if cam == _selectedCam:
 				if _selectedCam.fov == 21:
 					_selectedCam.fov = 7
@@ -167,7 +171,7 @@ func onCameraSelected(camera):
 				$Arm.speedMultiplier = 0.2
 				_speedMultiplier = 0.2
 			_selectedCam.current = true
-			$MastCam/Base/CamHead/Navcam.current = false
+			$MastCam/BaseAxis/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamFront.current = false
 			$HazCamRear.current = false	
