@@ -3,11 +3,12 @@ extends Control
 var _armPanelOpen = false
 var _mastPanelOpen = false
 var _drivePanelOpen = false
-
+var _drillPanelOpen = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	var rover = $"/root/Spatial/Rover"
+	rover.connect("onMastRotated",self,"_onMastRotated")
+	rover.connect("onRoverRotated",self,"_onRoverRotated")	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
@@ -35,3 +36,20 @@ func _on_drive_panel_pressed():
 	else:
 		$PanelSlider.play("DrivePanel")	
 	_drivePanelOpen = !_drivePanelOpen		
+
+
+func _on_drill_panel_pressed():
+	if _drillPanelOpen:
+		$PanelSlider.play_backwards("DrillPanel")
+	else:
+		$PanelSlider.play("DrillPanel")	
+	_drillPanelOpen = !_drillPanelOpen	
+	
+	
+func _onMastRotated(angle):
+	var direction = 360-int(angle)%360
+	$Compass.setMastPointer(direction)
+	
+func _onRoverRotated(angle):
+	var direction = 360-int(angle)%360
+	$Compass.setRoverPointer(direction)	

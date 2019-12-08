@@ -1,4 +1,6 @@
 extends VehicleBody
+signal onMastRotated(angle)
+signal onRoverRotated(angle)
 
 var MASTCAM_HEAD_SPEED = 0.3
 var SPEED_LIMIT = 0.001
@@ -41,10 +43,12 @@ var _driveDirection = 1 #positive is foward negative is backward
 var _camLable
 var _selectedCam
 var _speedMultiplier = 1
+var _mastAngle = 0
+var _roverAngle = 0
 
 func _ready():
-	_mastCam = $MastCam/Base/CamHead
-	_mastCamBase = $MastCam/Base
+	_mastCam = $MastCam/BaseAxis/Base/CamHead
+	_mastCamBase = $MastCam/BaseAxis/Base
 
 	_leftFrontWheel = $LeftFront
 	_rightFrontWheel = $RightFront
@@ -69,9 +73,10 @@ func _ready():
 	CamUI.connect("cameraSelected",self,"onCameraSelected")
 	CamUI.connect("cameraZoomChanged",self,"onZoomChanged")
 	_camLable = get_parent().get_node("Control/SelectedCam")
-	
 	_driveStop()
 	onCameraSelected("navCam")
+
+	
 func _deployArm(delta):
 	_armDeploying = false
 	_armDeployed = true
@@ -92,16 +97,32 @@ func _process(delta):
 		_mastCam.rotate_x(MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
 	elif _moveMastCamLeft:
 		_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
+		_mastAngle = _mastCamBase.rotation_degrees.y
+		if _mastAngle<0:_mastAngle =360+_mastAngle
+		emit_signal("onMastRotated",_mastAngle+_roverAngle)	
 	elif _moveMastCamRight:
 		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
+		_mastAngle = _mastCamBase.rotation_degrees.y
+		if _mastAngle<0:_mastAngle =360+_mastAngle
+		emit_signal("onMastRotated",_mastAngle+_roverAngle)		
 	elif _turnLeft:
 		applyTurnForce(1)
 		_turnPosition()
-		pass
+		_roverAngle = rotation_degrees.y	
+		if _roverAngle<0:_roverAngle =360+_roverAngle			
+		emit_signal("onRoverRotated",_roverAngle)
+		var mastAngle = _mastCamBase.rotation_degrees.y
+		if mastAngle<0:mastAngle =360+mastAngle
+		emit_signal("onMastRotated",_roverAngle+mastAngle)		
 	elif _turnRight:
 		applyTurnForce(-1)
 		_turnPosition()	
-		pass
+		_roverAngle = rotation_degrees.y
+		if _roverAngle<0:_roverAngle =360+_roverAngle	
+		emit_signal("onRoverRotated",_roverAngle)
+		_mastAngle = _mastCamBase.rotation_degrees.y
+		if _mastAngle<0:_mastAngle =360+_mastAngle
+		emit_signal("onMastRotated",_roverAngle+_mastAngle)	
 	if !_turnLeft && !_turnRight && engine_force==0 && !_stopped && _speed<0.000001:
 		_stopped = true
 		_lockAxis()
@@ -153,8 +174,8 @@ func onCameraSelected(camera):
 		"navCam":
 			_camLable.text = "Navcam"
 			$Desaturator.visible = true
-			$MastCam/Base/CamHead/Mastcam.current = false
-			_selectedCam = $MastCam/Base/CamHead/Navcam
+			$MastCam/BaseAxis/Base/CamHead/Mastcam.current = false
+			_selectedCam = $MastCam/BaseAxis/Base/CamHead/Navcam
 			_selectedCam.current = true
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamFront.current = false
@@ -162,8 +183,8 @@ func onCameraSelected(camera):
 		"MAHLI":
 			_camLable.text = "MAHLI"			
 			$Desaturator.visible = false
-			$MastCam/Base/CamHead/Mastcam.current = false
-			$MastCam/Base/CamHead/Navcam.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam.current = false
+			$MastCam/BaseAxis/Base/CamHead/Navcam.current = false
 			_selectedCam = $Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI
 			_selectedCam.current = true
 			$HazCamFront.current = false
@@ -173,16 +194,16 @@ func onCameraSelected(camera):
 			$Desaturator.visible = true
 			_selectedCam = $HazCamFront
 			_selectedCam.current = true
-			$MastCam/Base/CamHead/Mastcam.current = false
-			$MastCam/Base/CamHead/Navcam.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam.current = false
+			$MastCam/BaseAxis/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamRear.current = false
 		"hazCamRear":
 			_camLable.text = "Hazcam(rear)"
 			$Desaturator.visible = true
 			$HazCamFront.current = false
-			$MastCam/Base/CamHead/Mastcam.current = false
-			$MastCam/Base/CamHead/Navcam.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam.current = false
+			$MastCam/BaseAxis/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			_selectedCam = $HazCamRear
 			_selectedCam.current = true

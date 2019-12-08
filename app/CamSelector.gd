@@ -11,9 +11,7 @@ func _ready():
 	_buttons.append($Panel3)
 	_buttons.append($Panel4)
 	_buttons.append($Panel5)	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	setButtonIndex(0)
 
 func _on_Cam_button_up(camera):
 	emit_signal("cameraSelected",camera)

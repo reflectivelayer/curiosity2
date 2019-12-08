@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Drill hole.obj-5b4ef32f90505e5a79180b2d51604941.mesh"
+
+[deps]
+
+files=[ "res://.import/Drill hole.obj-5b4ef32f90505e5a79180b2d51604941.mesh" ]
+
+source_file="res://models/landscape/Drill hole.obj"
+dest_files=[ "res://.import/Drill hole.obj-5b4ef32f90505e5a79180b2d51604941.mesh", "res://.import/Drill hole.obj-5b4ef32f90505e5a79180b2d51604941.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true
