@@ -81,4 +81,3 @@ nodes/fragment/connections = PoolIntArray( 3, 0, 2, 0, 2, 0, 5, 0, 5, 0, 0, 0, 4
 
 [resource]
 shader = SubResource( 6 )
-

@@ -19,4 +19,3 @@ fog_color = Color( 0.596078, 0.552941, 0.372549, 1 )
 fog_sun_color = Color( 1, 0.901961, 0.701961, 1 )
 fog_depth_begin = 0.0
 fog_depth_end = 300.0
-

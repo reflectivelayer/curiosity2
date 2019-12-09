@@ -4,7 +4,7 @@ signal onRoverRotated(angle)
 
 var MASTCAM_HEAD_SPEED = 0.3
 var SPEED_LIMIT = 0.001
-var DRIVE_FORCE = 1500
+var DRIVE_FORCE = 20
 var MastUI
 var ArmUI
 var DriveUI
@@ -309,7 +309,7 @@ func _turnPosition():
 	axis_lock_linear_z = true
 	
 func applyTurnForce(direction):
-	var turnForce = 200
+	var turnForce = 25
 	var torqueVector = Vector3(0,0,100)
 	if direction>0:
 		add_force( Vector3(turnForce,0,0),torqueVector)

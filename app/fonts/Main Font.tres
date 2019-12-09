@@ -7,4 +7,3 @@ font_path = "res://fonts/Alatsi-Regular.ttf"
 size = 25
 use_filter = true
 font_data = SubResource( 1 )
-
