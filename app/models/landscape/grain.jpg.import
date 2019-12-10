@@ -1,0 +1,37 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path.s3tc="res://.import/grain.jpg-819f1af2d1661a1a7a07c00d9cb26815.s3tc.stex"
+path.etc2="res://.import/grain.jpg-819f1af2d1661a1a7a07c00d9cb26815.etc2.stex"
+path.etc="res://.import/grain.jpg-819f1af2d1661a1a7a07c00d9cb26815.etc.stex"
+metadata={
+"imported_formats": [ "s3tc", "etc2", "etc" ],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://models/landscape/grain.jpg"
+dest_files=[ "res://.import/grain.jpg-819f1af2d1661a1a7a07c00d9cb26815.s3tc.stex", "res://.import/grain.jpg-819f1af2d1661a1a7a07c00d9cb26815.etc2.stex", "res://.import/grain.jpg-819f1af2d1661a1a7a07c00d9cb26815.etc.stex" ]
+
+[params]
+
+compress/mode=2
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=true
+flags/filter=true
+flags/mipmaps=true
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

@@ -1,6 +1,6 @@
 extends Spatial
 signal onDrillContact(contactA,contactB)
-signal onDrillTipContact(contact, normal, distance)
+signal onDrillTipContact(target,contactPoint, normal, distance)
 
 var MAX_DEPTH
 var _depth = 0
@@ -19,8 +19,8 @@ var _drillTip:RayCast
 
 
 func _ready():
-	_contactA = $Contact_A
-	_contactB = $Contact_B
+	_contactA = $"../Contact_A"
+	_contactB = $"../Contact_B"
 	_drillBit = $DrillBit
 	_drillTip = $DrillBit/Tip
 	_orgZ = translation.z
@@ -45,7 +45,9 @@ func _process(delta):
 	if dstA>=0 || dstB >=0:
 		emit_signal("onDrillContact",dstA,dstB)
 	if _drillTip.is_colliding():
-		emit_signal("onDrillTipContact",_drillTip.get_collision_point(),_drillTip.get_collision_normal(),-6)
+		var target:Spatial = _drillTip.get_collider().get_parent().get_parent()
+		var contactPoint = _drillTip.get_collision_point()
+		emit_signal("onDrillTipContact",target,contactPoint,_drillTip.get_collision_normal(),-6)
 		
 		
 func lowerDrill(isOn):
@@ -63,6 +65,3 @@ func raiseDrill(isOn):
 func activate(isOn):
 	if isOn:
 		_isRotating = !_isRotating
-
-func _on_Drill_Contact(body, contactID):
-	pass

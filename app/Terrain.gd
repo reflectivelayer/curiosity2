@@ -2,10 +2,10 @@ extends Spatial
 
 var rover:VehicleBody
 var sampler:RayCast
-var _orgRock1 = preload("res://models/landscape/rock1.tscn")
-var _orgRock2 = preload("res://models/landscape/rock2.tscn")
-var _orgRock3 = preload("res://models/landscape/rock3.tscn")
-var _orgRock4 = preload("res://models/landscape/rock4.tscn")
+var _orgRock1 = preload("res://models/landscape/Rock1.tscn")
+var _orgRock2 = preload("res://models/landscape/Rock2.tscn")
+var _orgRock3 = preload("res://models/landscape/Rock3.tscn")
+var _orgRock4 = preload("res://models/landscape/Rock4.tscn")
 var _rockCount = 4
 var _Drill:Spatial
 
@@ -15,8 +15,8 @@ func _ready():
 	add_child(sampler)
 	sampler.enabled = true	
 	sampler.cast_to = Vector3(0,100,0)	
+	$Rock.rotateCore( Vector3(7.361,51.352,-65.118))
 	_place3dFeatures()
-	_Drill.connect("onDrillTipContact",self,"onDrillTipContact")
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,7 +37,7 @@ func _placeRocks():
 	var maxRock = 50
 	var count = 0
 	var orgRocks = [_orgRock1,_orgRock2,_orgRock3,_orgRock4]
-	var rock:MeshInstance
+	var rock:Spatial
 	var rng = RandomNumberGenerator.new()
 	
 	rng.randomize()
@@ -59,10 +59,5 @@ func _placeRocks():
 		safeCount+=1
 	sampler.enabled = false
 	print("Rocks placed: "+String(count))
-
-func onDrillTipContact(contact,normal,distance):
-	if $DrillHoles/Hole.translation == Vector3():
-		$DrillHoles/Hole.translation = contact
-		$DrillHoles/Hole.rotation = normal
 
 
