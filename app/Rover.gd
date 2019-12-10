@@ -43,6 +43,7 @@ var _driveDirection = 1 #positive is foward negative is backward
 var _camLable
 var _selectedCam
 var _speedMultiplier = 1
+var _camSpeedMultiplier = 1
 var _mastAngle = 0
 var _roverAngle = 0
 
@@ -94,15 +95,15 @@ func _process(delta):
 	if _armRetracting:
 		_retractArm(delta)
 	if _moveMastCamUp:
-		_mastCam.rotate_x(-MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
+		_mastCam.rotate_x(-MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
 	elif _moveMastCamDown:
-		_mastCam.rotate_x(MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
+		_mastCam.rotate_x(MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
 	elif _moveMastCamLeft:
-		_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
+		_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
 		_updateMastAngle()
 		emit_signal("onMastRotated",_mastAngle+_roverAngle)	
 	elif _moveMastCamRight:
-		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED*delta*_speedMultiplier)
+		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
 		_updateMastAngle()
 		emit_signal("onMastRotated",_mastAngle+_roverAngle)		
 	elif _turnLeft:
@@ -152,6 +153,7 @@ func onCmeraDeploy():
 func onCameraSelected(camera):
 	$Arm.speedMultiplier = 1
 	_speedMultiplier = 1
+	_camSpeedMultiplier = 1
 	match camera:
 		"mastCam":
 			_camLable.text = "Mastcam"
@@ -162,14 +164,17 @@ func onCameraSelected(camera):
 					_selectedCam.fov = 7
 					$Arm.speedMultiplier = 0.1
 					_speedMultiplier = 0.1
+					_camSpeedMultiplier = 0.2
 				else:
 					cam.fov = 21
 					$Arm.speedMultiplier = 0.2
 					_speedMultiplier = 0.2
+					_camSpeedMultiplier = 0.4
 			else:
 				_selectedCam = cam
 				$Arm.speedMultiplier = 0.2
 				_speedMultiplier = 0.2
+				_camSpeedMultiplier = 0.4
 			_selectedCam.current = true
 			$MastCam/BaseAxis/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false

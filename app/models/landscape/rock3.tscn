@@ -8,11 +8,11 @@ data = PoolVector3Array( -0.2444, 0.4782, -1.1388, -0.0124, 0.9591, -0.8719, -0.
 
 [node name="Rock" index="0" instance=ExtResource( 2 )]
 
-[node name="rock3" type="MeshInstance" parent="." index="1"]
+[node name="SolidMass" type="MeshInstance" parent="." index="1"]
 mesh = ExtResource( 1 )
 material/0 = null
 
-[node name="StaticBody" type="StaticBody" parent="rock3" index="0"]
+[node name="StaticBody" type="StaticBody" parent="SolidMass" index="0"]
 
-[node name="CollisionShape" type="CollisionShape" parent="rock3/StaticBody" index="0"]
+[node name="CollisionShape" type="CollisionShape" parent="SolidMass/StaticBody" index="0"]
 shape = SubResource( 1 )

@@ -15,7 +15,7 @@ func _ready():
 	add_child(sampler)
 	sampler.enabled = true	
 	sampler.cast_to = Vector3(0,100,0)	
-	$Rock.rotateCore( Vector3(7.361,51.352,-65.118))
+	#$Rock.rotateCore( Vector3(7.361,51.352,-65.118))
 	_place3dFeatures()
 	
 
@@ -48,13 +48,14 @@ func _placeRocks():
 		var normal = sampler.get_collision_normal()
 		if abs(normal.x)<0.2 && abs(normal.z)<0.2:
 			rock = orgRocks[rng.randi_range(0,_rockCount-1)].instance()
-			rock.translation = target
 			rock.rotation = Vector3(rng.randf_range(0,PI*2),rng.randf_range(0,PI*2),rng.randf_range(0,PI*2))
 			var scalJitterX = rng.randf_range(0,0.4)
 			var scalJitterY = rng.randf_range(0,0.1)
 			var scalJitterZ = rng.randf_range(0,0.4)
-			rock.scale = Vector3(0.2+scalJitterX,0.5+scalJitterY,0.5+scalJitterZ)
 			add_child(rock)
+			#rock.global_scale(Vector3(2,1,2))
+			var aabb:AABB = rock.get_node("SolidMass").get_transformed_aabb()
+			rock.translation = target+Vector3(0,-aabb.size.y/4,0)			
 			count+=1
 		safeCount+=1
 	sampler.enabled = false

@@ -26,32 +26,19 @@ func _createHole():
 	holes = $Holes
 	#hole.rotate(drillNormal.cross(hole.get_transform().basis.y).normalized(),hole.get_transform().basis.y.angle_to(drillNormal))
 
-	print(drillNormal)
-	
-	var n1norm = $Rod.transform.basis.y
+	var hole:MeshInstance = _Hole.instance()
+	var n1norm = hole.transform.basis.y
 	var n2norm = drillNormal
 	var cosa = n1norm.dot(n2norm)
 	var alpha = acos(cosa)
 	var axis = n1norm.cross(n2norm)
 	axis = axis.normalized()
-	$Rod.transform = $Rod.transform.rotated(axis, alpha)
-	#$Rod.rotate_x(-PI/2)
-	$Rod.translation = to_local(drillOrigin)
-	
-	var hole:MeshInstance = _Hole.instance()
-	n1norm = hole.transform.basis.y
-	n2norm = drillNormal
-	cosa = n1norm.dot(n2norm)
-	alpha = acos(cosa)
-	axis = n1norm.cross(n2norm)
-	axis = axis.normalized()
 	hole.transform = hole.transform.rotated(axis, alpha)
 	print(hole.transform)
 	hole.translation = to_local(drillOrigin)
+	hole.rotate_x(-rotation.x)
+	hole.rotate_y(-rotation.y)
+	hole.rotate_z(-rotation.z)
 	hole.scale = Vector3(0.05,0.05,0.05)
 	done = true
 	holes.add_child(hole)
-
-	
-func rotateCore(rot:Vector3):
-		$rock1.rotation = rot
