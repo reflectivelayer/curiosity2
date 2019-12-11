@@ -19,6 +19,10 @@ config/name="Curiosity 2"
 run/main_scene="res://Terrain.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+settings/fps/force_fps=30
+
 [display]
 
 window/stretch/mode="2d"

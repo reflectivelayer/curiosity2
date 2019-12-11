@@ -176,11 +176,12 @@ func onDrillContact(contactA,contactB):
 	_DrillUI.setContactLeft(contactA>=0.01) 
 	_DrillUI.setContactRight(contactB>=0.01)
 	
-func onDrillTipContact(target,contactPoint,normal,distance):
+func onDrillTipContact(target,contactPoint,normal,drillDepth):
 		target.drillOrigin = contactPoint
 		target.drillNormal = normal
 		target.isDrilling = true
-
+		print(drillDepth)
+		
 func bounceBack():
 	if _isOn:
 		print("bounce")
