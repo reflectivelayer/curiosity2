@@ -946,6 +946,9 @@ margin_right = -9.0
 margin_bottom = 294.0
 custom_constants/separation = 20
 script = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel1" type="Panel" parent="CamSelector"]
 margin_right = 172.0

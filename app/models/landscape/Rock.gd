@@ -1,4 +1,6 @@
 extends Spatial
+const RL_CLASS =  "Rock"	#work around for not being able to check if custom classes exist
+
 const MAX_DUST = 100
 var _Hole = preload("res://models/landscape/DrillHole.tscn")
 
@@ -14,6 +16,7 @@ var hole:Spatial  #TEMP ONLY
 func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
+				
 	
 func getDepth()->float:
 	return _depth
@@ -40,4 +43,3 @@ func _createHole():
 	hole.rotate_z(-rotation.z)
 	hole.scale = Vector3(0.0,0.05,0.0)
 	holes.add_child(hole)
-	print(hole.transform)

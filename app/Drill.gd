@@ -60,7 +60,9 @@ func _process(delta):
 		if _contactPoint == null:
 			_contactPoint = translation
 		#_drillDepth = _contactPoint.distance_to(translation)
-		emit_signal("onDrillTipContact",rockTarget,tipLocation,_drillTip.get_collision_normal(),_drillDepth)
+		if rockTarget.get("RL_CLASS") != null && rockTarget.RL_CLASS == "Rock":
+			emit_signal("onDrillTipContact",rockTarget,tipLocation,_drillTip.get_collision_normal(),_drillDepth)
+
 	else:
 		_contactPoint = null	
 		

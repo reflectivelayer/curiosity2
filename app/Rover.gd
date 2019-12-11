@@ -75,7 +75,7 @@ func _ready():
 	CamUI.connect("cameraZoomChanged",self,"onZoomChanged")
 	_camLable = get_parent().get_node("Control/SelectedCam")
 	_driveStop()
-	onCameraSelected("navCam")
+	onCameraSelected("hazCamFront")
 	_updateMastAngle()
 	_updateRoverAngle()
 

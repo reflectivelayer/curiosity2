@@ -11,7 +11,7 @@ func _ready():
 	_buttons.append($Panel3)
 	_buttons.append($Panel4)
 	_buttons.append($Panel5)	
-	setButtonIndex(0)
+	setButtonIndex(3)
 
 func _on_Cam_button_up(camera):
 	emit_signal("cameraSelected",camera)
