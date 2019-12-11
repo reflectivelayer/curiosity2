@@ -236,7 +236,7 @@ brake = 1.0
 script = ExtResource( 2 )
 
 [node name="Chassis" type="MeshInstance" parent="Rover"]
-transform = Transform( 1, 0, 2.98023e-008, 0, 1, 0, -2.98023e-008, 0, 1, 0, 0, 0 )
+transform = Transform( 1, 0, 5.96046e-008, 0, 1, 0, -5.96046e-008, 0, 1, 0, 0, 0 )
 cast_shadow = 2
 mesh = ExtResource( 3 )
 material/0 = SubResource( 2 )
@@ -420,14 +420,14 @@ far = 250.0
 anims/MastStartUp = SubResource( 33 )
 
 [node name="Arm" type="MeshInstance" parent="Rover"]
-transform = Transform( 0.921926, 0, -0.387361, 0, 1, 0, 0.387361, 0, 0.921926, 0.469017, 1.03303, 1.11285 )
+transform = Transform( 0.99946, 0, 0.0328062, 0, 1, 0, -0.0328062, 0, 0.99946, 0.469025, 1.03303, 1.11283 )
 mesh = ExtResource( 14 )
 material/0 = SubResource( 34 )
 material/1 = SubResource( 35 )
 script = ExtResource( 15 )
 
 [node name="Lower" type="MeshInstance" parent="Rover/Arm"]
-transform = Transform( 0.988523, -0.104859, 0.108744, -0.0538454, 0.427993, 0.902176, -0.141143, -0.89768, 0.417434, 7.62939e-006, -0.164128, 0.168358 )
+transform = Transform( 0.99605, -0.0658034, 0.0596115, 0.047187, 0.961029, 0.272398, -0.075213, -0.26851, 0.960335, 3.05176e-005, -0.164128, 0.16835 )
 mesh = ExtResource( 16 )
 material/0 = SubResource( 36 )
 material/1 = SubResource( 37 )
@@ -443,7 +443,7 @@ material/2 = SubResource( 42 )
 material/3 = SubResource( 43 )
 
 [node name="InstrumentBase" type="MeshInstance" parent="Rover/Arm/Lower/Upper"]
-transform = Transform( -1, 9.27623e-009, -8.69293e-008, 0, 0.994353, 0.106108, 8.74228e-008, 0.106108, -0.994355, -0.188538, 0.79216, -0.000364304 )
+transform = Transform( -1, 2.6344e-007, 1.91759e-007, 0, 0.588504, -0.808494, -3.25841e-007, -0.808492, -0.588505, -0.188538, 0.79216, -0.000364304 )
 mesh = ExtResource( 18 )
 material/0 = SubResource( 44 )
 material/1 = SubResource( 45 )
@@ -565,4 +565,4 @@ current = true
 far = 200.0
 
 [node name="Rock" parent="." instance=ExtResource( 29 )]
-transform = Transform( -0.187239, 0.923527, 0, -0.463618, -0.372979, 0, 0, 0, 1, 82.655, -0.295473, 65.4054 )
+transform = Transform( -0.187239, 0.923527, 0, -0.451808, -0.363478, -0.224271, -0.103976, -0.0836484, 0.974527, 82.6534, -0.179022, 65.4078 )
