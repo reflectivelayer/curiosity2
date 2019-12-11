@@ -118,7 +118,8 @@ func _process(delta):
 	if _checkCollision():
 		_stopArm()
 	if _Drill.isRotating:
-		_Drill.drill()
+		_Drill.drill(_Drill.direction!=-1)
+		
 	
 func onArmMovement(section, direction,isOn):
 	_section = section
@@ -182,7 +183,7 @@ func onDrillTipContact(target,contactPoint,normal,drillDepth):
 		target.drillOrigin = contactPoint
 		target.drillNormal = normal
 		target.isDrilling = true
-
+		_DrillUI.setDepth(drillDepth)
 		
 func bounceBack():
 	if _isOn:

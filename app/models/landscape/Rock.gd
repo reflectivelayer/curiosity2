@@ -19,10 +19,10 @@ func getDepth()->float:
 	return _depth
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func drill()->float:
+func drill(pressure)->float:
 	if hole==null:
 		_createHole()
-	return hole.drill()
+	return hole.drill(pressure)
 		
 func _createHole():
 	holes = $Holes

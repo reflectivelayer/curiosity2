@@ -4,12 +4,14 @@ signal drillAction(action,isOn)
 
 var _contactLeft:Label
 var _contactRight
+var _depth
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 func _ready():
 	_contactLeft = $VBoxContainer/HBoxContainer2/DspContact_L
 	_contactRight = $VBoxContainer/HBoxContainer2/DspContact_R
+	_depth = $VBoxContainer/HBoxContainer/Depth
 	
 func setContactLeft(on:bool):
 	var styleBox:StyleBoxFlat = _contactLeft.get_stylebox("normal" )
@@ -34,3 +36,6 @@ func _on_BtnMoveDrill_down(direction):
 
 func _on_BtnMoveDrill_up(direction):
 	emit_signal("drillAction",direction,false)
+
+func setDepth(depth:float):
+	_depth.text = "%4.2f" % (depth * 100)

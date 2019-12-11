@@ -17,11 +17,13 @@ func _process(delta):
 		scale = Vector3(_size,0.05,_size)
 		_dig = 0
 
-func drill()->float:
-	_dig = _sinkRate*_timeDelta
-	depth+=_dig
-	if depth<GROW_LIMIT:
-		_size = depth*6	#3 = adjusted number limit scale to 0.03
-		scale = Vector3(_size,0.05,_size)
-	if depth>0.03:_dig=0
+func drill(pressure:bool)->float:
+	if pressure:
+		_dig = _sinkRate*_timeDelta
+		depth+=_dig
+		if depth<GROW_LIMIT:
+			_size = depth*6	#3 = adjusted number limit scale to 0.03
+			scale = Vector3(_size,0.05,_size)
+		if depth>0.03:_dig=0
+	else: _dig = 0
 	return _dig

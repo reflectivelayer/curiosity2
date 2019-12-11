@@ -5,11 +5,11 @@ signal onDrillTipContact(target,contactPoint, normal, drillDepth)
 var MAX_DEPTH = 0.065  # 6.5cm
 var rockTarget:Spatial
 var isRotating = false
+var direction = 0
 var _depth = 0
 var _drillDepth = 0
-var _drillRate = 0.01
+var _drillRate = 0.02
 var _orgZ
-var _direction = 0
 var _contactA:RayCast
 var _contactB:RayCast
 var _contactDepthA
@@ -32,15 +32,16 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if _contactPoint!=null && _direction==1 && !isRotating:  #Stop lowering drill when not spinning
-		_direction=0
-	elif _drillDepth > MAX_DEPTH && _direction == 1:
+	if _contactPoint!=null && direction==1 && !isRotating:  #Stop lowering drill when not spinning
+		direction=0
+	elif _drillDepth > MAX_DEPTH && direction == 1:
 		_turnDrillOff()
 	dstA = -1
 	dstB = -1
-	if _direction!=0:
-		_depth+=_drillRate*_direction*delta
-		translation.z = _orgZ+_depth
+	if direction!=0:
+		if direction == 1 || translation.z>= _orgZ:
+			_depth+=_drillRate*direction*delta
+			translation.z = _orgZ+_depth + _drillDepth
 	if isRotating:
 		_drillBit.rotate_z(0.2)
 		translation.z+=_dig
@@ -64,21 +65,21 @@ func _process(delta):
 		_contactPoint = null	
 		
 func lowerDrill(isOn)->bool:
-	if(dstA>0 && dstB>0):
+	if(dstA>0 && dstB>0 && _contactPoint==null):
 		if isOn:
 			if _contactPoint==null:
-				_direction=1
+				direction=1
 		else:
-			_direction=0
+			direction=0
 		return true
 	else:
 		return false
 
 func raiseDrill(isOn):
 	if isOn:
-		_direction=-1	
+		direction=-1	
 	else:
-		_direction=0
+		direction=0
 
 func activate(isPressed)->bool:
 	if(isPressed && !isRotating && dstA>0 && dstB>0):
@@ -94,9 +95,9 @@ func _turnDrillOn():
 		isRotating = true	
 func _turnDrillOff():
 		isRotating = false
-		_direction = 0
+		direction = 0
 		
-func drill():
+func drill(pressure:bool):
 	if rockTarget!=null:
-		_dig = rockTarget.drill()
+		_dig = rockTarget.drill(pressure)
 		_drillDepth += _dig

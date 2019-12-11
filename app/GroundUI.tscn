@@ -266,7 +266,6 @@ size_flags_vertical = 3
 script = ExtResource( 1 )
 
 [node name="ArmRect" type="HBoxContainer" parent="."]
-editor/display_folded = true
 margin_left = -205.0
 margin_top = 10.0
 margin_right = 64.0
@@ -357,7 +356,6 @@ custom_styles/normal = SubResource( 4 )
 icon = ExtResource( 6 )
 
 [node name="Hinge" type="HBoxContainer" parent="ArmRect/Arm/VBoxContainer"]
-editor/display_folded = true
 margin_top = 105.0
 margin_right = 187.0
 margin_bottom = 138.0
@@ -397,7 +395,6 @@ custom_styles/normal = SubResource( 4 )
 icon = ExtResource( 6 )
 
 [node name="Upper" type="HBoxContainer" parent="ArmRect/Arm/VBoxContainer"]
-editor/display_folded = true
 margin_top = 155.0
 margin_right = 187.0
 margin_bottom = 188.0
@@ -437,7 +434,6 @@ custom_styles/normal = SubResource( 4 )
 icon = ExtResource( 6 )
 
 [node name="Lower" type="HBoxContainer" parent="ArmRect/Arm/VBoxContainer"]
-editor/display_folded = true
 margin_top = 205.0
 margin_right = 187.0
 margin_bottom = 238.0
@@ -529,7 +525,6 @@ custom_styles/normal = SubResource( 9 )
 icon = ExtResource( 7 )
 
 [node name="MastRect" type="HBoxContainer" parent="."]
-editor/display_folded = true
 margin_left = -156.291
 margin_top = 360.0
 margin_right = 65.709
@@ -540,7 +535,6 @@ __meta__ = {
 }
 
 [node name="Mast" type="PanelContainer" parent="MastRect"]
-editor/display_folded = true
 margin_right = 148.0
 margin_bottom = 214.0
 size_flags_horizontal = 0
@@ -559,7 +553,6 @@ margin_bottom = 210.0
 custom_constants/separation = 5
 
 [node name="Title" type="HSplitContainer" parent="MastRect/Mast/VBoxContainer"]
-editor/display_folded = true
 margin_right = 140.0
 margin_bottom = 38.0
 dragger_visibility = 1
@@ -598,7 +591,6 @@ custom_styles/normal = SubResource( 10 )
 icon = ExtResource( 9 )
 
 [node name="HSplitContainer" type="HSplitContainer" parent="MastRect/Mast/VBoxContainer"]
-editor/display_folded = true
 margin_top = 108.0
 margin_right = 140.0
 margin_bottom = 141.0
@@ -653,14 +645,14 @@ custom_styles/normal = SubResource( 15 )
 icon = ExtResource( 11 )
 
 [node name="DrillRect" type="HBoxContainer" parent="."]
-editor/display_folded = true
 margin_left = 960.849
 margin_top = 303.079
 margin_right = 1197.85
 margin_bottom = 517.079
 custom_constants/separation = 9
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_use_anchors_": false
 }
 
 [node name="Button" type="Button" parent="DrillRect"]
@@ -676,9 +668,8 @@ custom_styles/normal = SubResource( 15 )
 icon = ExtResource( 12 )
 
 [node name="Drill" type="PanelContainer" parent="DrillRect"]
-editor/display_folded = true
 margin_left = 73.0
-margin_right = 237.0
+margin_right = 242.0
 margin_bottom = 207.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
@@ -688,13 +679,13 @@ script = ExtResource( 13 )
 [node name="VBoxContainer" type="VBoxContainer" parent="DrillRect/Drill"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 160.0
+margin_right = 165.0
 margin_bottom = 203.0
 size_flags_horizontal = 0
 custom_constants/separation = 5
 
 [node name="Label" type="Label" parent="DrillRect/Drill/VBoxContainer"]
-margin_right = 156.0
+margin_right = 161.0
 margin_bottom = 32.0
 custom_fonts/font = ExtResource( 4 )
 text = "Drill"
@@ -702,18 +693,31 @@ align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DrillRect/Drill/VBoxContainer"]
 margin_top = 37.0
-margin_right = 156.0
+margin_right = 161.0
 margin_bottom = 161.0
 size_flags_horizontal = 0
 
-[node name="Control" type="Control" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
-margin_right = 55.83
-margin_bottom = 124.0
-rect_min_size = Vector2( 55.83, 0 )
+[node name="Depth" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
+margin_top = 46.0
+margin_right = 54.22
+margin_bottom = 78.0
+rect_min_size = Vector2( 54.22, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 4 )
+text = "----"
+
+[node name="cm" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
+margin_left = 58.0
+margin_top = 46.0
+margin_right = 90.0
+margin_bottom = 78.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 4 )
+text = "cm"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
-margin_left = 59.0
-margin_right = 92.0
+margin_left = 94.0
+margin_right = 127.0
 margin_bottom = 124.0
 
 [node name="BtnUp" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer"]
@@ -739,15 +743,9 @@ custom_styles/disabled = SubResource( 10 )
 custom_styles/normal = SubResource( 10 )
 icon = ExtResource( 10 )
 
-[node name="Control2" type="Control" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
-margin_left = 96.0
-margin_right = 122.48
-margin_bottom = 124.0
-rect_min_size = Vector2( 26.48, 0 )
-
 [node name="BtnPower" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
-margin_left = 126.0
-margin_right = 156.0
+margin_left = 131.0
+margin_right = 161.0
 margin_bottom = 124.0
 size_flags_horizontal = 9
 custom_styles/hover = SubResource( 2 )
@@ -759,9 +757,8 @@ icon = ExtResource( 3 )
 align = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="DrillRect/Drill/VBoxContainer"]
-editor/display_folded = true
 margin_top = 166.0
-margin_right = 156.0
+margin_right = 161.0
 margin_bottom = 199.0
 
 [node name="DspContact_L" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer2"]
@@ -793,12 +790,11 @@ size_flags_horizontal = 9
 custom_styles/normal = SubResource( 18 )
 custom_fonts/font = SubResource( 19 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "CT-L"
+text = "CT-R"
 align = 1
 valign = 1
 
 [node name="DriveRect" type="HBoxContainer" parent="."]
-editor/display_folded = true
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = -150.0
@@ -942,7 +938,6 @@ text = "Cams"
 align = 1
 
 [node name="CamSelector" type="VBoxContainer" parent="."]
-editor/display_folded = true
 anchor_left = 0.01
 anchor_right = 1.0
 margin_left = 832.76
@@ -1066,7 +1061,6 @@ margin_left = 380.0
 margin_top = 14.0
 margin_right = 380.0
 margin_bottom = 14.0
-
 [connection signal="pressed" from="ArmRect/Arm/VBoxContainer/Title/BtnPower" to="ArmRect/Arm" method="_on_BtnCamera_pressed"]
 [connection signal="button_down" from="ArmRect/Arm/VBoxContainer/Tools/BtnLeft" to="ArmRect/Arm" method="_on_BtnLeft_button_down" binds= [ "tools" ]]
 [connection signal="button_up" from="ArmRect/Arm/VBoxContainer/Tools/BtnLeft" to="ArmRect/Arm" method="_on_BtnLeft_button_up" binds= [ "tools" ]]
