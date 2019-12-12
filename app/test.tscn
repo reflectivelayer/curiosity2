@@ -1,22 +1,99 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://grayscale.shader" type="Shader" id=2]
-[ext_resource path="res://White single Pixel.png" type="Texture" id=3]
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 2 )
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.227451, 0.227451, 0.25098, 1 )
 
-[node name="Node2D" type="Control"]
+[sub_resource type="PlaneMesh" id=1]
+material = SubResource( 5 )
+size = Vector2( 50, 50 )
 
-[node name="icon" type="Sprite" parent="."]
-position = Vector2( 279.321, 301.041 )
-texture = ExtResource( 1 )
+[sub_resource type="ConcavePolygonShape" id=2]
+data = PoolVector3Array( 25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25 )
 
-[node name="TextureRect" type="TextureRect" parent="."]
-material = SubResource( 1 )
-margin_right = 1021.0
-margin_bottom = 595.0
-texture = ExtResource( 3 )
-expand = true
+[sub_resource type="CylinderShape" id=6]
+radius = 0.503843
+height = 0.587618
 
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.956863, 0.278431, 0.0705882, 1 )
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="CylinderMesh" id=4]
+material = SubResource( 3 )
+top_radius = 0.5
+bottom_radius = 0.5
+height = 0.5
+
+[sub_resource type="CylinderShape" id=8]
+radius = 0.106159
+height = 1.80601
+
+[sub_resource type="CylinderMesh" id=7]
+material = SubResource( 3 )
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.83
+
+[node name="Spatial" type="Spatial"]
+
+[node name="ground" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="ground"]
+
+[node name="CollisionShape" type="CollisionShape" parent="ground/StaticBody"]
+shape = SubResource( 2 )
+
+[node name="Tire1" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-007, -1, 0, 1, -1.62921e-007, 0, 1.1069, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Tire1"]
+shape = SubResource( 6 )
+
+[node name="Tire" type="MeshInstance" parent="Tire1"]
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="Tire2" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-007, 1, 0, -1, -1.62921e-007, 0, 1.1069, 2.80166 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Tire2"]
+shape = SubResource( 6 )
+
+[node name="Tire" type="MeshInstance" parent="Tire2"]
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="rod" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-007, -1, 0, 1, -1.62921e-007, 0, 1.1069, 0.761899 )
+
+[node name="CollisionShape" type="CollisionShape" parent="rod"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.663701, -1.19209e-007 )
+shape = SubResource( 8 )
+
+[node name="Tire" type="MeshInstance" parent="rod"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.665365, -1.19209e-007 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -0.00911057, 0, 0.999959, 0, 1, 0, -0.999959, 0, -0.00911057, 2.77564, 0.770902, 0.782842 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.858092, 0.513496, 0, -0.513496, 0.858092, 0, 2.66975, 3.39523 )
+shadow_enabled = true
+
+[node name="HingeJoint" type="HingeJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13211, 0.352278 )
+nodes/node_a = NodePath("../Tire1")
+nodes/node_b = NodePath("../rod")
+motor/enable = true
+motor/target_velocity = 5.0
+
+[node name="HingeJoint2" type="HingeJoint" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07794, 2.44105 )
+nodes/node_a = NodePath("../rod")
+nodes/node_b = NodePath("../Tire2")

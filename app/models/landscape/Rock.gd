@@ -21,7 +21,13 @@ func _ready():
 func getDepth()->float:
 	return _depth
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
+func rotateCore(rot:Vector3):
+	$SolidMass.rotation = rot
+
+func scaleCore(sc:Vector3):
+	$SolidMass.scale = sc
+
 func drill(pressure)->float:
 	if hole==null:
 		_createHole()
@@ -38,8 +44,5 @@ func _createHole():
 	axis = axis.normalized()
 	hole.transform = hole.transform.rotated(axis, alpha)
 	hole.translation = to_local(drillOrigin)
-	hole.rotate_x(-rotation.x)
-	hole.rotate_y(-rotation.y)
-	hole.rotate_z(-rotation.z)
 	hole.scale = Vector3(0.0,0.05,0.0)
 	holes.add_child(hole)

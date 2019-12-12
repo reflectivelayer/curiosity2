@@ -14,6 +14,7 @@
 extends MeshInstance
 
 var ARM_SPEED = 0.3
+var INSTRUMENT_SPEED = 0.6
 var _ArmUI
 var _Drill:MeshInstance
 
@@ -62,7 +63,7 @@ func _ready():
 	_DrillUI.connect("drillAction",self,"_onDrillAction")	
 	_Drill.connect("onDrillContact",self,"onDrillContact")
 	_Drill.connect("onDrillTipContact",self,"onDrillTipContact")
-	#_setDefaultPosition()
+	_setDefaultPosition()
 	
 
 func printArmDefaultPosition():
@@ -112,9 +113,9 @@ func _process(delta):
 	elif _moveArmInstrumentBaseDown:
 		_armInstrumentBase.rotate_x(ARM_SPEED*delta*speedMultiplier)
 	elif _moveArmInstrumentLeft:
-		_armInstrument.rotate_y(-ARM_SPEED*delta*speedMultiplier)
+		_armInstrument.rotate_y(-INSTRUMENT_SPEED*delta)
 	elif _moveArmInstrumentRight:
-		_armInstrument.rotate_y(ARM_SPEED*delta*speedMultiplier)
+		_armInstrument.rotate_y(INSTRUMENT_SPEED*delta)
 	if _checkCollision():
 		_stopArm()
 	if _Drill.isRotating:

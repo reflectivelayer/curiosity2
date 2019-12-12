@@ -4,7 +4,7 @@ signal onRoverRotated(angle)
 
 var MASTCAM_HEAD_SPEED = 0.3
 var SPEED_LIMIT = 0.001
-var DRIVE_FORCE = 20
+var DRIVE_FORCE = 40
 var MastUI
 var ArmUI
 var DriveUI
@@ -75,7 +75,7 @@ func _ready():
 	CamUI.connect("cameraZoomChanged",self,"onZoomChanged")
 	_camLable = get_parent().get_node("Control/SelectedCam")
 	_driveStop()
-	onCameraSelected("hazCamFront")
+	#onCameraSelected("hazCamFront")
 	_updateMastAngle()
 	_updateRoverAngle()
 

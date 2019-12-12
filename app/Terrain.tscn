@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=2]
+[gd_scene load_steps=81 format=2]
 
 [ext_resource path="res://Terrain.gd" type="Script" id=1]
 [ext_resource path="res://Rover.gd" type="Script" id=2]
@@ -28,7 +28,6 @@
 [ext_resource path="res://models/landscape/Material_002.material" type="Material" id=26]
 [ext_resource path="res://GroundUI.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Mars_env.tres" type="Environment" id=28]
-[ext_resource path="res://models/landscape/Rock1.tscn" type="PackedScene" id=29]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 100.0
@@ -228,7 +227,7 @@ directional_shadow_mode = 1
 transform = Transform( 1, 0, 0, 0, 0.746986, 0.664839, 0, -0.664839, 0.746986, 0, 0, 0 )
 
 [node name="Rover" type="VehicleBody" parent="."]
-transform = Transform( -0.933035, 0, -0.359785, 0, 1, 0, 0.359785, 0, -0.933035, 83.5854, 0.141165, 67.4812 )
+transform = Transform( -0.918376, -0.171371, -0.356674, -0.202434, 0.977948, 0.0513599, 0.340007, 0.119371, -0.932816, 95.7328, 4.30735, -6.11744 )
 mass = 1000.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 1.3
@@ -236,7 +235,7 @@ brake = 1.0
 script = ExtResource( 2 )
 
 [node name="Chassis" type="MeshInstance" parent="Rover"]
-transform = Transform( 1, 0, 5.96046e-008, 0, 1, 0, -5.96046e-008, 0, 1, 0, 0, 0 )
+transform = Transform( 1, 0, 2.98023e-008, 0, 1, 0, -2.98023e-008, 0, 1, 0, 0, 0 )
 cast_shadow = 2
 mesh = ExtResource( 3 )
 material/0 = SubResource( 2 )
@@ -329,6 +328,7 @@ material/0 = SubResource( 28 )
 
 [node name="RightCenter" type="VehicleWheel" parent="Rover"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.21, 0.254, -0.106 )
+use_as_traction = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
 wheel_friction_slip = 1.0
@@ -343,6 +343,7 @@ material/0 = SubResource( 28 )
 
 [node name="LeftCenter" type="VehicleWheel" parent="Rover"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.20825, 0.253945, -0.090072 )
+use_as_traction = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
 wheel_friction_slip = 1.0
@@ -370,7 +371,7 @@ mesh = ExtResource( 10 )
 material/0 = SubResource( 28 )
 
 [node name="LeftRear" type="VehicleWheel" parent="Rover"]
-transform = Transform( 1, 0, 2.98023e-008, 0, 1, 0, -2.98023e-008, 0, 1, 1.074, 0.254, -1.168 )
+transform = Transform( 1, 0, -5.96046e-008, 0, 1, 0, 5.96046e-008, 0, 1, 1.074, 0.254, -1.168 )
 use_as_traction = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
@@ -560,9 +561,6 @@ mesh = ExtResource( 21 )
 material/0 = SubResource( 48 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -0.186928, -0.158608, 0.969485, 0.104438, 0.978079, 0.180151, -0.976806, 0.134926, -0.166266, 84.2532, 1.27408, 65.0536 )
+transform = Transform( -0.186928, -0.158608, 0.969485, 0.104438, 0.978079, 0.180151, -0.976806, 0.134926, -0.166266, 103.206, 8.79613, -3.40639 )
 current = true
 far = 200.0
-
-[node name="Rock" parent="." instance=ExtResource( 29 )]
-transform = Transform( -0.187239, 0.923527, 0, -0.451808, -0.363478, -0.224271, -0.103976, -0.0836484, 0.974527, 82.6547, -0.179022, 65.4058 )
