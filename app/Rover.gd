@@ -4,7 +4,9 @@ signal onRoverRotated(angle)
 
 var MASTCAM_HEAD_SPEED = 0.3
 var SPEED_LIMIT = 0.001
-var DRIVE_FORCE = 40
+var ANGULAR_SPEED_LIMIT = 0.2
+var DRIVE_FORCE = 500
+var BRAKE_FORCE = 30
 var MastUI
 var ArmUI
 var DriveUI
@@ -25,10 +27,10 @@ var _mastCam:MeshInstance
 var _mastCamBase:MeshInstance
 
 var _useMAHLI = false
-var _leftFrontWheel
-var _rightFrontWheel
-var _leftRearWheel
-var _rightRearWheel
+var _leftFrontWheel:VehicleWheel
+var _rightFrontWheel:VehicleWheel
+var _leftRearWheel:VehicleWheel
+var _rightRearWheel:VehicleWheel
 var _leftFrontSuspension
 var _rightFrontSuspension
 var _leftRearSuspension
@@ -46,6 +48,8 @@ var _speedMultiplier = 1
 var _camSpeedMultiplier = 1
 var _mastAngle = 0
 var _roverAngle = 0
+var _previousRotation:Vector3
+var _roverLocked:bool  = false
 
 func _ready():
 	_mastCam = $MastCam/BaseAxis/Base/CamHead
@@ -107,26 +111,21 @@ func _process(delta):
 		_updateMastAngle()
 		emit_signal("onMastRotated",_mastAngle+_roverAngle)		
 	elif _turnLeft:
-		applyTurnForce(1)
-		_turnPosition()
+		_turnRoverLeft()
 		_updateRoverAngle()
 		emit_signal("onRoverRotated",_roverAngle)
 		_updateMastAngle()
 		emit_signal("onMastRotated",_roverAngle+_mastAngle)		
 	elif _turnRight:
-		applyTurnForce(-1)
-		_turnPosition()	
+		_turnRoverRight()
 		_updateRoverAngle()
 		emit_signal("onRoverRotated",_roverAngle)
 		_updateMastAngle()
 		emit_signal("onMastRotated",_roverAngle+_mastAngle)	
-	if !_turnLeft && !_turnRight && engine_force==0 && !_stopped && _speed<0.000001:
-		_stopped = true
-		_lockAxis()
 	_previousPosition = translation*1
 	_updateSpeedControl()
 	#if checkInstumentCollision(): _stopArm()
-
+		
 func _updateMastAngle():
 	_mastAngle = _mastCamBase.rotation_degrees.y
 	if _mastAngle<0:_mastAngle =360+_mastAngle	
@@ -233,106 +232,67 @@ func onDriveMovement(direction,isOn):
 	match direction:
 		"up":
 			if isOn:
-				if _stopped:
-					_stopped = false
-					_unlockAxis()
-					_driveForward()
+				_driveForward()
 			else:
 				_driveStop()
 		"down":
 			if isOn:
-				if _stopped:
-					_stopped = false
-					_unlockAxis()
 					_driveBackward()
 			else:
 				_driveStop()
 		"left":
 			_turnLeft = isOn
 			if isOn:
-				if _stopped:
-					brake = 0
-					_stopped = false
-					_unlockAxis()
+				_stopped = false
 			else:
-				brake = 100
-				_setSuspensionStraight()
+				_driveStop()
 		"right":
 			_turnRight = isOn
 			if isOn:
-				if _stopped:
-					brake = 0	
-					_stopped = false
-					_unlockAxis()
+				_stopped = false
 			else:
-				brake = 100
-				_setSuspensionStraight()
+				_driveStop()
 				
 
 func _driveForward():
+	lockRoverInPlace(false)		
 	_setWheelsforStraight()
-	brake =0.0
-	engine_force = DRIVE_FORCE
+	_releaseBrakes()
+	_driveWheels(DRIVE_FORCE)
 	_driveDirection = 1
 	
 func _driveBackward():
+	lockRoverInPlace(false)	
 	_setWheelsforStraight()
-	brake =0.0	
-	engine_force = -DRIVE_FORCE
+	_releaseBrakes()
+	_driveWheels(-DRIVE_FORCE)
 	_driveDirection = -1	
 
 func _driveStop():
-	engine_force=0
-	brake = 100
+	_brakeAllWheels()
+	_setWheelsforStraight()
 	_driveDirection = 0
-
 	
 func _setWheelsforStraight():
-	$RightFront.rotation_degrees.y = 0
-	$RightRear.rotation_degrees.y = 0
-	$LeftFront.rotation_degrees.y = 0
-	$LeftRear.rotation_degrees.y = 0
-
-func _setSuspensionStraight():
-	_rightFrontSuspension.rotation_degrees.y = 0
+	_leftFrontWheel.steering = 0
+	_rightFrontWheel.steering = 0
+	_leftRearWheel.steering = 0
+	_rightRearWheel.steering = 0
+	_rightFrontSuspension.rotation_degrees.y = 180
 	_leftFrontSuspension.rotation_degrees.y = 0
-	_rightRearSuspension.rotation_degrees.y = 0
+	_rightRearSuspension.rotation_degrees.y = 180
 	_leftRearSuspension.rotation_degrees.y = 0
-	axis_lock_linear_x = false
-	axis_lock_linear_z = false	
 	
 func _turnPosition():
-	_rightFrontWheel.rotation_degrees.y = 45
-	_leftFrontWheel.rotation_degrees.y = -45
-	_rightRearWheel.rotation_degrees.y = -45
-	_leftRearWheel.rotation_degrees.y = 45
-	_rightFrontSuspension.rotation_degrees.y = 45
+	_leftFrontWheel.steering = -45
+	_rightFrontWheel.steering = 45
+	_leftRearWheel.steering = 45
+	_rightRearWheel.steering = -45
+	_rightFrontSuspension.rotation_degrees.y = 225
 	_leftFrontSuspension.rotation_degrees.y = -45
-	_rightRearSuspension.rotation_degrees.y = -45
+	_rightRearSuspension.rotation_degrees.y = -225
 	_leftRearSuspension.rotation_degrees.y = 45
-	axis_lock_linear_x = true
-	axis_lock_linear_z = true
-	
-func applyTurnForce(direction):
-	var turnForce = 25
-	var torqueVector = Vector3(0,0,100)
-	if direction>0:
-		add_force( Vector3(turnForce,0,0),torqueVector)
-		add_force( Vector3(-turnForce,0,0),-torqueVector)
-	else:
-		add_force( Vector3(-turnForce,0,0),torqueVector)
-		add_force( Vector3(turnForce,0,0),-torqueVector)
 
-func _lockAxis():
-	axis_lock_linear_x = true
-	axis_lock_linear_z = true
-	axis_lock_angular_y = true	
-	
-func _unlockAxis():
-	axis_lock_linear_x = false
-	axis_lock_linear_z = false
-	axis_lock_angular_y = false
-	
 func _updateSpeedControl():
 	if _speed>SPEED_LIMIT:
 		engine_force = 0
@@ -342,8 +302,61 @@ func _updateSpeedControl():
 			_driveForward()
 		else:
 			_driveBackward()
-
+	if abs(angular_velocity.y)>ANGULAR_SPEED_LIMIT:
+		if _turnLeft:
+			_driveWheelsTurn(-DRIVE_FORCE/50)
+		else:
+			_driveWheelsTurn(DRIVE_FORCE/50)
+	elif(_turnLeft || _turnRight) && abs(angular_velocity.y)<ANGULAR_SPEED_LIMIT:
+		if _turnLeft:
+			_driveWheelsTurn(-DRIVE_FORCE/20)
+		else:
+			_driveWheelsTurn(DRIVE_FORCE/20)
+	if _driveDirection==0 && !_turnLeft && !_turnRight && !_roverLocked && _speed < 0.0001:
+		lockRoverInPlace(true)
 
 func onZoomChanged(value):
 	print(value)
+
+func _brakeAllWheels():
+	_leftFrontWheel.brake = BRAKE_FORCE
+	_rightFrontWheel.brake = BRAKE_FORCE
+	_leftRearWheel.brake = BRAKE_FORCE
+	_rightRearWheel.brake = BRAKE_FORCE
 	
+func _releaseBrakes():
+	_leftFrontWheel.brake = 0
+	_rightFrontWheel.brake = 0
+	_leftRearWheel.brake = 0
+	_rightRearWheel.brake = 0
+
+func _driveWheels(force:float):
+	_leftFrontWheel.engine_force = force
+	_rightFrontWheel.engine_force = force
+	_leftRearWheel.engine_force = force
+	_rightRearWheel.engine_force = force
+
+func _driveWheelsTurn(force:float):
+	_leftFrontWheel.engine_force = force
+	_rightFrontWheel.engine_force = -force
+	_leftRearWheel.engine_force = force
+	_rightRearWheel.engine_force = -force	
+
+func _turnRoverLeft():
+	lockRoverInPlace(false)
+	_turnPosition()
+	_driveWheelsTurn(-DRIVE_FORCE/20)
+	
+func _turnRoverRight():
+	lockRoverInPlace(false)	
+	_turnPosition()
+	_driveWheelsTurn(DRIVE_FORCE/20)
+
+func lockRoverInPlace(lock:bool):
+	axis_lock_linear_x = lock
+	axis_lock_linear_y = lock
+	axis_lock_linear_z = lock
+	axis_lock_angular_x = lock
+	axis_lock_angular_y = lock
+	axis_lock_angular_z = lock
+	_roverLocked = lock
