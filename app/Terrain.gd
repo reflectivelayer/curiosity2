@@ -34,7 +34,7 @@ func _placeRocks():
 	var safe = 2000
 	var safeCount = 0 
 	var radius = 130
-	var maxRock = 150
+	var maxRock = 50
 	var count = 0
 	var orgRocks = [_orgRock1,_orgRock2,_orgRock3,_orgRock4]
 	var rock:Spatial

@@ -79,7 +79,7 @@ func _ready():
 	CamUI.connect("cameraZoomChanged",self,"onZoomChanged")
 	_camLable = get_parent().get_node("Control/SelectedCam")
 	_driveStop()
-	#onCameraSelected("hazCamFront")
+	onCameraSelected("hazCamFront")
 	_updateMastAngle()
 	_updateRoverAngle()
 
@@ -343,12 +343,14 @@ func _driveWheelsTurn(force:float):
 	_rightRearWheel.engine_force = -force	
 
 func _turnRoverLeft():
-	lockRoverInPlace(false)
+	lockRoverInPlace(false)	
+	linear_velocity =Vector3()
 	_turnPosition()
 	_driveWheelsTurn(-DRIVE_FORCE/20)
 	
 func _turnRoverRight():
-	lockRoverInPlace(false)	
+	lockRoverInPlace(false)
+	linear_velocity =Vector3()	
 	_turnPosition()
 	_driveWheelsTurn(DRIVE_FORCE/20)
 

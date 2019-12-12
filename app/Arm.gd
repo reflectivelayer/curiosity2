@@ -44,6 +44,7 @@ var _collisionLower
 var _raycastLower:RayCast
 var _collisionIncrement = PI/4
 var _DrillUI
+var _armParked = true
 
 func _ready():
 	_armLower = $Lower
@@ -63,7 +64,7 @@ func _ready():
 	_DrillUI.connect("drillAction",self,"_onDrillAction")	
 	_Drill.connect("onDrillContact",self,"onDrillContact")
 	_Drill.connect("onDrillTipContact",self,"onDrillTipContact")
-	_setDefaultPosition()
+	#_setDefaultPosition()
 	
 
 func printArmDefaultPosition():
@@ -157,7 +158,12 @@ func onArmMovement(section, direction,isOn):
 					_moveArmInstrumentLeft = isOn
 				"right":
 					_moveArmInstrumentRight = isOn
-					
+		"deployment":
+			if _armParked:
+				 deployArm()
+			else:
+				parkArm()
+		
 func _stopArm():
 	_moveArmBaseLeft = false
 	_moveArmBaseRight = false
@@ -171,6 +177,25 @@ func _stopArm():
 	_moveArmInstrumentRight = false
 	bounceBack()	
 
+	
+func deployArm():
+	$ArmPositions.play("ExtendArm")
+	_armParked = false
+	
+func parkArm():
+	var extendArm_anim = $ArmPositions.get_animation("ExtendArm")
+	var trackIndex = extendArm_anim.find_track(".:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5, rotation_degrees)
+	trackIndex = extendArm_anim.find_track("Lower:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5, $Lower.rotation_degrees)
+	trackIndex = extendArm_anim.find_track("Lower/Upper:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5, $Lower/Upper.rotation_degrees)	
+	trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5, $Lower/Upper/InstrumentBase.rotation_degrees)	
+	trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase/Instruments:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5, $Lower/Upper/InstrumentBase/Instruments.rotation_degrees)	
+	$ArmPositions.play_backwards("ExtendArm")
+	_armParked = true
 	
 func onDrillContact(contactA,contactB):
 	if contactA>=0.04 || contactB>=0.04:

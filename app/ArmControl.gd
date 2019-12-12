@@ -13,7 +13,7 @@ func _ready():
 
 
 func _on_BtnCamera_pressed():
-	emit_signal("cameraDeploy")
+		emit_signal("armMovement","deployment","deploy",false)
 	
 func _on_BtnLeft_button_down(section):
 		emit_signal("armMovement",section,"left",true)
