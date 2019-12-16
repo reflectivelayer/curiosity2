@@ -99,17 +99,21 @@ func _process(delta):
 	if _armRetracting:
 		_retractArm(delta)
 	if _moveMastCamUp:
-		_mastCam.rotate_x(-MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
+		if _mastCam.rotation.x-MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier>-1.51844:
+			_mastCam.rotate_x(-MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
 	elif _moveMastCamDown:
-		_mastCam.rotate_x(MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
+		if _mastCam.rotation.x+MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier<1.24:
+			_mastCam.rotate_x(MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
 	elif _moveMastCamLeft:
-		_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
-		_updateMastAngle()
-		emit_signal("onMastRotated",_mastAngle+_roverAngle)	
+		if _mastCamBase.rotation.y+MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier<3:
+			_mastCamBase.rotate_y(MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
+			_updateMastAngle()
+			emit_signal("onMastRotated",_mastAngle+_roverAngle)	
 	elif _moveMastCamRight:
-		_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
-		_updateMastAngle()
-		emit_signal("onMastRotated",_mastAngle+_roverAngle)		
+		if _mastCamBase.rotation.y+MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier>-3:
+			_mastCamBase.rotate_y(-MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)
+			_updateMastAngle()
+			emit_signal("onMastRotated",_mastAngle+_roverAngle)		
 	elif _turnLeft:
 		_turnRoverLeft()
 		_updateRoverAngle()
@@ -157,20 +161,16 @@ func onCameraSelected(camera):
 		"mastCam":
 			_camLable.text = "Mastcam"
 			$Desaturator.visible = false
-			var cam = $MastCam/BaseAxis/Base/CamHead/Mastcam
+			var cam = $MastCam/BaseAxis/Base/CamHead/Mastcam_34
 			if cam == _selectedCam:
-				if _selectedCam.fov == 21:
-					_selectedCam.fov = 7
-					$Arm.speedMultiplier = 0.1
-					_speedMultiplier = 0.1
-					_camSpeedMultiplier = 0.2
-				else:
-					cam.fov = 21
-					$Arm.speedMultiplier = 0.2
-					_speedMultiplier = 0.2
-					_camSpeedMultiplier = 0.4
+				_selectedCam = $MastCam/BaseAxis/Base/CamHead/Mastcam_100
+				$MastCam/BaseAxis/Base/CamHead/Mastcam_34.current = false
+				$Arm.speedMultiplier = 0.1
+				_speedMultiplier = 0.1
+				_camSpeedMultiplier = 0.2
 			else:
 				_selectedCam = cam
+				$MastCam/BaseAxis/Base/CamHead/Mastcam_100.current = false
 				$Arm.speedMultiplier = 0.2
 				_speedMultiplier = 0.2
 				_camSpeedMultiplier = 0.4
@@ -182,40 +182,43 @@ func onCameraSelected(camera):
 		"navCam":
 			_camLable.text = "Navcam"
 			$Desaturator.visible = true
-			$MastCam/BaseAxis/Base/CamHead/Mastcam.current = false
 			_selectedCam = $MastCam/BaseAxis/Base/CamHead/Navcam
 			_selectedCam.current = true
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamFront.current = false
-			$HazCamRear.current = false				
+			$HazCamRear.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam_34.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam_100.current = false
 		"MAHLI":
 			_camLable.text = "MAHLI"			
 			$Desaturator.visible = false
-			$MastCam/BaseAxis/Base/CamHead/Mastcam.current = false
 			$MastCam/BaseAxis/Base/CamHead/Navcam.current = false
 			_selectedCam = $Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI
 			_selectedCam.current = true
 			$HazCamFront.current = false
 			$HazCamRear.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam_34.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam_100.current = false
 		"hazCamFront":
 			_camLable.text = "Hazcam(front)"			
 			$Desaturator.visible = true
 			_selectedCam = $HazCamFront
 			_selectedCam.current = true
-			$MastCam/BaseAxis/Base/CamHead/Mastcam.current = false
 			$MastCam/BaseAxis/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
 			$HazCamRear.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam_34.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam_100.current = false
 		"hazCamRear":
 			_camLable.text = "Hazcam(rear)"
 			$Desaturator.visible = true
 			$HazCamFront.current = false
-			$MastCam/BaseAxis/Base/CamHead/Mastcam.current = false
+			_selectedCam = $HazCamRear
+			_selectedCam.current = true	
 			$MastCam/BaseAxis/Base/CamHead/Navcam.current = false
 			$Arm/Lower/Upper/InstrumentBase/Instruments/MAHLI.current = false
-			_selectedCam = $HazCamRear
-			_selectedCam.current = true
-			
+			$MastCam/BaseAxis/Base/CamHead/Mastcam_34.current = false
+			$MastCam/BaseAxis/Base/CamHead/Mastcam_100.current = false			
 
 func onMastMovement(direction,isOn):
 	match direction:

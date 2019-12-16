@@ -6,7 +6,6 @@ var _Hole = preload("res://models/landscape/DrillHole.tscn")
 
 var drillOrigin:Vector3
 var drillNormal:Vector3
-var _depth:float = 0
 var isDrilling = false
 var rng:RandomNumberGenerator
 var holes:Spatial
@@ -19,7 +18,7 @@ func _ready():
 				
 	
 func getDepth()->float:
-	return _depth
+	return hole.depth
 	
 
 func rotateCore(rot:Vector3):
@@ -28,12 +27,12 @@ func rotateCore(rot:Vector3):
 func scaleCore(sc:Vector3):
 	$SolidMass.scale = sc
 
-func drill(pressure)->float:
+func drill(location,pressure)->float:
 	if hole==null:
-		_createHole()
-	return hole.drill(pressure)
+		_createHole(location)
+	return hole.drill(location,pressure)
 		
-func _createHole():
+func _createHole(location:Vector3):
 	holes = $Holes
 	hole = _Hole.instance()
 	var n1norm = hole.transform.basis.y
@@ -45,4 +44,5 @@ func _createHole():
 	hole.transform = hole.transform.rotated(axis, alpha)
 	hole.translation = to_local(drillOrigin)
 	hole.scale = Vector3(0.0,0.05,0.0)
+	hole.relativeEntryPoint = location
 	holes.add_child(hole)

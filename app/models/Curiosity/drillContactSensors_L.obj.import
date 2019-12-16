@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/drillContactSensors_L.obj-3e50fe7e35f3b21c4b26c2384fbdcd6e.mesh"
+
+[deps]
+
+files=[ "res://.import/drillContactSensors_L.obj-3e50fe7e35f3b21c4b26c2384fbdcd6e.mesh" ]
+
+source_file="res://models/Curiosity/drillContactSensors_L.obj"
+dest_files=[ "res://.import/drillContactSensors_L.obj-3e50fe7e35f3b21c4b26c2384fbdcd6e.mesh", "res://.import/drillContactSensors_L.obj-3e50fe7e35f3b21c4b26c2384fbdcd6e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

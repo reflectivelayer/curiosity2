@@ -14,7 +14,8 @@
 extends MeshInstance
 
 var ARM_SPEED = 0.3
-var INSTRUMENT_SPEED = 0.6
+var INSTRUMENT_SPEED = 0.4
+var DRILL_FORCE:float = 0.001
 var _ArmUI
 var _Drill:MeshInstance
 
@@ -119,9 +120,11 @@ func _process(delta):
 		_armInstrument.rotate_y(INSTRUMENT_SPEED*delta)
 	if _checkCollision():
 		_stopArm()
-	if _Drill.isRotating:
-		_Drill.drill(_Drill.direction!=-1)
-		
+	if _Drill.direction!=0 || _Drill.spin != 0:
+		if _Drill.direction == 1:
+			_Drill.drill(DRILL_FORCE*_Drill.spin)
+		elif _Drill.direction == -1:
+			_Drill.drill(-DRILL_FORCE*10)	
 	
 func onArmMovement(section, direction,isOn):
 	_section = section
@@ -259,8 +262,28 @@ func _checkCollision()->bool:
 		
 func _onDrillAction(direction,isOn):
 	if direction == "down":
-		_Drill.lowerDrill(isOn)
+		if isOn:
+			_Drill.direction = 1
+		else:
+			_Drill.direction = 0	
 	elif direction == "up":
-		_Drill.raiseDrill(isOn)	
+		if isOn:
+			_Drill.direction = -1
+		else:
+			_Drill.direction = 0
 	elif direction == "activate":
-		_Drill.activate(isOn)		
+		if isOn:
+			_Drill.toggleActivate()
+			_Drill.direction  = _Drill.spin
+
+
+#func lowerDrill(isOn)->bool:
+#	if(dst_L>0 && dst_R>0 && _contactPoint==null):
+#		if isOn:
+#			if _contactPoint==null:
+#				direction=1
+#		else:
+#			direction=0
+#		return true
+#	else:
+#		return false
