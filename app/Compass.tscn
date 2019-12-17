@@ -5,6 +5,9 @@
 
 [node name="Node2D" type="Control"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Compass" type="Sprite" parent="."]
 position = Vector2( 108.316, 15.25 )
@@ -26,4 +29,3 @@ polygon = PoolVector2Array( 0, 0, -8, 20, 8, 20 )
 __meta__ = {
 "_edit_group_": true
 }
-

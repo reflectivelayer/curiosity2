@@ -11,6 +11,7 @@ var MastUI
 var ArmUI
 var DriveUI
 var CamUI
+var UI
 var ZoomControl
 
 var power = false
@@ -78,6 +79,7 @@ func _ready():
 	CamUI.connect("cameraSelected",self,"onCameraSelected")
 	CamUI.connect("cameraZoomChanged",self,"onZoomChanged")
 	_camLable = get_parent().get_node("Control/SelectedCam")
+	UI = get_parent().get_node("Control")
 	_driveStop()
 	onCameraSelected("hazCamFront")
 	_updateMastAngle()
@@ -128,7 +130,7 @@ func _process(delta):
 		emit_signal("onMastRotated",_roverAngle+_mastAngle)	
 	_previousPosition = translation*1
 	_updateSpeedControl()
-	#if checkInstumentCollision(): _stopArm()
+	_updateAttitudeDisplay(rotation_degrees.x,rotation_degrees.z)
 		
 func _updateMastAngle():
 	_mastAngle = _mastCamBase.rotation_degrees.y
@@ -365,3 +367,7 @@ func lockRoverInPlace(lock:bool):
 	axis_lock_angular_y = lock
 	axis_lock_angular_z = lock
 	_roverLocked = lock
+
+func _updateAttitudeDisplay(pitch:float, roll:float):
+	UI.setRollDisplay(roll)
+	UI.setPitchDisplay(pitch)

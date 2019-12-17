@@ -210,18 +210,22 @@ data = PoolVector3Array( 187.947, 13.3366, 168.087, 178.099, 13.8245, 157.195, 1
 [node name="Spatial" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
+[node name="Sun" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -0.498336, 0.866984, 0, -0.866984, -0.498336, 0, 0, 0 )
 light_color = Color( 0.710938, 0.637939, 0.599854, 1 )
 light_energy = 0.8
 shadow_enabled = true
+shadow_bias = 0.15
 directional_shadow_mode = 1
+directional_shadow_split_1 = 0.053
+directional_shadow_normal_bias = 0.05
+directional_shadow_max_distance = 70.0
 
 [node name="CamCenter" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.746986, 0.664839, 0, -0.664839, 0.746986, 0, 0, 0 )
 
 [node name="Rover" type="VehicleBody" parent="."]
-transform = Transform( -0.934038, 0.00435268, -0.357145, 0.00466001, 0.999989, -1.91643e-009, 0.357141, -0.00166431, -0.934048, 80.1272, 0.0186409, 64.3403 )
+transform = Transform( -0.934038, 0.00435268, -0.357145, 0.00466001, 0.999989, -8.454e-009, 0.357141, -0.00166431, -0.934048, 80.1272, 0.0186409, 64.3403 )
 mass = 1000.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 1.3
@@ -462,8 +466,7 @@ transform = Transform( 1, -1.49012e-008, 1.49012e-008, -4.47035e-008, 1, -2.9802
 script = ExtResource( 20 )
 
 [node name="DrillBit" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase/Instruments/Drill"]
-transform = Transform( -0.661773, 0.749705, 3.54135e-007, -0.749704, -0.661774, -2.23517e-008, 1.11759e-007, 4.09782e-008, 1, -0.00234985, 0.0841141, 0.193901 )
-cast_shadow = 0
+transform = Transform( -0.661773, 0.749705, 3.47383e-007, -0.749704, -0.661774, -2.98023e-008, 9.68575e-008, 2.79397e-008, 1, -0.00234985, 0.0841141, 0.1939 )
 mesh = ExtResource( 21 )
 material/0 = SubResource( 22 )
 
