@@ -75,7 +75,7 @@ func _ready():
 	DriveUI = get_parent().get_node("Control/DriveRect/Drive")
 	DriveUI.connect("driveMovment",self,"onDriveMovement")
 
-	CamUI = get_parent().get_node("Control/CamSelector")
+	CamUI = get_parent().get_node("Control/CamRect/CamSelector")
 	CamUI.connect("cameraSelected",self,"onCameraSelected")
 	CamUI.connect("cameraZoomChanged",self,"onZoomChanged")
 	_camLable = get_parent().get_node("Control/SelectedCam")

@@ -65,7 +65,7 @@ func _ready():
 	_DrillUI.connect("drillAction",self,"_onDrillAction")	
 	_Drill.connect("onDrillContact",self,"onDrillContact")
 	_Drill.connect("onDrillTipContact",self,"onDrillTipContact")
-	#_setDefaultPosition()
+	_setDefaultPosition()
 	
 
 func printArmDefaultPosition():

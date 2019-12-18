@@ -4,6 +4,7 @@ var _armPanelOpen = false
 var _mastPanelOpen = false
 var _drivePanelOpen = false
 var _drillPanelOpen = false
+var _camPanelOpen = false
 var _rollDisplay:Label 
 var _pitchDisplay:Label 
 
@@ -61,3 +62,9 @@ func _onRoverRotated(angle):
 	var direction = 360-int(angle)%360
 	$Compass.setRoverPointer(direction)	
 
+func _on_Cam_panel_pressed():
+	if _camPanelOpen:
+		$PanelSlider.play_backwards("CamPanel")
+	else:
+		$PanelSlider.play("CamPanel")	
+	_camPanelOpen = !_camPanelOpen	

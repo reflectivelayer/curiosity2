@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://Terrain.gd" type="Script" id=1]
 [ext_resource path="res://Rover.gd" type="Script" id=2]
@@ -35,7 +35,6 @@
 [ext_resource path="res://models/Curiosity/Wheels.tres" type="Material" id=33]
 [ext_resource path="res://models/Curiosity/Turret.material" type="Material" id=34]
 [ext_resource path="res://models/Curiosity/Patches.tres" type="Material" id=35]
-[ext_resource path="res://models/landscape/Rock4.tscn" type="PackedScene" id=36]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 100.0
@@ -356,6 +355,7 @@ material/0 = SubResource( 4 )
 
 [node name="RightRear" type="VehicleWheel" parent="Rover"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.061, 0.254, -1.173 )
+engine_force = 1.4013e-045
 use_as_traction = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
@@ -371,6 +371,7 @@ material/0 = SubResource( 4 )
 
 [node name="LeftRear" type="VehicleWheel" parent="Rover"]
 transform = Transform( 1, 0, -5.96046e-008, 0, 1, 0, 5.96046e-008, 0, 1, 1.074, 0.254, -1.168 )
+engine_force = 9.64289e-039
 use_as_traction = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
@@ -574,6 +575,3 @@ environment = ExtResource( 28 )
 transform = Transform( -0.233814, -0.243957, 0.941178, 0.0270672, 0.966002, 0.257116, -0.971905, 0.0855923, -0.219261, 78.2386, 1.753, 75.3492 )
 current = true
 far = 200.0
-
-[node name="Rock" parent="." instance=ExtResource( 36 )]
-transform = Transform( 0.559492, -0.176068, -0.809919, -0.213961, 0.913375, -0.346363, 0.800743, 0.367078, 0.473354, 79.3107, 0.18602, 61.7504 )
