@@ -46,6 +46,7 @@ var _raycastLower:RayCast
 var _collisionIncrement = PI/4
 var _DrillUI
 var _armParked = true
+var _armFinalPosition = []
 
 func _ready():
 	_armLower = $Lower
@@ -66,6 +67,7 @@ func _ready():
 	_Drill.connect("onDrillContact",self,"onDrillContact")
 	_Drill.connect("onDrillTipContact",self,"onDrillTipContact")
 	_setDefaultPosition()
+	_saveArmDistination()
 	
 
 func printArmDefaultPosition():
@@ -182,6 +184,7 @@ func _stopArm():
 
 	
 func deployArm():
+	_loadArmDestination()
 	$ArmPositions.play("ExtendArm")
 	_armParked = false
 	
@@ -277,13 +280,28 @@ func _onDrillAction(direction,isOn):
 			_Drill.direction  = _Drill.spin
 
 
-#func lowerDrill(isOn)->bool:
-#	if(dst_L>0 && dst_R>0 && _contactPoint==null):
-#		if isOn:
-#			if _contactPoint==null:
-#				direction=1
-#		else:
-#			direction=0
-#		return true
-#	else:
-#		return false
+func _saveArmDistination():
+	var extendArm_anim = $ArmPositions.get_animation("ExtendArm")
+	var trackIndex = extendArm_anim.find_track(".:rotation_degrees")
+	_armFinalPosition.append(extendArm_anim.track_get_key_value(trackIndex, 5))
+	trackIndex = extendArm_anim.find_track("Lower:rotation_degrees")
+	_armFinalPosition.append(extendArm_anim.track_get_key_value(trackIndex, 5))
+	trackIndex = extendArm_anim.find_track("Lower/Upper:rotation_degrees")
+	_armFinalPosition.append(extendArm_anim.track_get_key_value(trackIndex, 5))	
+	trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase:rotation_degrees")
+	_armFinalPosition.append(extendArm_anim.track_get_key_value(trackIndex, 5))
+	trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase/Instruments:rotation_degrees")
+	_armFinalPosition.append(extendArm_anim.track_get_key_value(trackIndex, 5))
+
+func _loadArmDestination():
+	var extendArm_anim = $ArmPositions.get_animation("ExtendArm")
+	var trackIndex = extendArm_anim.find_track(".:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5, _armFinalPosition[0])
+	trackIndex = extendArm_anim.find_track("Lower:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[1])
+	trackIndex = extendArm_anim.find_track("Lower/Upper:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[2])	
+	trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5, _armFinalPosition[3])	
+	trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase/Instruments:rotation_degrees")
+	extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[4])	

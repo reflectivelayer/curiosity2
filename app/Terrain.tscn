@@ -427,14 +427,14 @@ far = 250.0
 anims/MastStartUp = SubResource( 9 )
 
 [node name="Arm" type="MeshInstance" parent="Rover"]
-transform = Transform( 0.999998, 0, 0, 0, 1, 0, 0, 0, 0.999998, 0.468971, 1.03303, 1.11277 )
+transform = Transform( -4.37113e-008, 0, -0.999998, 0, 1, 0, 0.999998, 0, -4.37113e-008, 0.468971, 1.03303, 1.11277 )
 mesh = ExtResource( 14 )
 material/0 = SubResource( 10 )
 material/1 = SubResource( 11 )
 script = ExtResource( 15 )
 
 [node name="Lower" type="MeshInstance" parent="Rover/Arm"]
-transform = Transform( 1, 0, 0, 0, 0.309018, 0.951056, 0, -0.951058, 0.309017, 4.57764e-005, -0.164139, 0.168327 )
+transform = Transform( 1, 0, 0, 0, 0.94552, 0.325568, 0, -0.325569, 0.945518, 4.57764e-005, -0.164139, 0.168327 )
 mesh = ExtResource( 16 )
 material/0 = SubResource( 12 )
 material/1 = SubResource( 13 )
@@ -442,7 +442,7 @@ material/2 = SubResource( 14 )
 material/3 = SubResource( 15 )
 
 [node name="Upper" type="MeshInstance" parent="Rover/Arm/Lower"]
-transform = Transform( 1, 2.98023e-008, -2.98023e-008, -5.96046e-008, -0.995863, 0.0908587, 0, -0.0908587, -0.995863, 0.0607605, -0.00508881, 0.820147 )
+transform = Transform( 1, 0, 0, 0, 0.358368, 0.93358, 0, -0.93358, 0.358368, 0.0607605, -0.00508881, 0.820147 )
 mesh = ExtResource( 17 )
 material/0 = SubResource( 16 )
 material/1 = SubResource( 17 )
@@ -450,13 +450,13 @@ material/2 = SubResource( 18 )
 material/3 = SubResource( 19 )
 
 [node name="InstrumentBase" type="MeshInstance" parent="Rover/Arm/Lower/Upper"]
-transform = Transform( -1, 2.68221e-007, 3.76254e-007, 8.9407e-008, 0.953868, -0.300224, -4.17233e-007, -0.300223, -0.953869, -0.188496, 0.792183, -0.000354767 )
+transform = Transform( -1, 8.74227e-008, 0, 3.82137e-015, 4.37113e-008, 1, 8.74228e-008, 0.999999, -4.37114e-008, -0.188496, 0.792183, -0.000354767 )
 mesh = ExtResource( 18 )
 material/0 = SubResource( 20 )
 material/1 = SubResource( 21 )
 
 [node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
-transform = Transform( -0.984808, -0.012113, 0.173225, -1.49012e-008, 0.997564, 0.0697563, -0.173648, 0.0686966, -0.982407, 0.0601349, 0.133446, 0.142113 )
+transform = Transform( -0.642788, 0, 0.766043, 0, 1, 0, -0.766045, 0, -0.642786, 0.0601349, 0.133446, 0.142113 )
 mesh = ExtResource( 19 )
 material/0 = ExtResource( 34 )
 material/1 = ExtResource( 35 )
