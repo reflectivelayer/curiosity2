@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Terrain.gd" type="Script" id=1]
 [ext_resource path="res://Rover.gd" type="Script" id=2]
@@ -35,6 +35,7 @@
 [ext_resource path="res://models/Curiosity/Wheels.tres" type="Material" id=33]
 [ext_resource path="res://models/Curiosity/Turret.material" type="Material" id=34]
 [ext_resource path="res://models/Curiosity/Patches.tres" type="Material" id=35]
+[ext_resource path="res://models/landscape/Rock4.tscn" type="PackedScene" id=36]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 100.0
@@ -427,7 +428,7 @@ far = 250.0
 anims/MastStartUp = SubResource( 9 )
 
 [node name="Arm" type="MeshInstance" parent="Rover"]
-transform = Transform( -4.37113e-008, 0, -0.999998, 0, 1, 0, 0.999998, 0, -4.37113e-008, 0.468971, 1.03303, 1.11277 )
+transform = Transform( 0.991803, 0, -0.127757, 0, 1, 0, 0.127757, 0, 0.991803, 0.468971, 1.03303, 1.11277 )
 mesh = ExtResource( 14 )
 material/0 = SubResource( 10 )
 material/1 = SubResource( 11 )
@@ -442,7 +443,7 @@ material/2 = SubResource( 14 )
 material/3 = SubResource( 15 )
 
 [node name="Upper" type="MeshInstance" parent="Rover/Arm/Lower"]
-transform = Transform( 1, 0, 0, 0, 0.358368, 0.93358, 0, -0.93358, 0.358368, 0.0607605, -0.00508881, 0.820147 )
+transform = Transform( 1, 0, 0, 0, -0.296708, -0.954968, 0, 0.954968, -0.296708, 0.0607605, -0.00508881, 0.820147 )
 mesh = ExtResource( 17 )
 material/0 = SubResource( 16 )
 material/1 = SubResource( 17 )
@@ -450,13 +451,13 @@ material/2 = SubResource( 18 )
 material/3 = SubResource( 19 )
 
 [node name="InstrumentBase" type="MeshInstance" parent="Rover/Arm/Lower/Upper"]
-transform = Transform( -1, 8.74227e-008, 0, 3.82137e-015, 4.37113e-008, 1, 8.74228e-008, 0.999999, -4.37114e-008, -0.188496, 0.792183, -0.000354767 )
+transform = Transform( -1, -2.92486e-008, -3.24526e-007, 0, 0.995962, -0.0897635, 3.25841e-007, -0.0897634, -0.995963, -0.188496, 0.792183, -0.000354767 )
 mesh = ExtResource( 18 )
 material/0 = SubResource( 20 )
 material/1 = SubResource( 21 )
 
 [node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
-transform = Transform( -0.642788, 0, 0.766043, 0, 1, 0, -0.766045, 0, -0.642786, 0.0601349, 0.133446, 0.142113 )
+transform = Transform( -0.998146, 0, -0.0608744, 0, 1, 0, 0.0608746, 0, -0.998143, 0.0601349, 0.133446, 0.142113 )
 mesh = ExtResource( 19 )
 material/0 = ExtResource( 34 )
 material/1 = ExtResource( 35 )
@@ -575,3 +576,6 @@ environment = ExtResource( 28 )
 transform = Transform( -0.233814, -0.243957, 0.941178, 0.0270672, 0.966002, 0.257116, -0.971905, 0.0855923, -0.219261, 78.2386, 1.753, 75.3492 )
 current = true
 far = 200.0
+
+[node name="Rock" parent="." instance=ExtResource( 36 )]
+transform = Transform( 0.920577, 0.168267, -0.352454, -0.280436, 0.912882, -0.296651, 0.271833, 0.371931, 0.887567, 78.775, -0.0316519, 61.1848 )

@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Grain",
+"language": "GDScript",
+"path": "res://models/landscape/Grain.gd"
+}, {
+"base": "Reference",
+"class": "RockLayer",
+"language": "GDScript",
+"path": "res://models/landscape/RockLayer.gd"
+} ]
 _global_script_class_icons={
-
+"Grain": "",
+"RockLayer": ""
 }
 
 [application]

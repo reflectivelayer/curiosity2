@@ -32,6 +32,8 @@ var _leftFrontWheel:VehicleWheel
 var _rightFrontWheel:VehicleWheel
 var _leftRearWheel:VehicleWheel
 var _rightRearWheel:VehicleWheel
+var _leftCenterWheel:VehicleWheel
+var _rightCenterWheel:VehicleWheel
 var _leftFrontSuspension
 var _rightFrontSuspension
 var _leftRearSuspension
@@ -60,6 +62,8 @@ func _ready():
 	_rightFrontWheel = $RightFront
 	_leftRearWheel = $LeftRear
 	_rightRearWheel = $RightRear
+	_leftCenterWheel = $LeftCenter
+	_rightCenterWheel = $RightCenter
 	_leftFrontSuspension = $LeftFrontSuspension
 	_rightFrontSuspension = $RightFrontSuspension
 	_leftRearSuspension = $LeftRearSuspension
@@ -340,12 +344,14 @@ func _driveWheels(force:float):
 	_rightFrontWheel.engine_force = force
 	_leftRearWheel.engine_force = force
 	_rightRearWheel.engine_force = force
+	_leftCenterWheel.engine_force = force
+	_rightCenterWheel.engine_force = force
 
 func _driveWheelsTurn(force:float):
 	_leftFrontWheel.engine_force = force
 	_rightFrontWheel.engine_force = -force
 	_leftRearWheel.engine_force = force
-	_rightRearWheel.engine_force = -force	
+	_rightRearWheel.engine_force = -force
 
 func _turnRoverLeft():
 	lockRoverInPlace(false)	
