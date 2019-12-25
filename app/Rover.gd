@@ -153,11 +153,7 @@ func onPowerToggle():
 
 	
 func onCmeraDeploy():
-	if _armDeploying || _armDeployed:
-		_armRetracting = true
-		_armDeploying = false	
-	else:
-		_armDeploying = true
+	pass
 	
 func onCameraSelected(camera):
 	$Arm.speedMultiplier = 1
