@@ -39,7 +39,6 @@ func drill(location:Vector3, pressure:float)->float:
 		if _holeFloor<GROW_WIDTH_LIMIT:
 			_size = _holeFloor*7	#3 = adjusted number limit scale to 0.03
 			scale = Vector3(_size,0.05,_size)
-	print(layer.grain[0].color)
 	return dig
 
 func getRockLayerAt(depth):

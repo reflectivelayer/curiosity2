@@ -1,6 +1,9 @@
 extends Spatial
+class_name Drill
+
 signal onDrillContact(contactA,contactB)
 signal onDrillTipContact(target,contactPoint, normal, drillDepth)
+signal onDrillParked() 
 
 var MAX_DEPTH = 0.065  # 6.5cm
 var rockTarget:Spatial
@@ -19,7 +22,7 @@ var dst_L = 0
 var dst_R = 0 
 var _drillBit
 var _drillTip:RayCast
-var _contactPoint = null
+var contactPoint = null
 var _dig = 0.0
 var _pressure = 0
 
@@ -42,9 +45,12 @@ func _process(delta):
 	dst_R = -1
 	if direction!=0:	
 		var movZ = _movementlRate*direction*delta
-		if _contactPoint == null:
+		if contactPoint == null:
 			if translation.z+movZ>_orgZ:
 				translate(Vector3(0,0,movZ))
+			else:
+				_turnDrillOff()	
+				emit_signal("onDrillParked")
 		else:
 			if direction == 1:
 				movZ = rockTarget.drill(translation,_pressure*spin)
@@ -68,14 +74,15 @@ func _process(delta):
 	if _drillTip.is_colliding():
 		rockTarget = _drillTip.get_collider().get_parent().get_parent()
 		var tipLocation = _drillTip.get_collision_point()
-		if _contactPoint == null:
-			_contactPoint = translation
+		if contactPoint == null:
+			contactPoint = translation
 		if rockTarget.get("RL_CLASS") != null && rockTarget.RL_CLASS == "Rock":
-			_drillDepth =  max(0,translation.z - _orgZ - _contactPoint.z)
+			_drillDepth =  max(0,translation.z - _orgZ - contactPoint.z)
 			emit_signal("onDrillTipContact",rockTarget,tipLocation,_drillTip.get_collision_normal(),_drillDepth)
-
 	else:
-		_contactPoint = null	
+		if contactPoint!=null:
+			emit_signal("onDrillTipContact",null,null,null,0)
+		contactPoint = null	
 		
 func toggleActivate()->bool:
 	if(spin==0 && dst_L>0 && dst_R>0):

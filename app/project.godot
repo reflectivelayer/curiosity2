@@ -9,6 +9,21 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Spatial",
+"class": "Drill",
+"language": "GDScript",
+"path": "res://Drill.gd"
+}, {
+"base": "Reference",
+"class": "DrillManager",
+"language": "GDScript",
+"path": "res://DrillManager.gd"
+}, {
+"base": "PanelContainer",
+"class": "DrillUI",
+"language": "GDScript",
+"path": "res://DrillControl.gd"
+}, {
 "base": "Reference",
 "class": "Grain",
 "language": "GDScript",
@@ -20,6 +35,9 @@ _global_script_classes=[ {
 "path": "res://models/landscape/RockLayer.gd"
 } ]
 _global_script_class_icons={
+"Drill": "",
+"DrillManager": "",
+"DrillUI": "",
 "Grain": "",
 "RockLayer": ""
 }

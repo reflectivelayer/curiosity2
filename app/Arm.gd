@@ -15,10 +15,7 @@ extends MeshInstance
 
 var ARM_SPEED = 0.3
 var INSTRUMENT_SPEED = 0.4
-var DRILL_FORCE:float = 0.001
 var _ArmUI
-var _Drill:MeshInstance
-
 var _moveArmBaseLeft = false
 var _moveArmBaseRight = false
 var _moveArmLowerUp = false
@@ -44,7 +41,6 @@ var _raycastUpper:RayCast
 var _collisionLower
 var _raycastLower:RayCast
 var _collisionIncrement = PI/4
-var _DrillUI
 var _armParked = false
 var _isPreParking = false
 var _armFinalPosition = []
@@ -60,6 +56,7 @@ var _lowerPreParkTransform:Transform
 var _upperPreParkTransform:Transform
 var _insBasePreParkTransform:Transform
 var _insPreParkTransform:Transform
+var _drillManager:DrillManager
 
 func _ready():
 	_armLower = $Lower
@@ -67,18 +64,22 @@ func _ready():
 	_armInstrumentBase = $Lower/Upper/InstrumentBase
 	_armInstrument = $Lower/Upper/InstrumentBase/Instruments
 	_instrumentsCollider = $Lower/Upper/InstrumentBase/Instruments/RayCast
-	_Drill = $Lower/Upper/InstrumentBase/Instruments/Drill
 	_collisionUpper = $Lower/Upper/Collision
 	_raycastUpper = $Lower/Upper/Collision/RayCast
 	_collisionLower = $Lower/Collision
 	_raycastLower = $Lower/Collision/RayCast
 	
+	var drill = $Lower/Upper/InstrumentBase/Instruments/Drill
+	var drillUI = $"../../Control/DrillRect/Drill"
+	var anim:Animation = $Animator.get_animation("PreDrill")
+	var drillBit = $Lower/Upper/InstrumentBase/Instruments/Drill/DrillBit
+	_drillManager = DrillManager.new(drill,drillUI,drillBit,anim,$Animator)
+	
+	_drillManager.connect("onStopArm",self,"_onStopArm")
+		
 	_ArmUI = $"../../Control/ArmRect/Arm"
 	_ArmUI.connect("armMovement",self,"onArmMovement")
-	_DrillUI = $"../../Control/DrillRect/Drill"
-	_DrillUI.connect("drillAction",self,"_onDrillAction")	
-	_Drill.connect("onDrillContact",self,"onDrillContact")
-	_Drill.connect("onDrillTipContact",self,"onDrillTipContact")
+
 	#_setDefaultPosition()
 	_saveArmDistination()
 	_armPreParkTransform  = Transform(transform.basis)
@@ -113,7 +114,6 @@ func _setDefaultPosition():
 	$Lower/Upper/InstrumentBase/Instruments.rotation = Vector3(-0, 2.426008, 0)
 	
 
-
 func _process(delta):
 	_delta = delta
 	if _moveArmBaseLeft:
@@ -129,11 +129,9 @@ func _process(delta):
 	elif _moveArmUpperUp:
 		_armUpper.rotate_x(ARM_SPEED*delta*speedMultiplier)
 		_armInstrumentBase.rotate_x(-ARM_SPEED*delta*speedMultiplier)
-		print(_armUpper.rotation.x)
 	elif _moveArmUpperDown:
 		_armUpper.rotate_x(-ARM_SPEED*delta*speedMultiplier)
-		_armInstrumentBase.rotate_x(ARM_SPEED*delta*speedMultiplier)
-		print(_armUpper.rotation.x)		
+		_armInstrumentBase.rotate_x(ARM_SPEED*delta*speedMultiplier)	
 	elif _moveArmInstrumentBaseUp:
 		_armInstrumentBase.rotate_x(-ARM_SPEED*delta*speedMultiplier)
 	elif _moveArmInstrumentBaseDown:
@@ -144,13 +142,13 @@ func _process(delta):
 		_armInstrument.rotate_y(INSTRUMENT_SPEED*delta)
 	if _checkCollision():
 		_stopArm()
-	if _Drill.direction!=0 || _Drill.spin != 0:
-		if _Drill.direction == 1:
-			_Drill.drill(DRILL_FORCE*_Drill.spin)
-		elif _Drill.direction == -1:
-			_Drill.drill(-DRILL_FORCE*10)	
+	_drillManager.update()
 	if _isPreParking:
 		_updatePrePark()
+
+
+func _onStopArm():
+	_stopArm()
 	
 func onArmMovement(section, direction,isOn):
 	_section = section
@@ -209,7 +207,6 @@ func _stopArm():
 
 func _updatePrePark():
 	_parkTime+=0.01
-	print(_parkTime)
 	transform.basis = slerp(_parkRotationArm,_armPreParkTransform,_parkTime)
 	$Lower.transform.basis = slerp(_parkRotationLower,_lowerPreParkTransform,_parkTime)
 	$Lower/Upper.transform.basis = slerp(_parkRotationUpper,_upperPreParkTransform,_parkTime)
@@ -222,7 +219,7 @@ func _updatePrePark():
 		parkArm()
 		
 func deployArm():
-		$ArmPositions.play("ExtendArm")
+		$Animator.play("ExtendArm")
 		_armParked = false
 		
 func _preParkArm():
@@ -242,23 +239,9 @@ func slerp(t1:Transform,t2:Transform,ratio:float)->Basis:
 
 	#if $Lower/Upper.rotation_degrees.x<0: $Lower/Upper.rotation_degrees.x+=360 
 func parkArm():
-	$ArmPositions.play_backwards("ExtendArm")
+	$Animator.play_backwards("ExtendArm")
 	_armParked = true
-	
-func onDrillContact(contactA,contactB):
-	if contactA>=0.04 || contactB>=0.04:
-		_stopArm()
-	elif  contactA>=0 && contactB>=0:
-		pass
-	_DrillUI.setContactLeft(contactA>=0.01) 
-	_DrillUI.setContactRight(contactB>=0.01)
-	
-func onDrillTipContact(target,contactPoint,normal,drillDepth):
-		target.drillOrigin = contactPoint
-		target.drillNormal = normal
-		target.isDrilling = true
-		_DrillUI.setDepth(drillDepth)
-		
+			
 func bounceBack():
 	if _isOn:
 		print("bounce")
@@ -297,33 +280,16 @@ func bounceBack():
 						_armInstrument.rotate_y(ARM_SPEED*_delta*speedMultiplier)
 					"right":
 						_armInstrument.rotate_y(-ARM_SPEED*_delta*speedMultiplier)
-						
 
 func _checkCollision()->bool:
 	_collisionUpper.rotate_y(_collisionIncrement)
 	_collisionLower.rotate_z(_collisionIncrement)
 	_instrumentsCollider.rotate_y(_collisionIncrement)
 	return _raycastUpper.is_colliding() || _raycastLower.is_colliding() || _instrumentsCollider.is_colliding()
-		
-func _onDrillAction(direction,isOn):
-	if direction == "down":
-		if isOn:
-			_Drill.direction = 1
-		else:
-			_Drill.direction = 0	
-	elif direction == "up":
-		if isOn:
-			_Drill.direction = -1
-		else:
-			_Drill.direction = 0
-	elif direction == "activate":
-		if isOn:
-			_Drill.toggleActivate()
-			_Drill.direction  = _Drill.spin
 
 
 func _saveArmDistination():
-	var extendArm_anim = $ArmPositions.get_animation("ExtendArm")
+	var extendArm_anim = $Animator.get_animation("ExtendArm")
 	var trackIndex = extendArm_anim.find_track(".:rotation_degrees")
 	_armFinalPosition.append(extendArm_anim.track_get_key_value(trackIndex, 5))
 	trackIndex = extendArm_anim.find_track("Lower:rotation_degrees")
@@ -336,7 +302,7 @@ func _saveArmDistination():
 	_armFinalPosition.append(extendArm_anim.track_get_key_value(trackIndex, 5))
 
 func _loadArmDestination():
-	var extendArm_anim = $ArmPositions.get_animation("ExtendArm")
+	var extendArm_anim = $Animator.get_animation("ExtendArm")
 	var trackIndex = extendArm_anim.find_track(".:rotation_degrees")
 	extendArm_anim.track_set_key_value(trackIndex, 5, _armFinalPosition[0])
 	trackIndex = extendArm_anim.find_track("Lower:rotation_degrees")
@@ -347,3 +313,4 @@ func _loadArmDestination():
 	extendArm_anim.track_set_key_value(trackIndex, 5, _armFinalPosition[3])	
 	trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase/Instruments:rotation_degrees")
 	extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[4])	
+	

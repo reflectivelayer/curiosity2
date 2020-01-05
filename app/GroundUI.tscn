@@ -127,16 +127,14 @@ func _on_BtnDown_button_up():
 	emit_signal(\"driveMovment\",\"down\",false)
 "
 
-[sub_resource type="StyleBoxEmpty" id=48]
+[sub_resource type="StyleBoxEmpty" id=21]
 
-[sub_resource type="StyleBoxFlat" id=21]
+[sub_resource type="StyleBoxFlat" id=22]
 bg_color = Color( 0.4, 0.4, 0.4, 1 )
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxEmpty" id=22]
 
 [sub_resource type="StyleBoxEmpty" id=23]
 
@@ -146,23 +144,23 @@ corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxEmpty" id=26]
 
-[sub_resource type="StyleBoxFlat" id=27]
+[sub_resource type="StyleBoxEmpty" id=27]
+
+[sub_resource type="StyleBoxFlat" id=28]
 bg_color = Color( 0.4, 0.4, 0.4, 1 )
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxEmpty" id=28]
+[sub_resource type="StyleBoxEmpty" id=29]
 
-[sub_resource type="StyleBoxFlat" id=29]
+[sub_resource type="StyleBoxFlat" id=30]
 bg_color = Color( 0.4, 0.4, 0.4, 1 )
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxEmpty" id=30]
 
 [sub_resource type="StyleBoxEmpty" id=31]
 
@@ -172,14 +170,14 @@ corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxEmpty" id=34]
 
-[sub_resource type="StyleBoxFlat" id=35]
+[sub_resource type="StyleBoxEmpty" id=35]
+
+[sub_resource type="StyleBoxFlat" id=36]
 bg_color = Color( 0.4, 0.4, 0.4, 1 )
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxEmpty" id=36]
 
 [sub_resource type="StyleBoxEmpty" id=37]
 
@@ -189,16 +187,18 @@ corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxEmpty" id=40]
 
-[sub_resource type="StyleBoxFlat" id=41]
+[sub_resource type="StyleBoxEmpty" id=41]
+
+[sub_resource type="StyleBoxFlat" id=42]
 bg_color = Color( 0.4, 0.4, 0.4, 1 )
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxEmpty" id=42]
+[sub_resource type="StyleBoxEmpty" id=43]
 
-[sub_resource type="Animation" id=49]
+[sub_resource type="Animation" id=44]
 resource_name = "CamPanel"
 length = 0.2
 tracks/0/type = "value"
@@ -214,7 +214,7 @@ tracks/0/keys = {
 "values": [ Vector2( 961, 10 ), Vector2( 805, 10 ) ]
 }
 
-[sub_resource type="Animation" id=43]
+[sub_resource type="Animation" id=45]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("DrillRect:rect_position")
@@ -229,7 +229,7 @@ tracks/0/keys = {
 "values": [ Vector2( 960.849, 303.079 ), Vector2( 774.409, 303.079 ) ]
 }
 
-[sub_resource type="Animation" id=44]
+[sub_resource type="Animation" id=46]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("DriveRect:rect_position")
@@ -244,7 +244,7 @@ tracks/0/keys = {
 "values": [ Vector2( -150, 124 ), Vector2( 6.34, 124 ) ]
 }
 
-[sub_resource type="Animation" id=45]
+[sub_resource type="Animation" id=47]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("MastRect:rect_position")
@@ -259,7 +259,7 @@ tracks/0/keys = {
 "values": [ Vector2( -156.291, 360 ), Vector2( 6.929, 360 ) ]
 }
 
-[sub_resource type="Animation" id=46]
+[sub_resource type="Animation" id=48]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("ArmRect:rect_position")
@@ -274,7 +274,7 @@ tracks/0/keys = {
 "values": [ Vector2( -205, 10 ), Vector2( 0, 10 ) ]
 }
 
-[sub_resource type="DynamicFont" id=47]
+[sub_resource type="DynamicFont" id=49]
 size = 20
 font_data = ExtResource( 14 )
 
@@ -958,11 +958,11 @@ __meta__ = {
 margin_right = 64.0
 margin_bottom = 64.0
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 48 )
-custom_styles/pressed = SubResource( 48 )
-custom_styles/focus = SubResource( 48 )
-custom_styles/disabled = SubResource( 48 )
-custom_styles/normal = SubResource( 48 )
+custom_styles/hover = SubResource( 21 )
+custom_styles/pressed = SubResource( 21 )
+custom_styles/focus = SubResource( 21 )
+custom_styles/disabled = SubResource( 21 )
+custom_styles/normal = SubResource( 21 )
 icon = ExtResource( 20 )
 
 [node name="CamSelector" type="VBoxContainer" parent="CamRect"]
@@ -981,7 +981,7 @@ __meta__ = {
 margin_right = 147.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 21 )
+custom_styles/panel = SubResource( 22 )
 
 [node name="NavCam" type="Button" parent="CamRect/CamSelector/Panel1"]
 margin_left = 2.0
@@ -990,11 +990,11 @@ margin_right = 148.0
 margin_bottom = 40.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 22 )
-custom_styles/pressed = SubResource( 23 )
-custom_styles/focus = SubResource( 24 )
-custom_styles/disabled = SubResource( 25 )
-custom_styles/normal = SubResource( 26 )
+custom_styles/hover = SubResource( 23 )
+custom_styles/pressed = SubResource( 24 )
+custom_styles/focus = SubResource( 25 )
+custom_styles/disabled = SubResource( 26 )
+custom_styles/normal = SubResource( 27 )
 custom_fonts/font = ExtResource( 4 )
 custom_constants/hseparation = 0
 text = "Navcam"
@@ -1007,7 +1007,7 @@ margin_top = 60.0
 margin_right = 147.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 27 )
+custom_styles/panel = SubResource( 28 )
 
 [node name="MastCam" type="Button" parent="CamRect/CamSelector/Panel2"]
 margin_left = -1.0
@@ -1016,11 +1016,11 @@ margin_right = 148.0
 margin_bottom = 40.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 22 )
-custom_styles/pressed = SubResource( 23 )
-custom_styles/focus = SubResource( 24 )
-custom_styles/disabled = SubResource( 25 )
-custom_styles/normal = SubResource( 28 )
+custom_styles/hover = SubResource( 23 )
+custom_styles/pressed = SubResource( 24 )
+custom_styles/focus = SubResource( 25 )
+custom_styles/disabled = SubResource( 26 )
+custom_styles/normal = SubResource( 29 )
 custom_fonts/font = ExtResource( 4 )
 custom_constants/hseparation = 0
 text = "Mastcam"
@@ -1030,18 +1030,18 @@ margin_top = 120.0
 margin_right = 147.0
 margin_bottom = 160.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 29 )
+custom_styles/panel = SubResource( 30 )
 
 [node name="MAHLI" type="Button" parent="CamRect/CamSelector/Panel3"]
 margin_left = 2.0
 margin_right = 147.0
 margin_bottom = 40.0
 size_flags_horizontal = 4
-custom_styles/hover = SubResource( 30 )
-custom_styles/pressed = SubResource( 31 )
-custom_styles/focus = SubResource( 32 )
-custom_styles/disabled = SubResource( 33 )
-custom_styles/normal = SubResource( 34 )
+custom_styles/hover = SubResource( 31 )
+custom_styles/pressed = SubResource( 32 )
+custom_styles/focus = SubResource( 33 )
+custom_styles/disabled = SubResource( 34 )
+custom_styles/normal = SubResource( 35 )
 custom_fonts/font = ExtResource( 4 )
 text = "MAHLI"
 
@@ -1050,7 +1050,7 @@ margin_top = 180.0
 margin_right = 147.0
 margin_bottom = 220.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 35 )
+custom_styles/panel = SubResource( 36 )
 
 [node name="HazCamFront" type="Button" parent="CamRect/CamSelector/Panel4"]
 margin_left = 3.0
@@ -1059,11 +1059,11 @@ margin_right = 148.0
 margin_bottom = 39.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 36 )
-custom_styles/pressed = SubResource( 37 )
-custom_styles/focus = SubResource( 38 )
-custom_styles/disabled = SubResource( 39 )
-custom_styles/normal = SubResource( 40 )
+custom_styles/hover = SubResource( 37 )
+custom_styles/pressed = SubResource( 38 )
+custom_styles/focus = SubResource( 39 )
+custom_styles/disabled = SubResource( 40 )
+custom_styles/normal = SubResource( 41 )
 custom_fonts/font = ExtResource( 4 )
 text = "Hazcam F"
 
@@ -1072,7 +1072,7 @@ margin_top = 240.0
 margin_right = 147.0
 margin_bottom = 280.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 41 )
+custom_styles/panel = SubResource( 42 )
 
 [node name="HazCamRear" type="Button" parent="CamRect/CamSelector/Panel5"]
 margin_left = 4.0
@@ -1081,11 +1081,11 @@ margin_right = 148.0
 margin_bottom = 40.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 42 )
-custom_styles/pressed = SubResource( 42 )
-custom_styles/focus = SubResource( 42 )
-custom_styles/disabled = SubResource( 42 )
-custom_styles/normal = SubResource( 42 )
+custom_styles/hover = SubResource( 43 )
+custom_styles/pressed = SubResource( 43 )
+custom_styles/focus = SubResource( 43 )
+custom_styles/disabled = SubResource( 43 )
+custom_styles/normal = SubResource( 43 )
 custom_fonts/font = ExtResource( 4 )
 text = "Hazcam R"
 __meta__ = {
@@ -1093,11 +1093,11 @@ __meta__ = {
 }
 
 [node name="PanelSlider" type="AnimationPlayer" parent="."]
-anims/CamPanel = SubResource( 49 )
-anims/DrillPanel = SubResource( 43 )
-anims/DrivePanel = SubResource( 44 )
-anims/MastCamPanel = SubResource( 45 )
-anims/RoboticArmPanel = SubResource( 46 )
+anims/CamPanel = SubResource( 44 )
+anims/DrillPanel = SubResource( 45 )
+anims/DrivePanel = SubResource( 46 )
+anims/MastCamPanel = SubResource( 47 )
+anims/RoboticArmPanel = SubResource( 48 )
 
 [node name="SelectedCam" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0.501961 )
@@ -1110,7 +1110,7 @@ margin_top = -35.5303
 margin_right = -440.945
 margin_bottom = -3.53033
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 47 )
+custom_fonts/font = SubResource( 49 )
 text = "Cams"
 align = 1
 __meta__ = {

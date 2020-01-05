@@ -1,4 +1,5 @@
 extends PanelContainer
+class_name DrillUI
 
 signal drillAction(action,isOn)
 
