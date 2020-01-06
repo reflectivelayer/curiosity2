@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/sam_chemin_cover.obj-98cc1beaf44b41711cd7723228fa5a74.mesh"
+
+[deps]
+
+files=[ "res://.import/sam_chemin_cover.obj-98cc1beaf44b41711cd7723228fa5a74.mesh" ]
+
+source_file="res://models/Curiosity/sam_chemin_cover.obj"
+dest_files=[ "res://.import/sam_chemin_cover.obj-98cc1beaf44b41711cd7723228fa5a74.mesh", "res://.import/sam_chemin_cover.obj-98cc1beaf44b41711cd7723228fa5a74.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true
