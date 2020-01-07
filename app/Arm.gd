@@ -69,12 +69,8 @@ func _ready():
 	_collisionLower = $Lower/Collision
 	_raycastLower = $Lower/Collision/RayCast
 	
-	var drill = $Lower/Upper/InstrumentBase/Instruments/Drill
-	var drillUI = $"../../Control/DrillRect/Drill"
-	var anim:Animation = $Animator.get_animation("PreDrill")
-	var drillBit = $Lower/Upper/InstrumentBase/Instruments/Drill/DrillBit
-	_drillManager = DrillManager.new(drill,drillUI,drillBit,anim,$Animator)
-	
+	var rover = $"../../Rover"
+	_drillManager = DrillManager.new(rover)
 	_drillManager.connect("onStopArm",self,"_onStopArm")
 		
 	_ArmUI = $"../../Control/ArmRect/Arm"

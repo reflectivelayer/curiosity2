@@ -11,15 +11,22 @@ var _target
 var _anim:Animation
 var _drillBit:MeshInstance
 var _animator:AnimationPlayer
+var _chassisAnimator:AnimationPlayer
 var _isDrilling:bool = false
+var _cheMinCoverOpen:bool = false
+var _sam1CoverOpen:bool = false
+var _sam2CoverOpen:bool = false
 
-func _init(drill:Drill, drillUI:DrillUI,drillBit:MeshInstance,anim:Animation,animator:AnimationPlayer):
-	_drill = drill
-	_drillUI = drillUI
-	_anim = anim
-	_animator = animator
-	_drillBit = drillBit
+func _init(rover:VehicleBody):
+	_drill = rover.get_node("Arm/Lower/Upper/InstrumentBase/Instruments/Drill")
+	_drillUI = rover.get_node("../Control/DrillRect/Drill")
+	_animator = rover.get_node("Arm/Animator")
+	_chassisAnimator = rover.get_node("Chassis/ChassisAnimator")
+	_anim = _animator.get_animation("PreDrill")
+	_drillBit = rover.get_node("Arm/Lower/Upper/InstrumentBase/Instruments/Drill/DrillBit")
+	
 	_drillUI.connect("drillAction",self,"_onDrillAction")
+	_drillUI.connect("coverAction",self,"_onCoverAction")	
 	_drill.connect("onDrillContact",self,"_onDrillContact")
 	_drill.connect("onDrillTipContact",self,"_onDrillTipContact")
 	_drill.connect("onDrillParked",self,"_onDrillParked")
@@ -88,6 +95,28 @@ func _onDrillTipContact(target,contactPoint,normal,drillDepth):
 	
 func _onDrillParked():
 	_isDrilling = false
+	
+func _onCoverAction(cover:String):
+	match cover:
+		"SAM_cover1":
+			if _sam1CoverOpen:
+				_chassisAnimator.play_backwards(cover)
+			else:
+				_chassisAnimator.play(cover)
+			_sam1CoverOpen = !_sam1CoverOpen
+		"SAM_cover2":
+			if _sam2CoverOpen:
+				_chassisAnimator.play_backwards(cover)
+			else:
+				_chassisAnimator.play(cover)
+			_sam2CoverOpen = !_sam2CoverOpen
+		"CheMin_cover":
+			if _cheMinCoverOpen:
+				_chassisAnimator.play_backwards(cover)
+			else:
+				_chassisAnimator.play(cover)
+			_cheMinCoverOpen = !_cheMinCoverOpen
+
 	
 func _startPreDrill():
 	var trackIndex = _anim.find_track("Lower/Upper/InstrumentBase/Instruments/Drill/DrillBit:translation")

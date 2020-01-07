@@ -2,6 +2,7 @@ extends PanelContainer
 class_name DrillUI
 
 signal drillAction(action,isOn)
+signal coverAction(cover)
 
 var _contactLeft:Label
 var _contactRight
@@ -40,3 +41,15 @@ func _on_BtnMoveDrill_up(direction):
 
 func setDepth(depth:float):
 	_depth.text = "%4.2f" % (depth * 100)
+
+
+func _on_SAM1_cover_pressed(cover):
+	emit_signal("coverAction",cover)
+
+
+func _on_SAM2_cover_pressed(cover):
+	emit_signal("coverAction",cover)
+
+
+func _on_Chem_cover_pressed(cover):
+	emit_signal("coverAction",cover)
