@@ -13,7 +13,7 @@ var _depth
 func _ready():
 	_contactLeft = $VBoxContainer/HBoxContainer2/DspContact_L
 	_contactRight = $VBoxContainer/HBoxContainer2/DspContact_R
-	_depth = $VBoxContainer/HBoxContainer/Depth
+	_depth = $VBoxContainer/HBoxContainer3/Depth
 	
 func setContactLeft(on:bool):
 	var styleBox:StyleBoxFlat = _contactLeft.get_stylebox("normal" )

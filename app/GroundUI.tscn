@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=95 format=2]
 
 [ext_resource path="res://GroundUI.gd" type="Script" id=1]
 [ext_resource path="res://ArmControl.gd" type="Script" id=2]
@@ -23,6 +23,8 @@
 [ext_resource path="res://ui/icn_sam1_cover.png" type="Texture" id=21]
 [ext_resource path="res://ui/icn_sam2_cover.png" type="Texture" id=22]
 [ext_resource path="res://ui/icn_chemin_cover.png" type="Texture" id=23]
+[ext_resource path="res://ui/icn_pour.png" type="Texture" id=24]
+[ext_resource path="res://ui/icn_shake.png" type="Texture" id=25]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -68,27 +70,47 @@ expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxEmpty" id=15]
 
-[sub_resource type="StyleBoxEmpty" id=51]
-
-[sub_resource type="StyleBoxEmpty" id=52]
-
-[sub_resource type="StyleBoxEmpty" id=53]
-
 [sub_resource type="StyleBoxEmpty" id=16]
 
-[sub_resource type="StyleBoxEmpty" id=54]
+[sub_resource type="StyleBoxEmpty" id=17]
 
-[sub_resource type="StyleBoxEmpty" id=55]
+[sub_resource type="StyleBoxEmpty" id=18]
 
-[sub_resource type="StyleBoxEmpty" id=58]
+[sub_resource type="StyleBoxEmpty" id=19]
 
-[sub_resource type="StyleBoxEmpty" id=56]
+[sub_resource type="StyleBoxEmpty" id=20]
 
-[sub_resource type="StyleBoxEmpty" id=57]
+[sub_resource type="StyleBoxEmpty" id=21]
 
-[sub_resource type="StyleBoxEmpty" id=59]
+[sub_resource type="StyleBoxEmpty" id=22]
 
-[sub_resource type="StyleBoxFlat" id=17]
+[sub_resource type="StyleBoxEmpty" id=23]
+
+[sub_resource type="StyleBoxEmpty" id=24]
+
+[sub_resource type="StyleBoxEmpty" id=25]
+
+[sub_resource type="StyleBoxEmpty" id=26]
+
+[sub_resource type="StyleBoxEmpty" id=27]
+
+[sub_resource type="StyleBoxEmpty" id=28]
+
+[sub_resource type="StyleBoxEmpty" id=29]
+
+[sub_resource type="StyleBoxEmpty" id=30]
+
+[sub_resource type="StyleBoxEmpty" id=31]
+
+[sub_resource type="StyleBoxEmpty" id=32]
+
+[sub_resource type="StyleBoxEmpty" id=33]
+
+[sub_resource type="StyleBoxEmpty" id=34]
+
+[sub_resource type="StyleBoxEmpty" id=35]
+
+[sub_resource type="StyleBoxFlat" id=36]
 bg_color = Color( 0.4, 0.6, 1, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -96,11 +118,11 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0.2, 0.6, 1 )
 
-[sub_resource type="DynamicFont" id=18]
+[sub_resource type="DynamicFont" id=37]
 size = 18
 font_data = ExtResource( 14 )
 
-[sub_resource type="StyleBoxFlat" id=19]
+[sub_resource type="StyleBoxFlat" id=38]
 bg_color = Color( 0.4, 0.6, 1, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -108,11 +130,11 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0.2, 0.6, 1 )
 
-[sub_resource type="DynamicFont" id=20]
+[sub_resource type="DynamicFont" id=39]
 size = 18
 font_data = ExtResource( 14 )
 
-[sub_resource type="GDScript" id=21]
+[sub_resource type="GDScript" id=40]
 script/source = "extends PanelContainer
 
 signal driveMovment(direction,isOn)
@@ -150,78 +172,78 @@ func _on_BtnDown_button_up():
 	emit_signal(\"driveMovment\",\"down\",false)
 "
 
-[sub_resource type="StyleBoxEmpty" id=22]
-
-[sub_resource type="StyleBoxFlat" id=23]
-bg_color = Color( 0.4, 0.4, 0.4, 1 )
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxEmpty" id=24]
-
-[sub_resource type="StyleBoxEmpty" id=25]
-
-[sub_resource type="StyleBoxEmpty" id=26]
-
-[sub_resource type="StyleBoxEmpty" id=27]
-
-[sub_resource type="StyleBoxEmpty" id=28]
-
-[sub_resource type="StyleBoxFlat" id=29]
-bg_color = Color( 0.4, 0.4, 0.4, 1 )
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxEmpty" id=30]
-
-[sub_resource type="StyleBoxFlat" id=31]
-bg_color = Color( 0.4, 0.4, 0.4, 1 )
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxEmpty" id=32]
-
-[sub_resource type="StyleBoxEmpty" id=33]
-
-[sub_resource type="StyleBoxEmpty" id=34]
-
-[sub_resource type="StyleBoxEmpty" id=35]
-
-[sub_resource type="StyleBoxEmpty" id=36]
-
-[sub_resource type="StyleBoxFlat" id=37]
-bg_color = Color( 0.4, 0.4, 0.4, 1 )
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxEmpty" id=38]
-
-[sub_resource type="StyleBoxEmpty" id=39]
-
-[sub_resource type="StyleBoxEmpty" id=40]
-
 [sub_resource type="StyleBoxEmpty" id=41]
 
-[sub_resource type="StyleBoxEmpty" id=42]
-
-[sub_resource type="StyleBoxFlat" id=43]
+[sub_resource type="StyleBoxFlat" id=42]
 bg_color = Color( 0.4, 0.4, 0.4, 1 )
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id=43]
 
 [sub_resource type="StyleBoxEmpty" id=44]
 
-[sub_resource type="Animation" id=45]
+[sub_resource type="StyleBoxEmpty" id=45]
+
+[sub_resource type="StyleBoxEmpty" id=46]
+
+[sub_resource type="StyleBoxEmpty" id=47]
+
+[sub_resource type="StyleBoxFlat" id=48]
+bg_color = Color( 0.4, 0.4, 0.4, 1 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id=49]
+
+[sub_resource type="StyleBoxFlat" id=50]
+bg_color = Color( 0.4, 0.4, 0.4, 1 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id=51]
+
+[sub_resource type="StyleBoxEmpty" id=52]
+
+[sub_resource type="StyleBoxEmpty" id=53]
+
+[sub_resource type="StyleBoxEmpty" id=54]
+
+[sub_resource type="StyleBoxEmpty" id=55]
+
+[sub_resource type="StyleBoxFlat" id=56]
+bg_color = Color( 0.4, 0.4, 0.4, 1 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id=57]
+
+[sub_resource type="StyleBoxEmpty" id=58]
+
+[sub_resource type="StyleBoxEmpty" id=59]
+
+[sub_resource type="StyleBoxEmpty" id=60]
+
+[sub_resource type="StyleBoxEmpty" id=61]
+
+[sub_resource type="StyleBoxFlat" id=62]
+bg_color = Color( 0.4, 0.4, 0.4, 1 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id=63]
+
+[sub_resource type="Animation" id=64]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("CamRect:rect_position")
@@ -236,7 +258,7 @@ tracks/0/keys = {
 "values": [ Vector2( 961, 10 ), Vector2( 805, 10 ) ]
 }
 
-[sub_resource type="Animation" id=46]
+[sub_resource type="Animation" id=65]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("DrillRect:rect_position")
@@ -251,7 +273,7 @@ tracks/0/keys = {
 "values": [ Vector2( 960.849, 303.079 ), Vector2( 774.409, 303.079 ) ]
 }
 
-[sub_resource type="Animation" id=47]
+[sub_resource type="Animation" id=66]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("DriveRect:rect_position")
@@ -266,7 +288,7 @@ tracks/0/keys = {
 "values": [ Vector2( -150, 124 ), Vector2( 6.34, 124 ) ]
 }
 
-[sub_resource type="Animation" id=48]
+[sub_resource type="Animation" id=67]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("MastRect:rect_position")
@@ -281,7 +303,7 @@ tracks/0/keys = {
 "values": [ Vector2( -156.291, 360 ), Vector2( 6.929, 360 ) ]
 }
 
-[sub_resource type="Animation" id=49]
+[sub_resource type="Animation" id=68]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("ArmRect:rect_position")
@@ -296,7 +318,7 @@ tracks/0/keys = {
 "values": [ Vector2( -205, 10 ), Vector2( 0, 10 ) ]
 }
 
-[sub_resource type="DynamicFont" id=50]
+[sub_resource type="DynamicFont" id=69]
 size = 20
 font_data = ExtResource( 14 )
 
@@ -693,9 +715,9 @@ custom_styles/normal = SubResource( 15 )
 icon = ExtResource( 11 )
 
 [node name="DrillRect" type="HBoxContainer" parent="."]
-margin_left = 960.849
+margin_left = 961.389
 margin_top = 303.079
-margin_right = 1202.85
+margin_right = 1203.39
 margin_bottom = 517.079
 custom_constants/separation = 9
 __meta__ = {
@@ -717,8 +739,8 @@ icon = ExtResource( 12 )
 
 [node name="Drill" type="PanelContainer" parent="DrillRect"]
 margin_left = 73.0
-margin_right = 241.0
-margin_bottom = 213.0
+margin_right = 237.0
+margin_bottom = 207.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 custom_styles/panel = SubResource( 1 )
@@ -727,17 +749,51 @@ script = ExtResource( 13 )
 [node name="VBoxContainer" type="VBoxContainer" parent="DrillRect/Drill"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 164.0
-margin_bottom = 209.0
+margin_right = 160.0
+margin_bottom = 203.0
 size_flags_horizontal = 0
 custom_constants/separation = 5
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="DrillRect/Drill/VBoxContainer"]
-margin_right = 160.0
-margin_bottom = 38.0
+margin_right = 156.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
 
-[node name="BtnPower" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer3"]
-margin_right = 30.0
+[node name="Drill" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer3"]
+margin_right = 46.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 4 )
+text = "Drill"
+align = 1
+
+[node name="Depth" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer3"]
+margin_left = 65.78
+margin_right = 120.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 54.22, 0 )
+size_flags_horizontal = 10
+custom_fonts/font = ExtResource( 4 )
+text = "----"
+
+[node name="cm" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer3"]
+margin_left = 124.0
+margin_right = 156.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 4 )
+text = "cm"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DrillRect/Drill/VBoxContainer"]
+margin_top = 37.0
+margin_right = 156.0
+margin_bottom = 161.0
+size_flags_vertical = 0
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
+margin_right = 35.0
+margin_bottom = 124.0
+
+[node name="BtnPower" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer3"]
+margin_right = 35.0
 margin_bottom = 38.0
 size_flags_horizontal = 9
 custom_styles/hover = SubResource( 2 )
@@ -748,46 +804,40 @@ custom_styles/normal = SubResource( 2 )
 icon = ExtResource( 3 )
 align = 2
 
-[node name="Label" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer3"]
-margin_left = 34.0
-margin_top = 3.0
-margin_right = 80.0
-margin_bottom = 35.0
-custom_fonts/font = ExtResource( 4 )
-text = "Drill"
-align = 1
+[node name="BtnShake" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer3"]
+margin_top = 42.0
+margin_right = 35.0
+margin_bottom = 77.0
+custom_styles/hover = SubResource( 16 )
+custom_styles/pressed = SubResource( 17 )
+custom_styles/focus = SubResource( 18 )
+custom_styles/disabled = SubResource( 19 )
+custom_styles/normal = SubResource( 20 )
+icon = ExtResource( 25 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DrillRect/Drill/VBoxContainer"]
-margin_top = 43.0
-margin_right = 160.0
-margin_bottom = 167.0
-size_flags_horizontal = 0
-
-[node name="Depth" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
-margin_top = 46.0
-margin_right = 54.22
-margin_bottom = 78.0
-rect_min_size = Vector2( 54.22, 0 )
-size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 4 )
-text = "----"
-
-[node name="cm" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
-margin_left = 58.0
-margin_top = 46.0
-margin_right = 90.0
-margin_bottom = 78.0
-size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 4 )
-text = "cm"
+[node name="BtnPour" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer3"]
+margin_top = 81.0
+margin_right = 35.0
+margin_bottom = 116.0
+custom_styles/hover = SubResource( 21 )
+custom_styles/pressed = SubResource( 22 )
+custom_styles/focus = SubResource( 23 )
+custom_styles/disabled = SubResource( 24 )
+custom_styles/normal = SubResource( 25 )
+icon = ExtResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
-margin_left = 94.0
-margin_right = 127.0
+margin_left = 39.0
+margin_right = 123.0
 margin_bottom = 124.0
+size_flags_horizontal = 3
 
 [node name="BtnUp" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_right = 33.0
+margin_left = 25.0
+margin_right = 58.0
 margin_bottom = 60.0
 size_flags_horizontal = 4
 custom_styles/hover = SubResource( 10 )
@@ -798,8 +848,9 @@ custom_styles/normal = SubResource( 10 )
 icon = ExtResource( 9 )
 
 [node name="BtnDown" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_left = 25.0
 margin_top = 64.0
-margin_right = 33.0
+margin_right = 58.0
 margin_bottom = 124.0
 size_flags_horizontal = 4
 custom_styles/hover = SubResource( 10 )
@@ -810,18 +861,18 @@ custom_styles/normal = SubResource( 10 )
 icon = ExtResource( 10 )
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="DrillRect/Drill/VBoxContainer/HBoxContainer"]
-margin_left = 131.0
-margin_right = 160.0
+margin_left = 127.0
+margin_right = 156.0
 margin_bottom = 124.0
 
 [node name="SAM_cover1" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer2"]
 margin_right = 29.0
 margin_bottom = 38.0
 size_flags_vertical = 3
-custom_styles/hover = SubResource( 51 )
-custom_styles/pressed = SubResource( 52 )
-custom_styles/focus = SubResource( 53 )
-custom_styles/normal = SubResource( 16 )
+custom_styles/hover = SubResource( 26 )
+custom_styles/pressed = SubResource( 27 )
+custom_styles/focus = SubResource( 28 )
+custom_styles/normal = SubResource( 29 )
 icon = ExtResource( 21 )
 
 [node name="SAM_cover2" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer2"]
@@ -829,10 +880,10 @@ margin_top = 42.0
 margin_right = 29.0
 margin_bottom = 80.0
 size_flags_vertical = 3
-custom_styles/hover = SubResource( 54 )
-custom_styles/pressed = SubResource( 55 )
-custom_styles/focus = SubResource( 58 )
-custom_styles/normal = SubResource( 16 )
+custom_styles/hover = SubResource( 30 )
+custom_styles/pressed = SubResource( 31 )
+custom_styles/focus = SubResource( 32 )
+custom_styles/normal = SubResource( 29 )
 icon = ExtResource( 22 )
 
 [node name="CheMin_cover" type="Button" parent="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer2"]
@@ -840,16 +891,16 @@ margin_top = 84.0
 margin_right = 29.0
 margin_bottom = 124.0
 size_flags_vertical = 3
-custom_styles/hover = SubResource( 56 )
-custom_styles/pressed = SubResource( 57 )
-custom_styles/focus = SubResource( 59 )
-custom_styles/normal = SubResource( 16 )
+custom_styles/hover = SubResource( 33 )
+custom_styles/pressed = SubResource( 34 )
+custom_styles/focus = SubResource( 35 )
+custom_styles/normal = SubResource( 29 )
 icon = ExtResource( 23 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="DrillRect/Drill/VBoxContainer"]
-margin_top = 172.0
-margin_right = 160.0
-margin_bottom = 205.0
+margin_top = 166.0
+margin_right = 156.0
+margin_bottom = 199.0
 
 [node name="DspContact_L" type="Label" parent="DrillRect/Drill/VBoxContainer/HBoxContainer2"]
 margin_top = -1.0
@@ -857,8 +908,8 @@ margin_right = 60.0
 margin_bottom = 32.19
 rect_min_size = Vector2( 60, 33.19 )
 size_flags_horizontal = 9
-custom_styles/normal = SubResource( 17 )
-custom_fonts/font = SubResource( 18 )
+custom_styles/normal = SubResource( 36 )
+custom_fonts/font = SubResource( 37 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "CT-L"
 align = 1
@@ -877,8 +928,8 @@ margin_right = 156.0
 margin_bottom = 32.19
 rect_min_size = Vector2( 60, 33.19 )
 size_flags_horizontal = 9
-custom_styles/normal = SubResource( 19 )
-custom_fonts/font = SubResource( 20 )
+custom_styles/normal = SubResource( 38 )
+custom_fonts/font = SubResource( 39 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "CT-R"
 align = 1
@@ -903,7 +954,7 @@ margin_bottom = 214.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_styles/panel = SubResource( 1 )
-script = SubResource( 21 )
+script = SubResource( 40 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1022,11 +1073,11 @@ __meta__ = {
 margin_right = 64.0
 margin_bottom = 64.0
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 22 )
-custom_styles/pressed = SubResource( 22 )
-custom_styles/focus = SubResource( 22 )
-custom_styles/disabled = SubResource( 22 )
-custom_styles/normal = SubResource( 22 )
+custom_styles/hover = SubResource( 41 )
+custom_styles/pressed = SubResource( 41 )
+custom_styles/focus = SubResource( 41 )
+custom_styles/disabled = SubResource( 41 )
+custom_styles/normal = SubResource( 41 )
 icon = ExtResource( 20 )
 
 [node name="CamSelector" type="VBoxContainer" parent="CamRect"]
@@ -1045,7 +1096,7 @@ __meta__ = {
 margin_right = 147.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 23 )
+custom_styles/panel = SubResource( 42 )
 
 [node name="NavCam" type="Button" parent="CamRect/CamSelector/Panel1"]
 margin_left = 2.0
@@ -1054,11 +1105,11 @@ margin_right = 148.0
 margin_bottom = 40.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 24 )
-custom_styles/pressed = SubResource( 25 )
-custom_styles/focus = SubResource( 26 )
-custom_styles/disabled = SubResource( 27 )
-custom_styles/normal = SubResource( 28 )
+custom_styles/hover = SubResource( 43 )
+custom_styles/pressed = SubResource( 44 )
+custom_styles/focus = SubResource( 45 )
+custom_styles/disabled = SubResource( 46 )
+custom_styles/normal = SubResource( 47 )
 custom_fonts/font = ExtResource( 4 )
 custom_constants/hseparation = 0
 text = "Navcam"
@@ -1071,7 +1122,7 @@ margin_top = 60.0
 margin_right = 147.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 29 )
+custom_styles/panel = SubResource( 48 )
 
 [node name="MastCam" type="Button" parent="CamRect/CamSelector/Panel2"]
 margin_left = -1.0
@@ -1080,11 +1131,11 @@ margin_right = 148.0
 margin_bottom = 40.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 24 )
-custom_styles/pressed = SubResource( 25 )
-custom_styles/focus = SubResource( 26 )
-custom_styles/disabled = SubResource( 27 )
-custom_styles/normal = SubResource( 30 )
+custom_styles/hover = SubResource( 43 )
+custom_styles/pressed = SubResource( 44 )
+custom_styles/focus = SubResource( 45 )
+custom_styles/disabled = SubResource( 46 )
+custom_styles/normal = SubResource( 49 )
 custom_fonts/font = ExtResource( 4 )
 custom_constants/hseparation = 0
 text = "Mastcam"
@@ -1094,18 +1145,18 @@ margin_top = 120.0
 margin_right = 147.0
 margin_bottom = 160.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 31 )
+custom_styles/panel = SubResource( 50 )
 
 [node name="MAHLI" type="Button" parent="CamRect/CamSelector/Panel3"]
 margin_left = 2.0
 margin_right = 147.0
 margin_bottom = 40.0
 size_flags_horizontal = 4
-custom_styles/hover = SubResource( 32 )
-custom_styles/pressed = SubResource( 33 )
-custom_styles/focus = SubResource( 34 )
-custom_styles/disabled = SubResource( 35 )
-custom_styles/normal = SubResource( 36 )
+custom_styles/hover = SubResource( 51 )
+custom_styles/pressed = SubResource( 52 )
+custom_styles/focus = SubResource( 53 )
+custom_styles/disabled = SubResource( 54 )
+custom_styles/normal = SubResource( 55 )
 custom_fonts/font = ExtResource( 4 )
 text = "MAHLI"
 
@@ -1114,7 +1165,7 @@ margin_top = 180.0
 margin_right = 147.0
 margin_bottom = 220.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 37 )
+custom_styles/panel = SubResource( 56 )
 
 [node name="HazCamFront" type="Button" parent="CamRect/CamSelector/Panel4"]
 margin_left = 3.0
@@ -1123,11 +1174,11 @@ margin_right = 148.0
 margin_bottom = 39.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 38 )
-custom_styles/pressed = SubResource( 39 )
-custom_styles/focus = SubResource( 40 )
-custom_styles/disabled = SubResource( 41 )
-custom_styles/normal = SubResource( 42 )
+custom_styles/hover = SubResource( 57 )
+custom_styles/pressed = SubResource( 58 )
+custom_styles/focus = SubResource( 59 )
+custom_styles/disabled = SubResource( 60 )
+custom_styles/normal = SubResource( 61 )
 custom_fonts/font = ExtResource( 4 )
 text = "Hazcam F"
 
@@ -1136,7 +1187,7 @@ margin_top = 240.0
 margin_right = 147.0
 margin_bottom = 280.0
 rect_min_size = Vector2( 0, 40 )
-custom_styles/panel = SubResource( 43 )
+custom_styles/panel = SubResource( 62 )
 
 [node name="HazCamRear" type="Button" parent="CamRect/CamSelector/Panel5"]
 margin_left = 4.0
@@ -1145,11 +1196,11 @@ margin_right = 148.0
 margin_bottom = 40.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 44 )
-custom_styles/pressed = SubResource( 44 )
-custom_styles/focus = SubResource( 44 )
-custom_styles/disabled = SubResource( 44 )
-custom_styles/normal = SubResource( 44 )
+custom_styles/hover = SubResource( 63 )
+custom_styles/pressed = SubResource( 63 )
+custom_styles/focus = SubResource( 63 )
+custom_styles/disabled = SubResource( 63 )
+custom_styles/normal = SubResource( 63 )
 custom_fonts/font = ExtResource( 4 )
 text = "Hazcam R"
 __meta__ = {
@@ -1157,11 +1208,11 @@ __meta__ = {
 }
 
 [node name="PanelSlider" type="AnimationPlayer" parent="."]
-anims/CamPanel = SubResource( 45 )
-anims/DrillPanel = SubResource( 46 )
-anims/DrivePanel = SubResource( 47 )
-anims/MastCamPanel = SubResource( 48 )
-anims/RoboticArmPanel = SubResource( 49 )
+anims/CamPanel = SubResource( 64 )
+anims/DrillPanel = SubResource( 65 )
+anims/DrivePanel = SubResource( 66 )
+anims/MastCamPanel = SubResource( 67 )
+anims/RoboticArmPanel = SubResource( 68 )
 
 [node name="SelectedCam" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0.501961 )
@@ -1174,7 +1225,7 @@ margin_top = -35.5303
 margin_right = -440.945
 margin_bottom = -3.53033
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 50 )
+custom_fonts/font = SubResource( 69 )
 text = "Cams"
 align = 1
 __meta__ = {
@@ -1264,8 +1315,8 @@ __meta__ = {
 [connection signal="button_up" from="MastRect/Mast/VBoxContainer/BtnDown" to="MastRect/Mast" method="_on_BtnDown_button_up"]
 [connection signal="pressed" from="MastRect/Button" to="." method="_on_Mast_Paneel_pressed"]
 [connection signal="pressed" from="DrillRect/Button" to="." method="_on_drill_panel_pressed"]
-[connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer3/BtnPower" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "activate" ]]
-[connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer3/BtnPower" to="DrillRect/Drill" method="_on_BtnMoveDrill_up" binds= [ "activate" ]]
+[connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer3/BtnPower" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "activate" ]]
+[connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer3/BtnPower" to="DrillRect/Drill" method="_on_BtnMoveDrill_up" binds= [ "activate" ]]
 [connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnUp" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "up" ]]
 [connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnUp" to="DrillRect/Drill" method="_on_BtnMoveDrill_up" binds= [ "up" ]]
 [connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnDown" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "down" ]]
