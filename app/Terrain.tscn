@@ -305,10 +305,10 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 1, 3, 7.1, 9.9, 11.6, 13.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1, 3, 7.1, 9.9, 11.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 130, 0 ), Vector3( -4, 130, 0 ), Vector3( -4, 130, 0 ), Vector3( -4, 130, 0 ), Vector3( -4, 130, 0 ), Vector3( -4, 170, 0 ), Vector3( -4, 180, 0 ) ]
+"values": [ Vector3( 0, 130, 0 ), Vector3( -4, 130, 0 ), Vector3( -4, 130, 0 ), Vector3( -4, 130, 0 ), Vector3( -4, 130, 0 ), Vector3( -4, 170, 0 ) ]
 }
 
 [sub_resource type="Animation" id=30]
@@ -327,6 +327,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=31]
+resource_name = "ShakeSample"
 length = 10.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:transform")
@@ -563,6 +564,7 @@ material/0 = SubResource( 7 )
 
 [node name="RightCenter" type="VehicleWheel" parent="Rover"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.21, 0.254, -0.106 )
+engine_force = 9.40396e-038
 use_as_traction = true
 wheel_roll_influence = 1.0
 wheel_radius = 0.24
@@ -666,14 +668,14 @@ anims/DepositAtSAM = SubResource( 12 )
 anims/MastStartUp = SubResource( 13 )
 
 [node name="Arm" type="MeshInstance" parent="Rover"]
-transform = Transform( -4.37112e-008, 0, -0.999997, 0, 1, 0, 0.999997, 0, -4.37112e-008, 0.468987, 1.03303, 1.11278 )
+transform = Transform( 0.999997, 0, 0, 0, 1, 0, 0, 0, 0.999997, 0.468987, 1.03303, 1.11278 )
 mesh = ExtResource( 14 )
 material/0 = SubResource( 14 )
 material/1 = SubResource( 15 )
 script = ExtResource( 15 )
 
 [node name="Lower" type="MeshInstance" parent="Rover/Arm"]
-transform = Transform( 1, 0, 0, 0, 0.945519, 0.325568, 0, -0.325568, 0.945517, 5.34058e-005, -0.164139, 0.168327 )
+transform = Transform( 1, 0, 0, 0, 0.309017, 0.951055, 0, -0.951057, 0.309017, 5.34058e-005, -0.164139, 0.168327 )
 mesh = ExtResource( 16 )
 material/0 = SubResource( 16 )
 material/1 = SubResource( 17 )
@@ -681,7 +683,7 @@ material/2 = SubResource( 18 )
 material/3 = SubResource( 19 )
 
 [node name="Upper" type="MeshInstance" parent="Rover/Arm/Lower"]
-transform = Transform( 1, 0, 0, 0, 0.358368, 0.93358, 0, -0.933581, 0.358368, 0.0607643, -0.00510406, 0.820145 )
+transform = Transform( 1, 0, 0, 0, -0.965926, 0.258819, 0, -0.258819, -0.965925, 0.0607643, -0.00510406, 0.820145 )
 mesh = ExtResource( 17 )
 material/0 = SubResource( 20 )
 material/1 = SubResource( 21 )
@@ -689,13 +691,13 @@ material/2 = SubResource( 22 )
 material/3 = SubResource( 23 )
 
 [node name="InstrumentBase" type="MeshInstance" parent="Rover/Arm/Lower/Upper"]
-transform = Transform( -1, 8.74227e-008, 0, 3.82137e-015, 4.37114e-008, 1, 8.74228e-008, 1, -4.37114e-008, -0.188511, 0.792184, -0.000350952 )
+transform = Transform( -1, 8.74227e-008, 0, 2.26267e-008, 0.258819, -0.965927, -8.44439e-008, -0.965926, -0.258819, -0.188499, 0.792183, -0.000350475 )
 mesh = ExtResource( 18 )
 material/0 = SubResource( 24 )
 material/1 = SubResource( 25 )
 
 [node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
-transform = Transform( -0.642788, 0, 0.766042, 0, 1, 0, -0.766045, 0, -0.642786, 0.0594482, 0.132721, 0.143999 )
+transform = Transform( -0.984808, -0.0121131, 0.173225, 0, 0.997564, 0.0697563, -0.173648, 0.0686967, -0.982406, 0.0594864, 0.132698, 0.143997 )
 mesh = ExtResource( 19 )
 material/0 = ExtResource( 34 )
 material/1 = ExtResource( 35 )
@@ -787,7 +789,7 @@ collide_with_areas = true
 [node name="Animator" type="AnimationPlayer" parent="Rover/Arm"]
 anims/ExtendArm = SubResource( 29 )
 anims/PreDrill = SubResource( 30 )
-anims/ShakeHand = SubResource( 31 )
+anims/ShakeSample = SubResource( 31 )
 
 [node name="Desaturator" type="TextureRect" parent="Rover"]
 material = SubResource( 32 )

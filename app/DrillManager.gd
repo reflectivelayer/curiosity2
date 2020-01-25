@@ -2,6 +2,7 @@ extends Reference
 class_name DrillManager
 
 signal onStopArm()
+signal onShakeSample()
 
 var DRILL_FORCE:float = 0.001
 var _drill:Drill
@@ -114,10 +115,10 @@ func _onCoverAction(cover:String):
 			if _cheMinCoverOpen:
 				_chassisAnimator.play_backwards(cover)
 			else:
-				_chassisAnimator.play(cover)
+				#_chassisAnimator.play(cover)
+				emit_signal("onShakeSample")				
 			_cheMinCoverOpen = !_cheMinCoverOpen
 
-	
 func _startPreDrill():
 	var trackIndex = _anim.find_track("Lower/Upper/InstrumentBase/Instruments/Drill/DrillBit:translation")
 	for i in range(0,6):

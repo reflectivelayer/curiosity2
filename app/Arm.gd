@@ -43,8 +43,12 @@ var _raycastLower:RayCast
 var _collisionIncrement = PI/4
 var _armParked = false
 var _isPreParking = false
+var _isDeploying = false
+var _shakingCompleted = false
+var _isShaking = false
 var _armFinalPosition = []
 var _parkTime = 0
+var _shakeTime = 0
 var _parkRotationArm:Transform
 var _parkRotationLower:Transform
 var _parkRotationUpper:Transform
@@ -56,7 +60,14 @@ var _lowerPreParkTransform:Transform
 var _upperPreParkTransform:Transform
 var _insBasePreParkTransform:Transform
 var _insPreParkTransform:Transform
+
+var _armShakeTransform:Transform
+var _lowerShakeTransform:Transform
+var _upperShakeTransform:Transform
+var _insBaseShakeTransform:Transform
+var _insShakeTransform:Transform
 var _drillManager:DrillManager
+var _previousAnimation:String
 
 func _ready():
 	_armLower = $Lower
@@ -72,19 +83,24 @@ func _ready():
 	var rover = $"../../Rover"
 	_drillManager = DrillManager.new(rover)
 	_drillManager.connect("onStopArm",self,"_onStopArm")
-		
+	_drillManager.connect("onShakeSample",self,"_onShakeSample")
+			
 	_ArmUI = $"../../Control/ArmRect/Arm"
 	_ArmUI.connect("armMovement",self,"onArmMovement")
 
 	#_setDefaultPosition()
-	_saveArmDistination()
-	_armPreParkTransform  = Transform(transform.basis)
-	_lowerPreParkTransform  = Transform($Lower.transform.basis)
-	_upperPreParkTransform  = Transform($Lower/Upper.transform.basis)
-	_insBasePreParkTransform  = Transform($Lower/Upper/InstrumentBase.transform.basis)
-	_insPreParkTransform  = Transform($Lower/Upper/InstrumentBase/Instruments.transform.basis)
-
-		
+	var shakeSample_anim = $Animator.get_animation("ShakeSample")
+	var trackIndex = shakeSample_anim.find_track(".:transform")
+	_armPreParkTransform = shakeSample_anim.track_get_key_value(trackIndex,0)
+	trackIndex = shakeSample_anim.find_track("Lower:transform")	
+	_lowerShakeTransform = shakeSample_anim.track_get_key_value(trackIndex,0)
+	trackIndex = shakeSample_anim.find_track("Lower/Upper:transform")		
+	_upperShakeTransform = shakeSample_anim.track_get_key_value(trackIndex,0)
+	trackIndex = shakeSample_anim.find_track("Lower/Upper/InstrumentBase:transform")
+	_insBaseShakeTransform = shakeSample_anim.track_get_key_value(trackIndex,0)
+	trackIndex = shakeSample_anim.find_track("Lower/Upper/InstrumentBase/Instruments:transform")
+	_insShakeTransform = shakeSample_anim.track_get_key_value(trackIndex,0)
+	
 func printArmDefaultPosition():
 	print(translation)
 	print(rotation)
@@ -138,11 +154,21 @@ func _process(delta):
 		_armInstrument.rotate_y(INSTRUMENT_SPEED*delta)
 	if _checkCollision():
 		_stopArm()
-	_drillManager.update()
 	if _isPreParking:
 		_updatePrePark()
-
-
+	if _isDeploying:
+		if $Animator.current_animation != "":
+			_previousAnimation = $Animator.current_animation
+		if _previousAnimation == "ExtendArm" && !$Animator.is_playing():
+			_isDeploying = false
+			_armPreParkTransform  = Transform(transform.basis)
+			_lowerPreParkTransform  = Transform($Lower.transform.basis)
+			_upperPreParkTransform  = Transform($Lower/Upper.transform.basis)
+			_insBasePreParkTransform  = Transform($Lower/Upper/InstrumentBase.transform.basis)
+			_insPreParkTransform  = Transform($Lower/Upper/InstrumentBase/Instruments.transform.basis)
+	if _isShaking:
+		_updateShake()
+	_drillManager.update()
 func _onStopArm():
 	_stopArm()
 	
@@ -208,15 +234,32 @@ func _updatePrePark():
 	$Lower/Upper.transform.basis = slerp(_parkRotationUpper,_upperPreParkTransform,_parkTime)
 	$Lower/Upper/InstrumentBase.transform.basis = slerp(_parkRotationInsBase,_insBasePreParkTransform,_parkTime)
 	$Lower/Upper/InstrumentBase/Instruments.transform.basis = slerp(_parkRotationIns,_insPreParkTransform,_parkTime)
-
+	
 	if _parkTime >= 1: 
 		_parkTime = 0
 		_isPreParking = false
 		parkArm()
-		
+
+func _updateShake():
+	_shakeTime+=0.01
+	transform.basis = slerp(_parkRotationArm,_armShakeTransform,_shakeTime)
+	$Lower.transform.basis = slerp(_parkRotationLower,_lowerShakeTransform,_shakeTime)
+	$Lower/Upper.transform.basis = slerp(_parkRotationUpper,_upperShakeTransform,_shakeTime)
+	$Lower/Upper/InstrumentBase.transform.basis = slerp(_parkRotationInsBase,_insBaseShakeTransform,_shakeTime)
+	$Lower/Upper/InstrumentBase/Instruments.transform.basis = slerp(_parkRotationIns,_insShakeTransform,_shakeTime)
+	
+	if _shakeTime >= 1: 
+		_shakeTime = 0
+		_isShaking = false
+		shakeSample()
+
+func _onShakeSample():
+	_preShakeSample()
+
 func deployArm():
 		$Animator.play("ExtendArm")
 		_armParked = false
+		_isDeploying = true
 		
 func _preParkArm():
 	_isPreParking = true
@@ -224,19 +267,29 @@ func _preParkArm():
 	_parkRotationLower = Transform($Lower.transform.basis)	
 	_parkRotationUpper = Transform($Lower/Upper.transform.basis)
 	_parkRotationInsBase = Transform($Lower/Upper/InstrumentBase.transform.basis)
+
+func _preShakeSample():
+	_isShaking = true
+	_parkRotationArm = Transform(transform.basis)
+	_parkRotationLower = Transform($Lower.transform.basis)	
+	_parkRotationUpper = Transform($Lower/Upper.transform.basis)
+	_parkRotationInsBase = Transform($Lower/Upper/InstrumentBase.transform.basis)
 	_parkRotationIns = Transform($Lower/Upper/InstrumentBase/Instruments.transform.basis)	
 
+	
 func slerp(t1:Transform,t2:Transform,ratio:float)->Basis:
 	var a = Quat(t1.basis)
 	var b = Quat(t2.basis)
 	var c = a.slerpni(b,ratio)
 	return Basis(c)
-
-
-	#if $Lower/Upper.rotation_degrees.x<0: $Lower/Upper.rotation_degrees.x+=360 
+ 
 func parkArm():
 	$Animator.play_backwards("ExtendArm")
 	_armParked = true
+
+func shakeSample():
+	$Animator.play("ShakeSample")
+	_shakingCompleted = true
 			
 func bounceBack():
 	if _isOn:
@@ -300,13 +353,14 @@ func _saveArmDistination():
 func _loadArmDestination():
 	var extendArm_anim = $Animator.get_animation("ExtendArm")
 	var trackIndex = extendArm_anim.find_track(".:rotation_degrees")
-	extendArm_anim.track_set_key_value(trackIndex, 5, _armFinalPosition[0])
-	trackIndex = extendArm_anim.find_track("Lower:rotation_degrees")
-	extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[1])
-	trackIndex = extendArm_anim.find_track("Lower/Upper:rotation_degrees")
-	extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[2])	
-	trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase:rotation_degrees")
-	extendArm_anim.track_set_key_value(trackIndex, 5, _armFinalPosition[3])	
-	trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase/Instruments:rotation_degrees")
-	extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[4])	
+	if trackIndex > 0:
+		extendArm_anim.track_set_key_value(trackIndex, 5, _armFinalPosition[0])
+		trackIndex = extendArm_anim.find_track("Lower:rotation_degrees")
+		extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[1])
+		trackIndex = extendArm_anim.find_track("Lower/Upper:rotation_degrees")
+		extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[2])	
+		trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase:rotation_degrees")
+		extendArm_anim.track_set_key_value(trackIndex, 5, _armFinalPosition[3])	
+		trackIndex = extendArm_anim.find_track("Lower/Upper/InstrumentBase/Instruments:rotation_degrees")
+		extendArm_anim.track_set_key_value(trackIndex, 5,_armFinalPosition[4])	
 	
