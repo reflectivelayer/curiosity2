@@ -41,11 +41,12 @@ var _raycastUpper:RayCast
 var _collisionLower
 var _raycastLower:RayCast
 var _collisionIncrement = PI/4
-var _armParked = false
+var _armParked = true
 var _isPreParking = false
 var _isDeploying = false
 var _shakingCompleted = false
 var _isShaking = false
+var _settingUpToPour = false
 var _armFinalPosition = []
 var _parkTime = 0
 var _shakeTime = 0
@@ -68,6 +69,8 @@ var _insBaseShakeTransform:Transform
 var _insShakeTransform:Transform
 var _drillManager:DrillManager
 var _previousAnimation:String
+var _pourValve
+var rng = RandomNumberGenerator.new()
 
 func _ready():
 	_armLower = $Lower
@@ -79,6 +82,7 @@ func _ready():
 	_raycastUpper = $Lower/Upper/Collision/RayCast
 	_collisionLower = $Lower/Collision
 	_raycastLower = $Lower/Collision/RayCast
+	_pourValve = $Lower/Upper/InstrumentBase/Instruments/Spray
 	
 	var rover = $"../../Rover"
 	_drillManager = DrillManager.new(rover)
@@ -87,7 +91,9 @@ func _ready():
 			
 	_ArmUI = $"../../Control/ArmRect/Arm"
 	_ArmUI.connect("armMovement",self,"onArmMovement")
-
+	var drillUI = get_node("../../Control/DrillRect/Drill")
+	drillUI.connect("armMode",self,"_onArmMode")
+	
 	#_setDefaultPosition()
 	var shakeSample_anim = $Animator.get_animation("ShakeSample")
 	var trackIndex = shakeSample_anim.find_track(".:transform")
@@ -160,15 +166,16 @@ func _process(delta):
 		if $Animator.current_animation != "":
 			_previousAnimation = $Animator.current_animation
 		if _previousAnimation == "ExtendArm" && !$Animator.is_playing():
-			_isDeploying = false
 			_armPreParkTransform  = Transform(transform.basis)
 			_lowerPreParkTransform  = Transform($Lower.transform.basis)
 			_upperPreParkTransform  = Transform($Lower/Upper.transform.basis)
 			_insBasePreParkTransform  = Transform($Lower/Upper/InstrumentBase.transform.basis)
 			_insPreParkTransform  = Transform($Lower/Upper/InstrumentBase/Instruments.transform.basis)
+			_isDeploying = false
 	if _isShaking:
 		_updateShake()
 	_drillManager.update()
+			
 func _onStopArm():
 	_stopArm()
 	
@@ -234,7 +241,6 @@ func _updatePrePark():
 	$Lower/Upper.transform.basis = slerp(_parkRotationUpper,_upperPreParkTransform,_parkTime)
 	$Lower/Upper/InstrumentBase.transform.basis = slerp(_parkRotationInsBase,_insBasePreParkTransform,_parkTime)
 	$Lower/Upper/InstrumentBase/Instruments.transform.basis = slerp(_parkRotationIns,_insPreParkTransform,_parkTime)
-	
 	if _parkTime >= 1: 
 		_parkTime = 0
 		_isPreParking = false
@@ -247,14 +253,20 @@ func _updateShake():
 	$Lower/Upper.transform.basis = slerp(_parkRotationUpper,_upperShakeTransform,_shakeTime)
 	$Lower/Upper/InstrumentBase.transform.basis = slerp(_parkRotationInsBase,_insBaseShakeTransform,_shakeTime)
 	$Lower/Upper/InstrumentBase/Instruments.transform.basis = slerp(_parkRotationIns,_insShakeTransform,_shakeTime)
-	
+
 	if _shakeTime >= 1: 
 		_shakeTime = 0
 		_isShaking = false
 		shakeSample()
 
-func _onShakeSample():
-	_preShakeSample()
+func _onArmMode(mode):
+	match(mode):
+		"shake":
+			_preShakeSample()
+			print("shake")
+		"pour":
+			_drillManager.startPour(_pourValve)
+			print("pour")
 
 func deployArm():
 		$Animator.play("ExtendArm")
@@ -263,18 +275,22 @@ func deployArm():
 		
 func _preParkArm():
 	_isPreParking = true
-	_parkRotationArm = Transform(transform.basis)
-	_parkRotationLower = Transform($Lower.transform.basis)	
-	_parkRotationUpper = Transform($Lower/Upper.transform.basis)
-	_parkRotationInsBase = Transform($Lower/Upper/InstrumentBase.transform.basis)
-
+	_parkRotationArm = Transform(transform.basis).orthonormalized()
+	_parkRotationLower = Transform($Lower.transform.basis).orthonormalized()
+	_parkRotationUpper = Transform($Lower/Upper.transform.basis).orthonormalized()
+	_parkRotationInsBase = Transform($Lower/Upper/InstrumentBase.transform.basis).orthonormalized()
+	_parkRotationIns = Transform($Lower/Upper/InstrumentBase/Instruments.transform.basis).orthonormalized()
+	
 func _preShakeSample():
 	_isShaking = true
-	_parkRotationArm = Transform(transform.basis)
-	_parkRotationLower = Transform($Lower.transform.basis)	
-	_parkRotationUpper = Transform($Lower/Upper.transform.basis)
-	_parkRotationInsBase = Transform($Lower/Upper/InstrumentBase.transform.basis)
-	_parkRotationIns = Transform($Lower/Upper/InstrumentBase/Instruments.transform.basis)	
+	_parkRotationArm = Transform(transform.basis).orthonormalized()
+	_parkRotationLower = Transform($Lower.transform.basis).orthonormalized()
+	_parkRotationUpper = Transform($Lower/Upper.transform.basis).orthonormalized()
+	_parkRotationInsBase = Transform($Lower/Upper/InstrumentBase.transform.basis).orthonormalized()
+	_parkRotationIns = Transform($Lower/Upper/InstrumentBase/Instruments.transform.basis).orthonormalized()
+
+func _preGoingToPour():
+	_settingUpToPour = true
 
 	
 func slerp(t1:Transform,t2:Transform,ratio:float)->Basis:
@@ -288,7 +304,9 @@ func parkArm():
 	_armParked = true
 
 func shakeSample():
+	$Animator.animation_set_next("ShakeSample","SetupToPour")
 	$Animator.play("ShakeSample")
+
 	_shakingCompleted = true
 			
 func bounceBack():

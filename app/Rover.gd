@@ -40,9 +40,6 @@ var _leftRearSuspension
 var _rightRearSuspension
 var _previousPosition:Vector3
 var _stopped:bool = false
-var _armDeploying = false
-var _armRetracting = false
-var _armDeployed = false
 var _speed
 var _driveDirection = 1 #positive is foward negative is backward
 var _camLable
@@ -90,20 +87,8 @@ func _ready():
 	_updateRoverAngle()
 
 	
-func _deployArm(delta):
-	_armDeploying = false
-	_armDeployed = true
-
-func _retractArm(delta):
-	_armRetracting = false
-	_armDeployed = false
-	
 func _process(delta):
 	_speed = _previousPosition.distance_squared_to(translation)
-	if _armDeploying:
-		_deployArm(delta)
-	if _armRetracting:
-		_retractArm(delta)
 	if _moveMastCamUp:
 		if _mastCam.rotation.x-MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier>-1.51844:
 			_mastCam.rotate_x(-MASTCAM_HEAD_SPEED*delta*_camSpeedMultiplier)

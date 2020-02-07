@@ -16,12 +16,19 @@ var hole:Spatial  #TEMP ONLY
 func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var grains1 = [Grain.new(0.1,"#0044ff")]
-	var grains2 = [Grain.new(0.2,"#804422")]
-	rockLayers.append(_createRockLayer(0.02,0.75,grains1))
+	var grains1 = [Grain.new(0.002,"#a97333")]
+	var grains2 = [Grain.new(0.004,"#927647")]
+	rockLayers.append(_createRockLayer(0.0175,0.75,grains1))
 	rockLayers.append(_createRockLayer(0.04,0.25,grains2))
+
 func getDepth()->float:
 	return hole.depth
+
+func getGrainsAt(depth)->Grain:
+	if hole != null:
+		return hole.getRockLayerAt(depth).grain
+	else:
+		return null
 	
 
 func rotateCore(rot:Vector3):
@@ -34,7 +41,7 @@ func drill(location,pressure)->float:
 	if hole==null:
 		_createHole(location)
 	return hole.drill(location,pressure)
-		
+
 func _createHole(location:Vector3):
 	holes = $Holes
 	hole = _Hole.instance()

@@ -5,6 +5,8 @@ signal onStopArm()
 signal onShakeSample()
 
 var DRILL_FORCE:float = 0.001
+var sampleContainer = {}
+var _sampleVolume:int
 var _drill:Drill
 var _drillUI:DrillUI
 var _rockContact:bool = false
@@ -17,6 +19,10 @@ var _isDrilling:bool = false
 var _cheMinCoverOpen:bool = false
 var _sam1CoverOpen:bool = false
 var _sam2CoverOpen:bool = false
+var _prevDrillDepth:int = 0
+var _pourValve
+var _sampleRatios = []
+var _rng = RandomNumberGenerator.new()
 
 func _init(rover:VehicleBody):
 	_drill = rover.get_node("Arm/Lower/Upper/InstrumentBase/Instruments/Drill")
@@ -27,7 +33,7 @@ func _init(rover:VehicleBody):
 	_drillBit = rover.get_node("Arm/Lower/Upper/InstrumentBase/Instruments/Drill/DrillBit")
 	
 	_drillUI.connect("drillAction",self,"_onDrillAction")
-	_drillUI.connect("coverAction",self,"_onCoverAction")	
+	_drillUI.connect("coverAction",self,"_onCoverAction")
 	_drill.connect("onDrillContact",self,"_onDrillContact")
 	_drill.connect("onDrillTipContact",self,"_onDrillTipContact")
 	_drill.connect("onDrillParked",self,"_onDrillParked")
@@ -38,7 +44,9 @@ func update():
 		if _drill.direction == 1:
 			_drill.drill(DRILL_FORCE*_drill.spin)
 		elif _drill.direction == -1:
-			_drill.drill(-DRILL_FORCE*10)	
+			_drill.drill(-DRILL_FORCE*10)
+	if _sampleVolume>0:
+		_updatePour()
 
 func lower():
 	pass
@@ -52,6 +60,26 @@ func start():
 func stop():
 	pass
 	
+func startPour(pourValve):
+	_pourValve = pourValve
+	_pourValve.emitting = true 
+	_sampleRatios.clear()
+	_sampleVolume = 0
+	for grain in sampleContainer.keys():
+		_sampleVolume += sampleContainer[grain]
+	for grain in sampleContainer.keys():
+		_sampleRatios.append(SampleRatio.new(grain,sampleContainer[grain]/float(_sampleVolume)))
+	
+func _updatePour():
+		_sampleVolume-=5
+		var pouring = _sampleVolume>0
+		for sampleRatio in _sampleRatios:
+			if _rng.randf() < sampleRatio.ratio:
+				_pourValve.setStyle(sampleRatio.grain.size,sampleRatio.grain.color)
+		if !pouring:
+			_pourValve.emitting = false
+			
+		
 func _onDrillAction(direction,isOn):
 	if !_isDrilling:
 		if direction == "down":
@@ -89,6 +117,9 @@ func _onDrillTipContact(target,contactPoint,normal,drillDepth):
 		target.drillNormal = normal
 		target.isDrilling = true
 		_drillUI.setDepth(drillDepth)
+		if _drill.spin!=0 && _prevDrillDepth!=drillDepth:
+			_fillSampleContainer(target.getGrainsAt(drillDepth))
+			_prevDrillDepth = drillDepth
 		if _drill.spin!=0 && drillDepth > 0.02:	#Stop drill and pull out
 			_drill.direction = -1
 			_drill.spin = 0
@@ -135,3 +166,21 @@ func _animationCompleted(animation):
 	if(animation == "PreDrill"):
 		_drill.toggleActivate()
 		_drill.direction  = _drill.spin
+
+func _fillSampleContainer(grains):
+	if grains != null:
+		var count
+		for grain in grains:
+			count = sampleContainer.get(grain)
+			if count != null:
+				sampleContainer[grain]+=1
+			else:
+				sampleContainer[grain] = 1
+
+class SampleRatio:
+	var grain:Grain
+	var ratio:float
+	
+	func _init(grain:Grain, ratio:float):
+		self.grain = grain
+		self.ratio = ratio

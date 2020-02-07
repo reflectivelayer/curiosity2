@@ -1317,6 +1317,8 @@ __meta__ = {
 [connection signal="pressed" from="DrillRect/Button" to="." method="_on_drill_panel_pressed"]
 [connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer3/BtnPower" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "activate" ]]
 [connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer3/BtnPower" to="DrillRect/Drill" method="_on_BtnMoveDrill_up" binds= [ "activate" ]]
+[connection signal="pressed" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer3/BtnShake" to="DrillRect/Drill" method="_on_BtnShake_pressed"]
+[connection signal="pressed" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer3/BtnPour" to="DrillRect/Drill" method="_on_BtnPour_pressed"]
 [connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnUp" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "up" ]]
 [connection signal="button_up" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnUp" to="DrillRect/Drill" method="_on_BtnMoveDrill_up" binds= [ "up" ]]
 [connection signal="button_down" from="DrillRect/Drill/VBoxContainer/HBoxContainer/VBoxContainer/BtnDown" to="DrillRect/Drill" method="_on_BtnMoveDrill_down" binds= [ "down" ]]

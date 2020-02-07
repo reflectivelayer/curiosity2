@@ -3,7 +3,7 @@ class_name DrillUI
 
 signal drillAction(action,isOn)
 signal coverAction(cover)
-
+signal armMode(motion,type)
 var _contactLeft:Label
 var _contactRight
 var _depth
@@ -53,3 +53,11 @@ func _on_SAM2_cover_pressed(cover):
 
 func _on_Chem_cover_pressed(cover):
 	emit_signal("coverAction",cover)
+
+
+func _on_BtnShake_pressed():
+	emit_signal("armMode","shake")
+
+
+func _on_BtnPour_pressed():
+	emit_signal("armMode","pour")
