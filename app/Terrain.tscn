@@ -720,14 +720,14 @@ anims/DepositAtSAM = SubResource( 12 )
 anims/MastStartUp = SubResource( 13 )
 
 [node name="Arm" type="MeshInstance" parent="Rover"]
-transform = Transform( 0.772221, 1.39698e-09, 0.635349, -1.62981e-09, 1, -1.10595e-09, -0.635349, -3.49246e-10, 0.772221, 0.469009, 1.03303, 1.11279 )
+transform = Transform( -4.37113e-08, 0, -0.999997, 0, 1, 0, 0.999997, 0, -4.37113e-08, 0.469009, 1.03303, 1.11279 )
 mesh = ExtResource( 14 )
 material/0 = SubResource( 14 )
 material/1 = SubResource( 15 )
 script = ExtResource( 15 )
 
 [node name="Lower" type="MeshInstance" parent="Rover/Arm"]
-transform = Transform( 1, 2.98023e-08, 2.23517e-08, -2.47965e-08, 0.235513, 0.97187, 0, -0.971872, 0.235512, 6.48499e-05, -0.164139, 0.168327 )
+transform = Transform( 1, 0, 0, 0, 0.945519, 0.325568, 0, -0.325568, 0.945517, 6.48499e-05, -0.164139, 0.168327 )
 mesh = ExtResource( 16 )
 material/0 = SubResource( 16 )
 material/1 = SubResource( 17 )
@@ -735,7 +735,7 @@ material/2 = SubResource( 18 )
 material/3 = SubResource( 19 )
 
 [node name="Upper" type="MeshInstance" parent="Rover/Arm/Lower"]
-transform = Transform( 1, 2.98023e-08, 2.01166e-07, -1.19209e-07, 0.983236, 0.182338, -1.93715e-07, -0.182338, 0.983235, 0.0607681, -0.00509644, 0.820145 )
+transform = Transform( 1, 0, 0, 0, 0.358368, 0.93358, 0, -0.933581, 0.358368, 0.0607681, -0.00509644, 0.820145 )
 mesh = ExtResource( 17 )
 material/0 = SubResource( 20 )
 material/1 = SubResource( 21 )
@@ -743,13 +743,13 @@ material/2 = SubResource( 22 )
 material/3 = SubResource( 23 )
 
 [node name="InstrumentBase" type="MeshInstance" parent="Rover/Arm/Lower/Upper"]
-transform = Transform( -1, 2.98023e-08, -1.50874e-07, -2.98023e-08, 0.999668, -0.0257407, 1.49012e-07, -0.0257407, -0.999669, -0.188526, 0.792175, -0.000351906 )
+transform = Transform( -1, 8.74227e-08, 0, 3.82137e-15, 4.37113e-08, 1, 8.74228e-08, 0.999999, -4.37114e-08, -0.188526, 0.792175, -0.000351906 )
 mesh = ExtResource( 18 )
 material/0 = SubResource( 24 )
 material/1 = SubResource( 25 )
 
 [node name="Instruments" type="MeshInstance" parent="Rover/Arm/Lower/Upper/InstrumentBase"]
-transform = Transform( 0.16818, 5.96046e-08, -0.985754, -5.96046e-08, 1, 1.78814e-07, 0.985756, 5.96046e-08, 0.16818, 0.0594444, 0.132721, 0.143999 )
+transform = Transform( -0.642787, 0, 0.766043, 0, 1, 0, -0.766044, 0, -0.642786, 0.0594444, 0.132721, 0.143999 )
 mesh = ExtResource( 19 )
 material/0 = ExtResource( 34 )
 material/1 = ExtResource( 35 )

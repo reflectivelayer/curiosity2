@@ -8,8 +8,12 @@ var _orgRock3 = preload("res://models/landscape/Rock3.tscn")
 var _orgRock4 = preload("res://models/landscape/Rock4.tscn")
 var _rockCount = 4
 var _Drill:Spatial
+var _grains = [[Grain.new(0.002,"#a97333")],[Grain.new(0.004,"#927647")],[Grain.new(0.002,"#8dc9ca")],[Grain.new(0.004,"#58626c")]]
+var _rng = RandomNumberGenerator.new()
+
 
 func _ready():
+	_rng.randomize()
 	_Drill = $Rover/Arm/Lower/Upper/InstrumentBase/Instruments/Drill
 	sampler = RayCast.new()
 	add_child(sampler)
@@ -52,6 +56,7 @@ func _placeRocks():
 			var scalJitterX = rng.randf_range(0,0.4)
 			var scalJitterY = rng.randf_range(0,0.1)
 			var scalJitterZ = rng.randf_range(0,0.4)
+			addLayers(rock)
 			add_child(rock)
 			#rock.global_scale(Vector3(2,1,2))
 			var aabb:AABB = rock.get_node("SolidMass").get_transformed_aabb()
@@ -60,5 +65,17 @@ func _placeRocks():
 		safeCount+=1
 	sampler.enabled = false
 	print("Rocks placed: "+String(count))
+	addLayers($Rock)
 
+func addLayers(rock):
+	var layers = []
+	var grain = _grains[_rng.randi_range(0,_grains.size()-1)]
+	for c in range(_rng.randi_range(1,3)):
+		layers.append(RockLayer.new(_rng.randf_range(0.005,0.04),_rng.randf_range(0.1,0.9),grain))
+	
+	layers.sort_custom(self,"layerDepthComparison")
+	layers[layers.size()-1].bottomDepth = 0.04	#Depth limit
+	rock.rockLayers = layers
 
+func layerDepthComparison(a:RockLayer, b:RockLayer):
+		return a.bottomDepth < b.bottomDepth

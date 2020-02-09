@@ -16,11 +16,7 @@ var hole:Spatial  #TEMP ONLY
 func _ready():
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
-	var grains1 = [Grain.new(0.002,"#a97333")]
-	var grains2 = [Grain.new(0.004,"#927647")]
-	rockLayers.append(_createRockLayer(0.0175,0.75,grains1))
-	rockLayers.append(_createRockLayer(0.04,0.25,grains2))
-
+	
 func getDepth()->float:
 	return hole.depth
 
@@ -57,8 +53,3 @@ func _createHole(location:Vector3):
 	hole.relativeEntryPoint = location
 	hole.rockLayers = rockLayers
 	holes.add_child(hole)
-
-
-func _createRockLayer(height:float, drillSpeed:float,grains:Array)->RockLayer:
-	var rockLayer:RockLayer = RockLayer.new(height,drillSpeed,grains)
-	return rockLayer
