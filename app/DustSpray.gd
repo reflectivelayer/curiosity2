@@ -33,9 +33,10 @@ func _process(delta):
 		addGrain()
 
 func addGrain():
+	var radius = 0.005
 	for c in range(3):
 		var dust = Dust.instance()
-		var pos = Vector3(rng.randf_range(-0.01,0.01),0,rng.randf_range(-0.01,0.01))
+		var pos = Vector3(rng.randf_range(-radius,radius),0,rng.randf_range(-radius,radius))
 		dust.inits(pos,Vector3(),_scale,_getCurrentMaterial())
 		_dustCloud.add_child(dust)
 

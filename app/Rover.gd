@@ -50,6 +50,7 @@ var _mastAngle = 0
 var _roverAngle = 0
 var _previousRotation:Vector3
 var _roverLocked:bool  = false
+var _drillManager:DrillManager
 
 func _ready():
 	_mastCam = $MastCam/BaseAxis/Base/CamHead
@@ -66,6 +67,7 @@ func _ready():
 	_leftRearSuspension = $LeftRearSuspension
 	_rightRearSuspension = $RightRearSuspension
 	
+	_drillManager = $Arm.drillManager
 	MastUI = get_parent().get_node("Control/MastRect/Mast")
 	MastUI.connect("powerToggle",self,"onPowerToggle")
 	MastUI.connect("mastMovment",self,"onMastMovement")
@@ -219,6 +221,9 @@ func onMastMovement(direction,isOn):
 			_moveMastCamRight = isOn
 
 func onDriveMovement(direction,isOn):
+	if _drillManager.isDrilling:
+		return
+		
 	match direction:
 		"up":
 			if isOn:

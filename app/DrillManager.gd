@@ -6,6 +6,7 @@ signal onShakeSample()
 
 var DRILL_FORCE:float = 0.001
 var sampleContainer = {}
+var isDrilling:bool = false
 var _sampleVolume:int
 var _drill:Drill
 var _drillUI:DrillUI
@@ -15,12 +16,11 @@ var _anim:Animation
 var _drillBit:MeshInstance
 var _animator:AnimationPlayer
 var _chassisAnimator:AnimationPlayer
-var _isDrilling:bool = false
 var _cheMinCoverOpen:bool = false
 var _sam1CoverOpen:bool = false
 var _sam2CoverOpen:bool = false
 var _prevDrillDepth:int = 0
-var _pourValve
+var pourValve
 var _sampleRatios = []
 var _rng = RandomNumberGenerator.new()
 
@@ -61,8 +61,8 @@ func stop():
 	pass
 	
 func startPour(pourValve):
-	_pourValve = pourValve
-	_pourValve.emitting = true 
+	self.pourValve = pourValve
+	self.pourValve.emitting = true 
 	_sampleRatios.clear()
 	_sampleVolume = 0
 	for grain in sampleContainer.keys():
@@ -71,17 +71,17 @@ func startPour(pourValve):
 		_sampleRatios.append(SampleRatio.new(grain,sampleContainer[grain]/float(_sampleVolume)))
 	
 func _updatePour():
-		_sampleVolume-=5
+		_sampleVolume-=4
 		var pouring = _sampleVolume>0
 		for sampleRatio in _sampleRatios:
 			if _rng.randf() < sampleRatio.ratio:
-				_pourValve.setStyle(sampleRatio.grain.size,sampleRatio.grain.color)
+				pourValve.setStyle(sampleRatio.grain.size,sampleRatio.grain.color)
 		if !pouring:
-			_pourValve.emitting = false
+			pourValve.emitting = false
 			
 		
 func _onDrillAction(direction,isOn):
-	if !_isDrilling:
+	if !isDrilling:
 		if direction == "down":
 			if isOn:
 				if _rockContact:
@@ -96,7 +96,7 @@ func _onDrillAction(direction,isOn):
 		elif direction == "activate":
 			if isOn:
 				if _rockContact && _target!=null:
-					_isDrilling = true
+					isDrilling = true
 					_startPreDrill()
 
 	
@@ -118,7 +118,7 @@ func _onDrillTipContact(target,contactPoint,normal,drillDepth):
 		target.isDrilling = true
 		_drillUI.setDepth(drillDepth)
 		if _drill.spin!=0 && _prevDrillDepth!=drillDepth:
-			_fillSampleContainer(target.getGrainsAt(drillDepth))
+			_fillSampleContainer(target.getLayerAt(drillDepth))
 			_prevDrillDepth = drillDepth
 		if _drill.spin!=0 && drillDepth > 0.02:	#Stop drill and pull out
 			_drill.direction = -1
@@ -126,7 +126,7 @@ func _onDrillTipContact(target,contactPoint,normal,drillDepth):
 	_target = target
 	
 func _onDrillParked():
-	_isDrilling = false
+	isDrilling = false
 	
 func _onCoverAction(cover:String):
 	match cover:
@@ -167,15 +167,15 @@ func _animationCompleted(animation):
 		_drill.toggleActivate()
 		_drill.direction  = _drill.spin
 
-func _fillSampleContainer(grains):
-	if grains != null:
+func _fillSampleContainer(layer:RockLayer):
+	if layer != null:
 		var count
-		for grain in grains:
+		for grain in layer.grains:
 			count = sampleContainer.get(grain)
 			if count != null:
-				sampleContainer[grain]+=1
+				sampleContainer[grain]+=layer.drillSpeedMultiplier
 			else:
-				sampleContainer[grain] = 1
+				sampleContainer[grain] = layer.drillSpeedMultiplier
 
 class SampleRatio:
 	var grain:Grain

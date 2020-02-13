@@ -67,7 +67,7 @@ var _lowerShakeTransform:Transform
 var _upperShakeTransform:Transform
 var _insBaseShakeTransform:Transform
 var _insShakeTransform:Transform
-var _drillManager:DrillManager
+var drillManager:DrillManager
 var _previousAnimation:String
 var _pourValve
 var rng = RandomNumberGenerator.new()
@@ -85,9 +85,9 @@ func _ready():
 	_pourValve = $Lower/Upper/InstrumentBase/Instruments/Spray
 	
 	var rover = $"../../Rover"
-	_drillManager = DrillManager.new(rover)
-	_drillManager.connect("onStopArm",self,"_onStopArm")
-	_drillManager.connect("onShakeSample",self,"_onShakeSample")
+	drillManager = DrillManager.new(rover)
+	drillManager.connect("onStopArm",self,"_onStopArm")
+	drillManager.connect("onShakeSample",self,"_onShakeSample")
 			
 	_ArmUI = $"../../Control/ArmRect/Arm"
 	_ArmUI.connect("armMovement",self,"onArmMovement")
@@ -174,12 +174,15 @@ func _process(delta):
 			_isDeploying = false
 	if _isShaking:
 		_updateShake()
-	_drillManager.update()
+	drillManager.update()
 			
 func _onStopArm():
 	_stopArm()
 	
 func onArmMovement(section, direction,isOn):
+	if drillManager.isDrilling || (drillManager.pourValve!=null && drillManager.pourValve.emitting):
+		return
+	
 	_section = section
 	_direction = direction
 	_isOn = isOn
@@ -265,7 +268,7 @@ func _onArmMode(mode):
 			_preShakeSample()
 			print("shake")
 		"pour":
-			_drillManager.startPour(_pourValve)
+			drillManager.startPour(_pourValve)
 			print("pour")
 
 func deployArm():

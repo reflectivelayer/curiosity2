@@ -99,6 +99,7 @@ func _turnDrillOn():
 func _turnDrillOff():
 		spin =  0
 		direction = 0
+	
 		
 func drill(pressure:float):
 		_pressure = pressure

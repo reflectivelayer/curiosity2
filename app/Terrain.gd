@@ -8,9 +8,11 @@ var _orgRock3 = preload("res://models/landscape/Rock3.tscn")
 var _orgRock4 = preload("res://models/landscape/Rock4.tscn")
 var _rockCount = 4
 var _Drill:Spatial
-var _grains = [[Grain.new(0.002,"#a97333")],[Grain.new(0.004,"#927647")],[Grain.new(0.002,"#8dc9ca")],[Grain.new(0.004,"#58626c")]]
+var _grains = [[Grain.new(0.001,"#a97333")],[Grain.new(0.002,"#927647")],[Grain.new(0.001,"#8dc9ca")],[Grain.new(0.002,"#58626c")]]
 var _rng = RandomNumberGenerator.new()
-
+var _hotSpotCount = 4
+var _hotSpots = []
+var _hotSpotRadius = 25
 
 func _ready():
 	_rng.randomize()
@@ -38,24 +40,41 @@ func _placeRocks():
 	var safe = 2000
 	var safeCount = 0 
 	var radius = 130
-	var maxRock = 50
+	var maxRock = 100
 	var count = 0
 	var orgRocks = [_orgRock1,_orgRock2,_orgRock3,_orgRock4]
 	var rock:Spatial
-	var rng = RandomNumberGenerator.new()
-	
-	rng.randomize()
-	while count < maxRock && safeCount<safe:
+
+
+	while count < _hotSpotCount && safeCount<safe:
 		sampler.force_raycast_update()
-		sampler.translation = Vector3(rng.randf_range(-radius,radius),-1,rng.randf_range(-radius,radius))
+		sampler.translation = Vector3(_rng.randf_range(-radius,radius),-1,_rng.randf_range(-radius,radius))
 		var target = sampler.get_collision_point()
 		var normal = sampler.get_collision_normal()
 		if abs(normal.x)<0.2 && abs(normal.z)<0.2:
-			rock = orgRocks[rng.randi_range(0,_rockCount-1)].instance()
-			rock.rotateCore(Vector3(rng.randf_range(0,PI*2),rng.randf_range(0,PI*2),rng.randf_range(0,PI*2)))
-			var scalJitterX = rng.randf_range(0,0.4)
-			var scalJitterY = rng.randf_range(0,0.1)
-			var scalJitterZ = rng.randf_range(0,0.4)
+			_hotSpots.append(target)
+			count+=1
+		safeCount+=1
+
+
+	count = 0
+	while count < maxRock && safeCount<safe:
+		sampler.force_raycast_update()
+		
+		if(_rng.randi_range(0,4) == 1):
+			sampler.translation = Vector3(_rng.randf_range(-radius,radius),-1,_rng.randf_range(-radius,radius))	
+		else:
+			var hotspotOffset = Vector3(_rng.randi_range(-_hotSpotRadius,_hotSpotRadius),-1,_rng.randi_range(-_hotSpotRadius,_hotSpotRadius))
+			sampler.translation = _hotSpots[_rng.randi_range(0,_hotSpotCount-1)]+hotspotOffset
+						
+		var target = sampler.get_collision_point()
+		var normal = sampler.get_collision_normal()
+		if abs(normal.x)<0.2 && abs(normal.z)<0.2:
+			rock = orgRocks[_rng.randi_range(0,_rockCount-1)].instance()
+			rock.rotateCore(Vector3(_rng.randf_range(0,PI*2),_rng.randf_range(0,PI*2),_rng.randf_range(0,PI*2)))
+			var scalJitterX = _rng.randf_range(0,0.4)
+			var scalJitterY = _rng.randf_range(0,0.1)
+			var scalJitterZ = _rng.randf_range(0,0.4)
 			addLayers(rock)
 			add_child(rock)
 			#rock.global_scale(Vector3(2,1,2))

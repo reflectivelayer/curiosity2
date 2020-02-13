@@ -22,10 +22,15 @@ func getDepth()->float:
 
 func getGrainsAt(depth)->Grain:
 	if hole != null:
-		return hole.getRockLayerAt(depth).grain
+		return hole.getRockLayerAt(depth).grains
 	else:
 		return null
-	
+
+func getLayerAt(depth)->RockLayer:
+	if hole != null:
+		return hole.getRockLayerAt(depth)
+	else:
+		return null	
 
 func rotateCore(rot:Vector3):
 	$SolidMass.rotation = rot
