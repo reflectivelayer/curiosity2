@@ -1282,6 +1282,30 @@ text = "-20.5°"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Crosshair" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Node2D" type="Node2D" parent="."]
+modulate = Color( 1, 1, 1, 0.333333 )
+position = Vector2( 500, 295.261 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Line2D2" type="Line2D" parent="Node2D"]
+points = PoolVector2Array( 0, -10, 0, 10 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="Line2D" type="Line2D" parent="Node2D"]
+points = PoolVector2Array( -10, 0, 10, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
 [connection signal="pressed" from="ArmRect/Arm/VBoxContainer/Title/BtnPower" to="ArmRect/Arm" method="_on_BtnCamera_pressed"]
 [connection signal="button_down" from="ArmRect/Arm/VBoxContainer/Tools/BtnLeft" to="ArmRect/Arm" method="_on_BtnLeft_button_down" binds= [ "tools" ]]
 [connection signal="button_up" from="ArmRect/Arm/VBoxContainer/Tools/BtnLeft" to="ArmRect/Arm" method="_on_BtnLeft_button_up" binds= [ "tools" ]]
